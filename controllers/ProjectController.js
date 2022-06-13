@@ -3,7 +3,7 @@ import asyncHandler from 'express-async-handler'
 //import mongoose from 'mongoose';
 const projects = asyncHandler( async (req,res) => {
     //if( !mongoose.Types.ObjectId.isValid(req.params.kurum_id) ) return false;
-    const projects = await Project.find({kurum_id: req.params.kurum_id}).select("-template")
+    const projects = await Project.find() //.select("-template")
     return res.status(200).json(projects);
 })
 
