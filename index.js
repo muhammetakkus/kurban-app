@@ -77,15 +77,7 @@ if(process.env.NODE_ENV === "production") {
 
 }
 
-app.use('/kurum', kurumRoutes)
-// bu şekilde de okey (yani altındaki bütün routelara middleware geçmiş oldun prefix+route+middleware diyebiliriz) 
-app.use('/project', kurumMiddleware, projectRoutes) 
-app.use('/process', kurumMiddleware, processRoutes)
-app.use('/buyukbas-kurban', kurumMiddleware, buyukbasKurbanRoutes)
-app.use('/kucukbas-kurban', kurumMiddleware, kucukbasKurbanRoutes)
-app.use('/hisse-group', kurumMiddleware, hisseGroupRoutes)
-app.use('/hisse', kurumMiddleware, hisseRoutes)
-app.use('/message', kurumMiddleware, messageRoutes)
+
 
 app.get('*', (req, res) => { 
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html")) //resolve yerine jo,n dene
