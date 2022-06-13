@@ -72,13 +72,13 @@ import kurumMiddleware from "./middleware/kurum.js"
 app.use('/', userRoutes)
 app.use('/kurum', kurumRoutes)
 // bu şekilde de okey (yani altındaki bütün routelara middleware geçmiş oldun prefix+route+middleware diyebiliriz) 
-app.use('/project', kurumMiddleware, projectRoutes) 
-app.use('/process', kurumMiddleware, processRoutes)
-app.use('/buyukbas-kurban', kurumMiddleware, buyukbasKurbanRoutes)
-app.use('/kucukbas-kurban', kurumMiddleware, kucukbasKurbanRoutes)
-app.use('/hisse-group', kurumMiddleware, hisseGroupRoutes)
-app.use('/hisse', kurumMiddleware, hisseRoutes)
-app.use('/message', kurumMiddleware, messageRoutes)
+app.use('/project', projectRoutes) 
+app.use('/process', processRoutes)
+app.use('/buyukbas-kurban', buyukbasKurbanRoutes)
+app.use('/kucukbas-kurban', kucukbasKurbanRoutes)
+app.use('/hisse-group', hisseGroupRoutes)
+app.use('/hisse', hisseRoutes)
+app.use('/message', messageRoutes)
 
 if(process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, '/client/build'))) // client başındaki slash kaldır dene
