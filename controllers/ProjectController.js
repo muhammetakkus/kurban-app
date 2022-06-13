@@ -1,6 +1,6 @@
 import Project from '../models/Project.js'
 import asyncHandler from 'express-async-handler'
-import mongoose from 'mongoose';
+//import mongoose from 'mongoose';
 const projects = asyncHandler( async (req,res) => {
     //if( !mongoose.Types.ObjectId.isValid(req.params.kurum_id) ) return false;
     const projects = await Project.find({kurum_id: req.params.kurum_id}).select("-template")

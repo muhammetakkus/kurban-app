@@ -2,7 +2,7 @@ import Kurum from '../models/Kurum.js'
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
-import mongoose from 'mongoose';
+
 // user objesinden password veya istenilen ögeler çıkarılmış şekilde return et
 const kurumData = (kurum) => {
     if(kurum.length > 1) {

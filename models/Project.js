@@ -2,19 +2,16 @@ import mongoose from 'mongoose'
 
 const ProjectSchema = new mongoose.Schema({
     project_name: String,
-    kurum_id: {
-        type: mongoose.Types.ObjectId, // proje oluşturulurken kurum_id geçilecek
-        require: true
-    }, 
+    kurum_id: mongoose.Types.ObjectId,
     uniq_project_code: String,
 }, {timestamps: true})
 
 // ters project.kurum işlemini yapmak için 
-ProjectSchema.virtual('kurum',{ // project.kurum şeklinde ulaşmak için (const project = bla bla dan sonra) - populate a gerek kalmadan
+/*ProjectSchema.virtual('kurum',{ // project.kurum şeklinde ulaşmak için (const project = bla bla dan sonra) - populate a gerek kalmadan
     ref:'Kurum',
     localField:'_id',
     foreignField:'projects'
-})
+})*/
 
 
 ProjectSchema.pre('save', async function (next) {

@@ -70,6 +70,13 @@ import kurumMiddleware from "./middleware/kurum.js"
 // For Heroku Deployment - this should be top of routes?
 
 app.use('/', userRoutes)
+if(process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, '/client/build'))) // client başındaki slash kaldır dene
+  
+  app.get('*', (req, res) => { 
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html")) //resolve yerine jo,n dene
+  })
+}
 app.use('/kurum', kurumRoutes)
 // bu şekilde de okey (yani altındaki bütün routelara middleware geçmiş oldun prefix+route+middleware diyebiliriz) 
 app.use('/project', projectRoutes) 
@@ -80,13 +87,7 @@ app.use('/hisse-group', hisseGroupRoutes)
 app.use('/hisse', hisseRoutes)
 app.use('/message', messageRoutes)
 
-if(process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, '/client/build'))) // client başındaki slash kaldır dene
-  
-  app.get('*', (req, res) => { 
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html")) //resolve yerine jo,n dene
-  })
-}
+
 
 /* Error Handler */
 //app.use(errorHandler)
