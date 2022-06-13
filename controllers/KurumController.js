@@ -150,8 +150,7 @@ const kurums = asyncHandler( async (req,res) => {
 
 const find = async (req,res) => {
    try {
-        // bu exec (execute) optional - promise döndürüyor
-        const kurum = await Kurum.findById({ _id: req.params.id }).exec(); // routerda /user/:id şeklinde id parametresi var
+        const kurum = await Kurum.findById({ _id: req.params.id }) // routerda /user/:id şeklinde id parametresi var
         res.status(200).json(kurum);
    } catch (error) {
         console.log(error);
@@ -161,17 +160,17 @@ const find = async (req,res) => {
    /**
     * ID ile Collection'dan spesifik field'ları çekmek için
     */
-    //const kurumSpecial = await Kurum.findById({ _id: req.params.id }, {full_name, kurum_name}).exec(); // _id, full_name, kurum_name key'li obj döner
+    //const kurumSpecial = await Kurum.findById({ _id: req.params.id }, {full_name: kurum_name}).exec(); // _id, full_name, kurum_name key'li obj döner
 
     /**
      * var mı? varsa _id döner 
      */
-    const is = await Kurum.exists({ istediginKey: "değeri" })
+    //const is = await Kurum.exists({ istediginKey: "değeri" })
     
     /**
      * where - eşleşirse objeyi döner - dönen objeden istediklerini almak için .select("title gsm zart zurt")
      */
-    const where = await Kurum.where(key).equals("değeri")
+    //const where = await Kurum.where(key).equals("değeri")
 }
 
 const update = async (req,res) => {
@@ -184,8 +183,8 @@ const _delete = async (req,res) =>{
     res.status(200).json(result);
 
     /** */
-    const zart = await deleteOne({ istediginKey: "değeri" }) // belirtilen değere ait bulduğu ilk kaydı siler
-    const zurt = await deleteMany({ istediginKey: "değeri" }) // belirtilen değere ait bulduğu bütün kayıtları siler
+    //const zart = await deleteOne({ istediginKey: "değeri" }) // belirtilen değere ait bulduğu ilk kaydı siler
+    //const zurt = await deleteMany({ istediginKey: "değeri" }) // belirtilen değere ait bulduğu bütün kayıtları siler
 }
 
 const generateToken = (id) => {
