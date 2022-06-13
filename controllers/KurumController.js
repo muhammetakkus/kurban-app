@@ -161,7 +161,7 @@ const find = async (req,res) => {
    /**
     * ID ile Collection'dan spesifik field'ları çekmek için
     */
-    const kurumSpecial = await Kurum.findById({ _id: req.params.id }, {full_name, kurum_name}).exec(); // _id, full_name, kurum_name key'li obj döner
+    //const kurumSpecial = await Kurum.findById({ _id: req.params.id }, {full_name, kurum_name}).exec(); // _id, full_name, kurum_name key'li obj döner
 
     /**
      * var mı? varsa _id döner 
