@@ -70,9 +70,6 @@ import kurumMiddleware from "./middleware/kurum.js"
 // For Heroku Deployment - this should be top of routes?
 
 app.use('/', userRoutes)
-app.use('/kurum', kurumRoutes)
-// bu şekilde de okey (yani altındaki bütün routelara middleware geçmiş oldun prefix+route+middleware diyebiliriz) 
-app.use('/project', projectRoutes) 
 if(process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, '/client/build'))) // client başındaki slash kaldır dene
   
@@ -80,6 +77,9 @@ if(process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html")) //resolve yerine jo,n dene
   })
 }
+app.use('/kurum', kurumRoutes)
+// bu şekilde de okey (yani altındaki bütün routelara middleware geçmiş oldun prefix+route+middleware diyebiliriz) 
+app.use('/project', projectRoutes) 
 app.use('/process', processRoutes)
 app.use('/buyukbas-kurban', buyukbasKurbanRoutes)
 app.use('/kucukbas-kurban', kucukbasKurbanRoutes)
