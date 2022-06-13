@@ -3,17 +3,14 @@ import asyncHandler from 'express-async-handler'
 //import mongoose from 'mongoose';
 const projects = asyncHandler( async (req,res) => {
     //if( !mongoose.Types.ObjectId.isValid(req.params.kurum_id) ) return false;
-    const projects = await Project.find({kurum_id: req.params.kurum_id}) //.select("-template")
-    return res.status(200).json(projects);
+    //const projects = await Project.find({kurum_id: req.params.kurum_id}) //.select("-template")
+    return res.status(200).json([]);
 })
 
 const find = async (req,res) => {
    try {
         // routerda /kurum/:kurum_id/project/:id şeklinde id parametresi var
-        const project = await Project.findById({ 
-            _id: req.params.id,
-            kurum_id: req.params.kurum_id
-        });
+        const project = await Project.findById(req.params.id);
         res.status(200).json(project);
    } catch (error) {
         console.log(error);
