@@ -1,3 +1,5 @@
+const app = express()
+
 /* */
 import kurumMiddleware from "../middleware/kurum.js"
 
@@ -21,3 +23,5 @@ app.use('/kucukbas-kurban', kurumMiddleware, kucukbasKurbanRoutes)
 app.use('/hisse-group', kurumMiddleware, hisseGroupRoutes)
 app.use('/hisse', kurumMiddleware, hisseRoutes)
 app.use('/message', kurumMiddleware, messageRoutes)
+
+export default app
