@@ -45,7 +45,7 @@ app.use(
     cors({
       origin: process.env.NODE_ENV === "production" ? process.CLIENT_URL_PROD : process.env.CLIENT_URL_LOCAL,
       methods: "GET,POST,PUT,DELETE",
-      credentials: true,
+      //credentials: true,
     })
   );
   
@@ -74,9 +74,7 @@ app.use('/', userRoutes)
 if(process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, '/client/build'))) // client başındaki slash kaldır dene
   
-  app.get('*', (req, res) => { 
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html")) //resolve yerine jo,n dene
-  })
+
 }
 
 app.use('/kurum', kurumRoutes)
@@ -89,7 +87,9 @@ app.use('/hisse-group', kurumMiddleware, hisseGroupRoutes)
 app.use('/hisse', kurumMiddleware, hisseRoutes)
 app.use('/message', kurumMiddleware, messageRoutes)
 
-
+app.get('*', (req, res) => { 
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html")) //resolve yerine jo,n dene
+})
 
 /* Error Handler */
 //app.use(errorHandler)
