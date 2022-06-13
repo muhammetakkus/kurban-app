@@ -2,7 +2,7 @@ import axios from "axios";
 
 class MenuService {
     getAll() {
-        return axios.get(`/kurum/menus`)
+        return [] //axios.get(`/kurum/menus`)
     }
 }
 
