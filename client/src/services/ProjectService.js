@@ -7,7 +7,7 @@ class ProjectService {
     }
 
     getAll(payload) {
-        return axios.get(`/project/all/${payload.kurum_id}`)
+        return []//axios.get(`/project/all/${payload.kurum_id}`)
     }
 
     get(id) {
