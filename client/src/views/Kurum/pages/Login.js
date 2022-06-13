@@ -32,7 +32,7 @@ function Login() {
 
     try {
       setLoading(true)
-      axios.post('kurum/login', data)
+      axios.post('/kurum/login', data)
       .then((response) => {
         console.log(response.data)
         setLoading(false)
