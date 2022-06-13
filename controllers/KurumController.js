@@ -34,7 +34,7 @@ const kurumData = (kurum) => {
 }
 
 const login = async (req,res) =>{
-    if( !mongoose.Types.ObjectId.isValid(id) ) return false;
+    
     try {
         const {email, password} = req.body
     
@@ -67,7 +67,6 @@ const register = async (req,res) => {
         return res.status(400).json({ errors: errors.array() });
     }
     */
-    if( !mongoose.Types.ObjectId.isValid(id) ) return false;
     try {
         //req.body.password = bcrypt.hash(req.body.password)
 
