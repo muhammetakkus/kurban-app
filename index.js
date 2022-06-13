@@ -67,16 +67,17 @@ import kurumMiddleware from "./middleware/kurum.js"
 
 
 /* Routers - şöyle bir şey var buradan :parametre router'a geçilirse bu seviyeden yakalanıyor örneğin buradan :id geçiğ projectRoutes altında çağrılan controllerdan yakalanamıyor */ 
+
+app.use('/', userRoutes)
+
 // For Heroku Deployment - this should be top of routes?
 if(process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, '/client/build')))
-  
-
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  })
 }
-app.use('/', userRoutes)
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-})
+
 app.use('/kurum', kurumRoutes)
 // bu şekilde de okey (yani altındaki bütün routelara middleware geçmiş oldun prefix+route+middleware diyebiliriz) 
 app.use('/project', kurumMiddleware, projectRoutes) 
