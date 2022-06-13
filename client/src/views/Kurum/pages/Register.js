@@ -43,7 +43,7 @@ function Register() {
     try {
 
         setLoading(true)
-        axios.post('kurum/register', data)
+        axios.post('/kurum/register', data)
         .then((response) => {
           setLoading(false)
           //console.log(response.data);
