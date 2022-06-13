@@ -13,6 +13,8 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: './config/config.env' })
 const PORT = process.env.PORT || 5001
 
+console.log(process.env.PORT)
+
 /* Database */
 import connectDB from './config/db.js'
 connectDB()
@@ -69,9 +71,7 @@ import kurumMiddleware from "./middleware/kurum.js"
 if(process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, '/client/build')))
   
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-  })
+
 }
 app.use('/', userRoutes)
 app.use('/kurum', kurumRoutes)
@@ -83,7 +83,9 @@ app.use('/kucukbas-kurban', kurumMiddleware, kucukbasKurbanRoutes)
 app.use('/hisse-group', kurumMiddleware, hisseGroupRoutes)
 app.use('/hisse', kurumMiddleware, hisseRoutes)
 app.use('/message', kurumMiddleware, messageRoutes)
-
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+})
 /* Error Handler */
 //app.use(errorHandler)
 
