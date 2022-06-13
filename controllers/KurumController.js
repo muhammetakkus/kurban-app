@@ -2,7 +2,7 @@ import Kurum from '../models/Kurum.js'
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
-import {emptyy} from '../utils/helper.js'
+import mongoose from 'mongoose';
 // user objesinden password veya istenilen ögeler çıkarılmış şekilde return et
 const kurumData = (kurum) => {
     if(kurum.length > 1) {
@@ -34,6 +34,7 @@ const kurumData = (kurum) => {
 }
 
 const login = async (req,res) =>{
+    if( !mongoose.Types.ObjectId.isValid(id) ) return false;
     try {
         const {email, password} = req.body
     
@@ -66,6 +67,7 @@ const register = async (req,res) => {
         return res.status(400).json({ errors: errors.array() });
     }
     */
+    if( !mongoose.Types.ObjectId.isValid(id) ) return false;
     try {
         //req.body.password = bcrypt.hash(req.body.password)
 
@@ -149,14 +151,14 @@ const kurums = asyncHandler( async (req,res) => {
 })
 
 const find = async (req,res) => {
-   try {
+  /* try {
         const kurum = await Kurum.findById({ _id: req.params.id }) // routerda /user/:id şeklinde id parametresi var
         res.status(200).json(kurum);
    } catch (error) {
         console.log(error);
         res.status(500).send(error);
    }
-
+*/
    /**
     * ID ile Collection'dan spesifik field'ları çekmek için
     */
@@ -174,13 +176,13 @@ const find = async (req,res) => {
 }
 
 const update = async (req,res) => {
-    const filter = { name: 'Alex' };
+  /*  const filter = { name: 'Alex' };
     const update = { age: '19' };
-    let doc = await Kurum.findOneAndUpdate(filter, update);
+    let doc = await Kurum.findOneAndUpdate(filter, update);*/
 }
 const _delete = async (req,res) =>{
-    const result = await Kurum.findByIdAndDelete({ _id: req.params.id });
-    res.status(200).json(result);
+   /* const result = await Kurum.findByIdAndDelete({ _id: req.params.id });
+    res.status(200).json(result);*/
 
     /** */
     //const zart = await deleteOne({ istediginKey: "değeri" }) // belirtilen değere ait bulduğu ilk kaydı siler
