@@ -86,11 +86,21 @@ router.get('/user/kurban-info/:kurban_code', getKurbanInfo)
 import kurumMiddleware from "../middleware/kurum.js"
 
 /* */
-import { projects } from '../controllers/ProjectController.js'
+import { projects, findProject } from '../controllers/ProjectController.js'
 router.get('/project/all/:kurum_id', projects)
-
+router.get('/project/:id', findProject)
 
 import { getAll } from '../controllers/DashboardMenuController.js'
 router.get('/kurum/menus', kurumMiddleware, getAll)
+
+
+import { processes } from '../controllers/ProcessController.js'
+router.get('/process/all/:kurum_id', processes)
+
+import { messages } from '../controllers/MessageController.js'
+router.get('/message/all/:kurum_id', messages)
+
+import { findAll } from '../controllers/BuyukbasKurbanController.js'
+router.get('/buyukbas-kurban/:project_id', findAll)
 
 export default router

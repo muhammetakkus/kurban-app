@@ -7,7 +7,7 @@ const projects = asyncHandler( async (req,res) => {
     return res.status(200).json(projects);
 })
 
-const find = async (req,res) => {
+const findProject = async (req,res) => {
    try {
         // routerda /kurum/:kurum_id/project/:id şeklinde id parametresi var
         const project = await Project.findById(req.params.id);
@@ -44,4 +44,4 @@ const _delete = async (req,res) =>{
 }
 
 
-export { projects, create, find, update, _delete}
+export { projects, create, findProject, update, _delete}
