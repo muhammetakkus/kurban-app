@@ -1,5 +1,7 @@
 import express from 'express'
-const router = express.Router()
+const router = express.Router({
+  mergeParams: true
+})
 import dotenv from 'dotenv'
 dotenv.config({ path: './config/config.env' })
 
