@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 
 */
 
-router.get('/', index)
+//router.get('/', index)
 
 
 import kurumRoutes from './kurum.js'
@@ -32,6 +32,7 @@ import processRoutes from './process.js'
 import hisseGroupRoutes from './hisse_group.js'
 import hisseRoutes from './hisse.js'
 import messageRoutes from './message.js'
+
 import kurumMiddleware from "../middleware/kurum.js"
 
 router.use('/kurum', kurumRoutes)
