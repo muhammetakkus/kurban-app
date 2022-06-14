@@ -23,6 +23,13 @@ router.get('/', (req, res) => {
 
 router.get('/', index)
 
+
+
+import { projects } from '../controllers/ProjectController.js'
+
+router.get('/project/all/:kurum_id', projects) // /kurum/kurum_id/project
+
+
 /* */
   router.get("/login/success", (req, res) => {
     if (req.user) {
