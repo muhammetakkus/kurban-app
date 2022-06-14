@@ -8,7 +8,7 @@ import userMiddleware from "../middleware/user.js"
 
 // Controllers
 import { index } from '../controllers/HomeController.js'
-import { login, users, register, find, update, _delete } from '../controllers/UserController.js'
+import { login, users, register, find, update, _delete, getKurbanInfo } from '../controllers/UserController.js'
 
 import passport from 'passport'
 /*
@@ -44,6 +44,8 @@ router.use('/hisse-group', kurumMiddleware, hisseGroupRoutes)
 router.use('/hisse', kurumMiddleware, hisseRoutes)
 router.use('/message', kurumMiddleware, messageRoutes)
 
+
+router.get("/kurban-info/:kurban_code", getKurbanInfo)
 
 /* Bu alt taraf farklı bir dosyaya taşınacak*/ 
 

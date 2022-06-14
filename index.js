@@ -54,12 +54,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-/* */
-import kurumMiddleware from "./middleware/kurum.js"
 
-
-/* Routers - şöyle bir şey var buradan :parametre router'a geçilirse bu seviyeden yakalanıyor örneğin buradan :id geçiğ projectRoutes altında çağrılan controllerdan yakalanamıyor */ 
-// For Heroku Deployment - this should be top of routes?
 // useRoutes ismi değişecek
 app.use('/', approutes)
 
