@@ -81,8 +81,16 @@ router.delete('/user/:id', _delete)
 
 router.get('/user/kurban-info/:kurban_code', getKurbanInfo)
 
-import { projects } from '../controllers/ProjectController.js'
 
+
+import kurumMiddleware from "../middleware/kurum.js"
+
+/* */
+import { projects } from '../controllers/ProjectController.js'
 router.get('/project/all/:kurum_id', projects)
+
+
+import { getAll } from '../controllers/DashboardMenuController.js'
+router.get('/kurum/menus', kurumMiddleware, getAll)
 
 export default router
