@@ -138,7 +138,7 @@ function BuyukBasKurbanList({ project_id }) {
 
 
   const sideResultForSMS = async (result) => {
-    setSideForSMS({isOpen: true, title: "Mesajlar", veri: message_templates, kurban_no: kurban.kurban_no, state_loading: result._id})
+    setSideForSMS({isOpen: true, title: "Mesajlar", veri: message_templates, kurban_no: kurban.kurban_no, state_loading: result._id, kurban_info_message: result.kurban_info_message})
     
     //console.log(res ult)
     //console.log(kurban)

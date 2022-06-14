@@ -110,6 +110,8 @@ export default function Side(props) {
                               className={`text-sm cursor-pointer ${item.message_title ? "" : "hidden"} px-1.5 lg:px-2.5 py-1  lg:py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100`}>GÖNDER</span>
                           </li>
                           ))}
+
+                          <li className={`${(data.title !== 'Mesajlar' && data.veri?.length === 0) ? "" : "hidden"} text-center text-gray-400`}>Henüz işlem adımı oluşturmadınız..</li>
                           
                           {/* SEND kurban-info MESSAGE */}
                           <li className={`flex items-center justify-between py-2 !border-dashed border-purple-700 ${data.title === 'Mesajlar' ? "" : "hidden"}`} >
@@ -117,7 +119,7 @@ export default function Side(props) {
                               type="button"
                               className="w-full group -ml-1 flex items-center rounded-md bg-white p-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             >
-                              <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-400">
+                              <span className={`${data.kurban_info_message ? "animate-bounce !text-green-400" : ""} flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-400`}>
                                 <ChatIcon className={`w-5 h-5`} />
                               </span>
                               <span className="ml-4 text-sm font-medium text-indigo-600 group-hover:text-indigo-500">
