@@ -24,11 +24,27 @@ router.get('/', (req, res) => {
 router.get('/', index)
 
 
+import kurumRoutes from './kurum.js'
+import projectRoutes from './project.js'
+import buyukbasKurbanRoutes from './buyukbas.js'
+import kucukbasKurbanRoutes from './kucukbas.js'
+import processRoutes from './process.js'
+import hisseGroupRoutes from './hisse_group.js'
+import hisseRoutes from './hisse.js'
+import messageRoutes from './message.js'
+import kurumMiddleware from "../middleware/kurum.js"
 
-import { projects } from '../controllers/ProjectController.js'
+router.use('/kurum', kurumRoutes)
+router.use('/project', kurumMiddleware, projectRoutes) 
+router.use('/process', kurumMiddleware, processRoutes)
+router.use('/buyukbas-kurban', kurumMiddleware, buyukbasKurbanRoutes)
+router.use('/kucukbas-kurban', kurumMiddleware, kucukbasKurbanRoutes)
+router.use('/hisse-group', kurumMiddleware, hisseGroupRoutes)
+router.use('/hisse', kurumMiddleware, hisseRoutes)
+router.use('/message', kurumMiddleware, messageRoutes)
 
-router.get('/project/all/:kurum_id', projects) // /kurum/kurum_id/project
 
+/* Bu alt taraf farklı bir dosyaya taşınacak*/ 
 
 /* */
   router.get("/login/success", (req, res) => {

@@ -20,15 +20,7 @@ import connectDB from './config/db.js'
 connectDB()
 
 /* Routers */
-import userRoutes from './routes/user.js'
-import kurumRoutes from './routes/kurum.js'
-import projectRoutes from './routes/project.js'
-import buyukbasKurbanRoutes from './routes/buyukbas.js'
-import kucukbasKurbanRoutes from './routes/kucukbas.js'
-import processRoutes from './routes/process.js'
-import hisseGroupRoutes from './routes/hisse_group.js'
-import hisseRoutes from './routes/hisse.js'
-import messageRoutes from './routes/message.js'
+import approutes from './routes/user.js'
 
 const app = express()
 
@@ -68,8 +60,8 @@ import kurumMiddleware from "./middleware/kurum.js"
 
 /* Routers - şöyle bir şey var buradan :parametre router'a geçilirse bu seviyeden yakalanıyor örneğin buradan :id geçiğ projectRoutes altında çağrılan controllerdan yakalanamıyor */ 
 // For Heroku Deployment - this should be top of routes?
-
-app.use('/', userRoutes)
+// useRoutes ismi değişecek
+app.use('/', approutes)
 
 if(process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, '/client/build'))) // client başındaki slash kaldır
@@ -80,15 +72,7 @@ if(process.env.NODE_ENV === "production") {
 }
 
 
-app.use('/kurum', kurumRoutes)
-// bu şekilde de okey (yani altındaki bütün routelara middleware geçmiş oldun prefix+route+middleware diyebiliriz) 
-app.use('/project', kurumMiddleware, projectRoutes) 
-app.use('/process', kurumMiddleware, processRoutes)
-app.use('/buyukbas-kurban', kurumMiddleware, buyukbasKurbanRoutes)
-app.use('/kucukbas-kurban', kurumMiddleware, kucukbasKurbanRoutes)
-app.use('/hisse-group', kurumMiddleware, hisseGroupRoutes)
-app.use('/hisse', kurumMiddleware, hisseRoutes)
-app.use('/message', kurumMiddleware, messageRoutes)
+
 
 
 /* Error Handler */
