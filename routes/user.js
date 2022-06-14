@@ -1,7 +1,5 @@
 import express from 'express'
-const router = express.Router({
-  mergeParams: true
-})
+const router = express.Router()
 import dotenv from 'dotenv'
 dotenv.config({ path: './config/config.env' })
 
@@ -10,7 +8,7 @@ import userMiddleware from "../middleware/user.js"
 
 // Controllers
 import { index } from '../controllers/HomeController.js'
-import { login, users, register, find, update, _delete, getKurbanInfo } from '../controllers/UserController.js'
+import { login, users, register, find, update, _delete } from '../controllers/UserController.js'
 
 import passport from 'passport'
 /*
@@ -23,33 +21,7 @@ router.get('/', (req, res) => {
 
 */
 
-//router.get('/', index)
-
-
-import kurumRoutes from './kurum.js'
-import projectRoutes from './project.js'
-import buyukbasKurbanRoutes from './buyukbas.js'
-import kucukbasKurbanRoutes from './kucukbas.js'
-import processRoutes from './process.js'
-import hisseGroupRoutes from './hisse_group.js'
-import hisseRoutes from './hisse.js'
-import messageRoutes from './message.js'
-
-import kurumMiddleware from "../middleware/kurum.js"
-
-router.use('/kurum', kurumRoutes)
-router.use('/project', kurumMiddleware, projectRoutes) 
-router.use('/process', kurumMiddleware, processRoutes)
-router.use('/buyukbas-kurban', kurumMiddleware, buyukbasKurbanRoutes)
-router.use('/kucukbas-kurban', kurumMiddleware, kucukbasKurbanRoutes)
-router.use('/hisse-group', kurumMiddleware, hisseGroupRoutes)
-router.use('/hisse', kurumMiddleware, hisseRoutes)
-router.use('/message', kurumMiddleware, messageRoutes)
-
-
-router.get("/kurban-info/:kurban_code", getKurbanInfo)
-
-/* Bu alt taraf farklı bir dosyaya taşınacak*/ 
+router.get('/', index)
 
 /* */
   router.get("/login/success", (req, res) => {
