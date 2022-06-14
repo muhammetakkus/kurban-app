@@ -104,7 +104,7 @@ import { findAll } from '../controllers/BuyukbasKurbanController.js'
 router.get('/buyukbas-kurban/:project_id', findAll)
 
 import { hisse_groups, findHisseGroup } from '../controllers/HisseGroupController.js'
-router.get('/hisse-group/all/:project_id', findHisseGroup)
+router.get('/hisse-group/all/:project_id', hisse_groups)
 router.get('/hisse-group/:id', findHisseGroup)
 
 
