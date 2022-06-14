@@ -1,12 +1,27 @@
 import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import LeftMenuContent from '../components/LeftMenuContent';
+import {useDispatch} from "react-redux"
+import {setMobileMenu} from  "../../../store/reducers/kurum.dashboard"
+import { useEffect } from 'react';
 
 function LeftMenu() {
 
     const mobileMenu = useSelector(state => state.kurum.mobileMenu)
     const active_project_id = useSelector(state => state.kurum.active_project_id)
+    
+    const dispatch = useDispatch()
+    const location = useLocation()
+    
 
+    useEffect(() => {
+      //const currentPath = location.pathname;
+      //const searchParams = new URLSearchParams(location.search);
+      console.log('aaa')
+      dispatch(setMobileMenu(false))
+    }, [location]);
+    
+    
     return (
       <>
         {/* Desktop */}

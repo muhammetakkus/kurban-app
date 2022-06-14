@@ -24,7 +24,7 @@ export default function KurbanInfo() {
 
   return (
     <div className="flex justify-center">
-      <div className={`${loading ? "hidden" : ""} lg:w-3/4 bg-white shadow overflow-hidden sm:rounded-lg`}>
+      <div className={`${loading ? "hidden" : ""} w-full mx-2 lg:w-3/4 bg-white shadow overflow-hidden sm:rounded-lg`}>
         <div className="px-4 py-5 sm:px-6 lg:w-3/4">
           <h3 className="text-lg leading-6 font-medium text-gray-900">Kurban Bilgileriniz</h3>
           <p className="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>
