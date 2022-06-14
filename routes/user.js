@@ -103,4 +103,14 @@ router.get('/message/all/:kurum_id', messages)
 import { findAll } from '../controllers/BuyukbasKurbanController.js'
 router.get('/buyukbas-kurban/:project_id', findAll)
 
+import { hisse_groups, findHisseGroup } from '../controllers/HisseGroupController.js'
+router.get('/hisse-group/all/:project_id', findHisseGroup)
+router.get('/hisse-group/:id', findHisseGroup)
+
+
+import { findByProjectID, findByKurbanID } from '../controllers/HisseController.js'
+router.get('/hisse/:kurban_id', findByKurbanID)
+router.get('/hisse/:project_id', findByProjectID)
+
+
 export default router

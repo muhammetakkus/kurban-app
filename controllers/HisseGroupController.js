@@ -6,7 +6,7 @@ const hisse_groups = asyncHandler( async (req,res) => {
     return res.status(200).json(hissegroups);
 })
 
-const find = async (req,res) => {
+const findHisseGroup = async (req,res) => {
    try {
         // routerda /kurum/:kurum_id/project/:id şeklinde id parametresi var
         const project = await HisseGroup.findById({ 
@@ -51,4 +51,4 @@ const _delete = async (req,res) =>{
 }
 
 
-export { hisse_groups, create, find, update, _delete}
+export { hisse_groups, create, findHisseGroup, update, _delete}
