@@ -45,7 +45,7 @@ app.use(
     cors({
       origin: process.env.NODE_ENV === "production" ? process.CLIENT_URL_PROD : process.env.CLIENT_URL_LOCAL,
       methods: "GET,POST,PUT,DELETE",
-      //credentials: true,
+      credentials: true,
     })
   );
   
@@ -72,16 +72,24 @@ import kurumMiddleware from "./middleware/kurum.js"
 app.use('/', userRoutes)
 
 if(process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, '/client/build'))) // client başındaki slash kaldır dene
+  app.use(express.static(path.join(__dirname, '/client/build'))) // client başındaki slash kaldır
   
-
+  app.get('*', (req, res) => { 
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html")) //resolve yerine jo,n dene
+  })
 }
 
 
+app.use('/kurum', kurumRoutes)
+// bu şekilde de okey (yani altındaki bütün routelara middleware geçmiş oldun prefix+route+middleware diyebiliriz) 
+app.use('/project', kurumMiddleware, projectRoutes) 
+app.use('/process', kurumMiddleware, processRoutes)
+app.use('/buyukbas-kurban', kurumMiddleware, buyukbasKurbanRoutes)
+app.use('/kucukbas-kurban', kurumMiddleware, kucukbasKurbanRoutes)
+app.use('/hisse-group', kurumMiddleware, hisseGroupRoutes)
+app.use('/hisse', kurumMiddleware, hisseRoutes)
+app.use('/message', kurumMiddleware, messageRoutes)
 
-app.get('*', (req, res) => { 
-  res.sendFile(path.resolve(__dirname, "client", "build", "index.html")) //resolve yerine jo,n dene
-})
 
 /* Error Handler */
 //app.use(errorHandler)

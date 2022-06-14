@@ -7,27 +7,10 @@ dotenv.config({ path: './config/config.env' })
 import userMiddleware from "../middleware/user.js"
 
 // Controllers
-//import { index } from '../controllers/HomeController.js'
+import { index } from '../controllers/HomeController.js'
+import { login, users, register, find, update, _delete } from '../controllers/UserController.js'
 
 import passport from 'passport'
-
-
-import { login, kurums, register } from '../controllers/KurumController.js'
-
-router.get('/kurum/', kurums)
-//router.get('/:id/projects', kurumMiddleware, kurums)
-router.post('/kurum/login', login)
-router.post('/kurum/register', register)
-
-
-
-
-import { projects } from '../controllers/ProjectController.js'
-
-/* Kurum login olduğunda projeler sayfasından gelecek request */
-router.get('/project/all/:kurum_id', projects) // /kurum/kurum_id/project
-
-
 /*
 
 router.get('/', (req, res) => {
@@ -38,7 +21,7 @@ router.get('/', (req, res) => {
 
 */
 
-//router.get('/', index)
+router.get('/', index)
 
 /* */
   router.get("/login/success", (req, res) => {
@@ -86,7 +69,14 @@ router.get(
 
 /**/
 
+router.post('/user/login', login)
+router.post('/user/register', register)
 
+// bunlara admin middleware geçilecek
+router.get('/users', userMiddleware, users)
+router.get('/user/:id', find)
+router.put('/user/:id', update)
+router.delete('/user/:id', _delete)
 
 
 
