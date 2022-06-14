@@ -8,7 +8,7 @@ import userMiddleware from "../middleware/user.js"
 
 // Controllers
 import { index } from '../controllers/HomeController.js'
-import { login, users, register, find, update, _delete } from '../controllers/UserController.js'
+import { login, users, register, find, update, _delete, getKurbanInfo } from '../controllers/UserController.js'
 
 import passport from 'passport'
 /*
@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 
 */
 
-router.get('/', index)
+//router.get('/', index)
 
 /* */
   router.get("/login/success", (req, res) => {
@@ -79,5 +79,10 @@ router.put('/user/:id', update)
 router.delete('/user/:id', _delete)
 
 
+router.get('/user/kurban-info/:kurban_code', getKurbanInfo)
+
+import { projects } from '../controllers/ProjectController.js'
+
+router.get('/project/all/:kurum_id', projects)
 
 export default router
