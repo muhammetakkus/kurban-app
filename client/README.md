@@ -132,3 +132,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
         ))}
       </Routes>
   
+## EXPRESS ##
+express tarafında get metodları app.use(/) altında çalışıyor diğer path ler altındaki file'larda çalışması You need to enable javasript hatası veriyor

@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from "react-redux"
 import axios from 'axios';
 import ProjectList from './ProjectList';
 import { useEffect } from 'react';
-import {setActiveProjectID} from "../../../store/reducers/kurum.dashboard"
-import Header from '../components/Header'
+import {setActiveProjectID} from "../../../../store/reducers/kurum.dashboard"
+import Header from '../../components/Header'
 
 function Project() {
     const dispatch = useDispatch()

@@ -1,15 +1,15 @@
-import Loading from '../../components/Loading';
-import KurbanService from "../../../services/BKurbanService";
-import HisseService from "../../../services/HisseService";
-import MessageService from "../../../services/MessageService";
+import Loading from '../../../components/Loading';
+import KurbanService from "../../../../services/BKurbanService";
+import HisseService from "../../../../services/HisseService";
+import MessageService from "../../../../services/MessageService";
 import { useEffect, useState } from "react";
 import {useSelector} from "react-redux"
-import {Icon} from "../../../utils/SVG";
+import {Icon} from "../../../../utils/SVG";
 import { NavLink } from 'react-router-dom';
-import Modal from '../../molecules/modal';
-import Side from '../../molecules/side';
-import Noty from '../../molecules/noty';
-import ProcessService from '../../../services/ProcessService';
+import Modal from '../../../molecules/modal';
+import Side from '../../../molecules/side';
+import Noty from '../../../molecules/noty';
+import ProcessService from '../../../../services/ProcessService';
 import { ChatIcon } from '@heroicons/react/outline'
 
 function BuyukBasKurbanList({ project_id }) {
@@ -171,6 +171,12 @@ function BuyukBasKurbanList({ project_id }) {
     }, 3500)
   }
 
+  const doluHisse = (e, hisse) => {
+    if(hisse > 6) {
+      e.preventDefault()
+      alert("Büyükbaş kurban kaydında hissedar adedi 7'i geçemez.")
+    }
+  }
     return (
             <div className="w-full overflow-hidden rounded-lg shadow-xs border-[1px] border-gray-400/20">
             <Noty isOpen={noty.isOpen} message={noty.message} title={noty.title} type={noty.type} />
@@ -228,10 +234,11 @@ function BuyukBasKurbanList({ project_id }) {
                               </p>
                             : ""
                           ))}
-
+              
                           <NavLink to={'/kurum/create-hisse'}
-                                   state={{ kurban_id: kurban._id, kurban_no: kurban.kurban_no }}
-                                   className={"inline-flex items-center px-1.5 lg:px-2.5 py-1  lg:py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"}
+                                   onClick={(e) => doluHisse(e, kurban.hisse.length)} 
+                                   state={{ kurban_id: kurban._id, kurban_no: kurban.kurban_no, hissedar_count: kurban.hisse.length }}
+                                   className={`inline-flex items-center px-1.5 lg:px-2.5 py-1  lg:py-1.5 border border-transparent text-xs font-medium rounded ${kurban.hisse.length > 6 ? 'text-red-500 bg-red-200 ring-0 focus:ring-0 hover:bg-red-200' : ''} text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
                                    >Hissedar ekle+</NavLink>
                         </td>
                         <td className="px-2 py-3 text-sm">

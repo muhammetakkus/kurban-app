@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import HisseGroupService from "../../../services/HisseGroupService";
+import HisseGroupService from "../../../../services/HisseGroupService";
 import {useSelector} from "react-redux"
-import Input from "../../components/Input"
-import Button from "../../components/Button"
-import Card from "../../components/Card"
-import Prev from '../../components/Prev'
-import Title from '../../components/Title'
+import Input from "../../../components/Input"
+import Button from "../../../components/Button"
+import Card from "../../../components/Card"
+import Prev from '../../../components/Prev'
+import Title from '../../../components/Title'
 
 function CreateProcess() {
     const kurum = useSelector((state) => state.auth.kurum)

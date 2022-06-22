@@ -17,7 +17,6 @@ function LeftMenu() {
     useEffect(() => {
       //const currentPath = location.pathname;
       //const searchParams = new URLSearchParams(location.search);
-      console.log('aaa')
       dispatch(setMobileMenu(false))
     }, [location]);
     

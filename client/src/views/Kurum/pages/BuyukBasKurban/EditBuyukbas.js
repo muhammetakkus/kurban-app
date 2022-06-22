@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'
 import {useSelector} from "react-redux"
 //import axios from 'axios';
-import BKurbanService from '../../../services/BKurbanService';
-import Input from "../../components/Input"
-import Button from "../../components/Button"
-import Card from "../../components/Card"
-import Prev from "../../components/Prev"
-import Title from "../../components/Title"
-import Textarea from "../../components/Textarea"
+import BKurbanService from '../../../../services/BKurbanService';
+import Input from "../../../components/Input"
+import Button from "../../../components/Button"
+import Card from "../../../components/Card"
+import Prev from "../../../components/Prev"
+import Title from "../../../components/Title"
+import Textarea from "../../../components/Textarea"
 
 function EditBuyukbas() {
 

@@ -1,13 +1,13 @@
-import MessageService from "../../../services/MessageService";
+import MessageService from "../../../../services/MessageService";
 import { useEffect, useState } from "react";
-import Card from "../../components/Card"
-import Prev from "../../components/Prev"
-import Title from "../../components/Title"
-import {Icon} from "../../../utils/SVG";
+import Card from "../../../components/Card"
+import Prev from "../../../components/Prev"
+import Title from "../../../components/Title"
+import {Icon} from "../../../../utils/SVG";
 import { NavLink } from "react-router-dom";
 import {useSelector} from "react-redux"
-import Loading from '../../components/Loading';
-import Modal from '../../molecules/modal';
+import Loading from '../../../components/Loading';
+import Modal from '../../../molecules/modal';
 
 function MessageTemplate() {
 

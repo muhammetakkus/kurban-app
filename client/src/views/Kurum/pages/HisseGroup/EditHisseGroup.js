@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'
-import HisseGroupService from "../../../services/HisseGroupService";
+import HisseGroupService from "../../../../services/HisseGroupService";
 import {useSelector} from "react-redux"
-import Input from "../../components/Input"
-import Button from "../../components/Button"
-import Card from "../../components/Card"
-import Prev from '../../components/Prev'
-import Title from '../../components/Title'
+import Input from "../../../components/Input"
+import Button from "../../../components/Button"
+import Card from "../../../components/Card"
+import Prev from '../../../components/Prev'
+import Title from '../../../components/Title'
 
 function EditHisseGroup() {
     const active_project_id = useSelector((state) => state.kurum.active_project_id)

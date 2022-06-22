@@ -83,7 +83,7 @@ function CreateHisse() {
             <Card>
               <div className="flex items-center">
                 <Prev />
-                <Title title={`${location.state.kurban_no}.Kurban - Hisse Kayıt (1/7)`} />
+                <Title title={`${location.state.kurban_no}.Kurban - Hisse Kayıt (${location.state.hissedar_count+1}/7)`} />
               </div>
               
 

@@ -61,8 +61,10 @@ const update = async (req,res) => {
 
 const create = async (req,res) => {
     const {kurum_id, project_id} = req.body
+    const buyukbas = await Buyukbas.find({ project_id: project_id })
+    const max_kurban_no = buyukbas.reduce( (a,b) => a.kurban_no> b.kurban_no ? a : b).kurban_no;
     const countKurban = await Buyukbas.countDocuments( { kurum_id: kurum_id }, { project_id: project_id }  )
-    const createKurban = await Buyukbas.create({ ...req.body, kurban_no: countKurban+1 })
+    const createKurban = await Buyukbas.create({ ...req.body, kurban_no: max_kurban_no+1 })
     return res.status(200).json(createKurban);
 }
 

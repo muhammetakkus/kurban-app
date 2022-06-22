@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import {useSelector} from "react-redux"
 import axios from 'axios';
-import BKurbanService from '../../../services/BKurbanService';
-import HisseGroupService from '../../../services/HisseGroupService';
-import Input from "../../components/Input"
-import Button from "../../components/Button"
-import Card from "../../components/Card"
-import Prev from "../../components/Prev"
-import Title from "../../components/Title"
-import Textarea from "../../components/Textarea"
-import {randomString} from '../../../utils/helper'
+import BKurbanService from '../../../../services/BKurbanService';
+import HisseGroupService from '../../../../services/HisseGroupService';
+import Input from "../../../components/Input"
+import Button from "../../../components/Button"
+import Card from "../../../components/Card"
+import Prev from "../../../components/Prev"
+import Title from "../../../components/Title"
+import Textarea from "../../../components/Textarea"
+import {randomString} from '../../../../utils/helper'
 
 function CreateBuyukbas() {
   

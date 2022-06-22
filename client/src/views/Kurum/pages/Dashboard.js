@@ -3,7 +3,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import {useDispatch} from "react-redux"
 //import DashboardWidget from "../components/DashboardWidget"
-import BuyukBasKurbanList from "./BuyukBasKurbanList"
+import BuyukBasKurbanList from "./BuyukBasKurban/BuyukBasKurbanList"
 import {setActiveProjectID} from  "../../../store/reducers/kurum.dashboard"
 import Button from "../../components/Button";
 /* Örnek Redux kullanımı - hem redux metodlarını çağırmak gerekiyor hem de reducer dosyanı */

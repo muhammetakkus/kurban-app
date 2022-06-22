@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
-import ProcessService from "../../../services/ProcessService";
-import MessageService from "../../../services/MessageService";
+import ProcessService from "../../../../services/ProcessService";
+import MessageService from "../../../../services/MessageService";
 import {useSelector} from "react-redux"
-import Input from "../../components/Input"
-import Button from "../../components/Button"
-import Card from "../../components/Card"
-import Prev from '../../components/Prev'
-import Title from '../../components/Title'
+import Input from "../../../components/Input"
+import Button from "../../../components/Button"
+import Card from "../../../components/Card"
+import Prev from '../../../components/Prev'
+import Title from '../../../components/Title'
 
 function CreateProcess() {
     const kurum = useSelector((state) => state.auth.kurum)

@@ -14,24 +14,25 @@ import KurbanSorgula from '../views/FrontSide/pages/KurbanSorgula'
 /* */
 import Kurum from '../views/Kurum/KurumLayout'
 import KurumDashboard from '../views/Kurum/pages/Dashboard'
-import KurumProject from '../views/Kurum/pages/Project'
-import CreateProject from '../views/Kurum/pages/CreateProject'
-import CreateBuyukbas from '../views/Kurum/pages/CreateBuyukbas'
-import EditBuyukbas from '../views/Kurum/pages/EditBuyukbas'
-import Hissedar from '../views/Kurum/pages/Hissedar'
-import MessageTemplate from '../views/Kurum/pages/MessageTemplate'
-import CreateMessageTemplate from '../views/Kurum/pages/CreateMessageTemplate'
-import EditMessageTemplate from '../views/Kurum/pages/EditMessageTemplate'
-import Process from '../views/Kurum/pages/Process'
-import CreateProcess from '../views/Kurum/pages/CreateProcess'
-import KucukbasKurban from '../views/Kurum/pages/KucukbasKurban'
-import HisseGroup from '../views/Kurum/pages/HisseGroup'
-import EditHisseGroup from '../views/Kurum/pages/EditHisseGroup'
-import CreateHisseGroup from '../views/Kurum/pages/CreateHisseGroup'
+import KurumProject from '../views/Kurum/pages/Project/Project'
+import CreateProject from '../views/Kurum/pages/Project/CreateProject'
+import CreateBuyukbas from '../views/Kurum/pages/BuyukBasKurban/CreateBuyukbas'
+import EditBuyukbas from '../views/Kurum/pages/BuyukBasKurban/EditBuyukbas'
 import CreateHisse from '../views/Kurum/pages/CreateHisse'
-import EditProcess from '../views/Kurum/pages/EditProcess'
+import Hissedar from '../views/Kurum/pages/Hissedar'
+import MessageTemplate from '../views/Kurum/pages/MessageTemplate/MessageTemplate'
+import CreateMessageTemplate from '../views/Kurum/pages/MessageTemplate/CreateMessageTemplate'
+import EditMessageTemplate from '../views/Kurum/pages/MessageTemplate/EditMessageTemplate'
+import Process from '../views/Kurum/pages/Process/Process'
+import CreateProcess from '../views/Kurum/pages/Process/CreateProcess'
+import EditProcess from '../views/Kurum/pages/Process/EditProcess'
+import KucukbasKurban from '../views/Kurum/pages/KucukbasKurban'
+import HisseGroup from '../views/Kurum/pages/HisseGroup/HisseGroup'
+import EditHisseGroup from '../views/Kurum/pages/HisseGroup/EditHisseGroup'
+import CreateHisseGroup from '../views/Kurum/pages/HisseGroup/CreateHisseGroup'
 
-import Ekran from '../views/Kurum/pages/Ekran'
+import Ekran from '../views/Kurum/pages/Ekran/Ekran'
+import EkranManagement from '../views/Kurum/pages/Ekran/EkranManagement'
 
 import KurumLogin from '../views/Kurum/pages/Login'
 import KurumRegister from '../views/Kurum/pages/Register'
@@ -202,7 +203,12 @@ const routers = (isUserAuth, isKurumAuth, isAdminAuth) => [
                 element: <KucukbasKurban />
             },
             {
-                path: 'ekran/:project_id',
+                path: 'ekran-management',
+                exact: false,
+                element: <EkranManagement />
+            },
+            {
+                path: 'ekran',
                 exact: false,
                 element: <Ekran />
             },

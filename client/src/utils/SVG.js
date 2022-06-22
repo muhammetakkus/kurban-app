@@ -92,8 +92,16 @@ const Edit = ({size, padding, className}) => {
 
 const Screen = ({size, padding, className}) => {
 	return (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <svg xmlns="http://www.w3.org/2000/svg" className={`h-${size} w-${size} p-${padding} ${className}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
   			<path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+		</svg>
+	)
+}
+
+const Management = ({size, padding, className}) => {
+	return (
+        <svg xmlns="http://www.w3.org/2000/svg" className={`h-${size} w-${size} p-${padding} ${className}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+		<path strokeLinecap="round" strokeLinejoin="round" d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
 		</svg>
 	)
 }
@@ -113,7 +121,8 @@ const Icon = ({name, size = 6, padding = 0, className=""}) => {
 		kucukbas: Kucukbas,
 		home: Home,
 		cross: Cross,
-		ekran: Screen
+		ekran: Screen,
+		management: Management
 	}
 
 	const Component = icons[name]

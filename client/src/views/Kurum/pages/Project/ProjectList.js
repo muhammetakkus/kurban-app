@@ -1,9 +1,9 @@
-import Loading from '../../components/Loading';
+import Loading from '../../../components/Loading';
 import { NavLink } from 'react-router-dom'
-import ProjectService from "../../../services/ProjectService";
+import ProjectService from "../../../../services/ProjectService";
 import { useEffect, useState } from "react";
 import {useSelector} from "react-redux"
-import {Icon} from "../../../utils/SVG";
+import {Icon} from "../../../../utils/SVG";
  
 function ProjectList() {
   const kurum = useSelector(state => state.auth.kurum)

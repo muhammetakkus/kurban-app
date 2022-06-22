@@ -1,9 +1,9 @@
-import Loading from '../../components/Loading';
-import ProcessService from "../../../services/ProcessService";
+import Loading from '../../../components/Loading';
+import ProcessService from "../../../../services/ProcessService";
 import { useEffect, useState } from "react";
 import {useSelector} from "react-redux"
-import {Icon} from "../../../utils/SVG";
-import Modal from '../../molecules/modal';
+import {Icon} from "../../../../utils/SVG";
+import Modal from '../../../molecules/modal';
 import {NavLink} from 'react-router-dom'
 
  
