@@ -67,7 +67,9 @@ import kurumMiddleware from "./middleware/kurum.js"
 
 
 /* Routers - şöyle bir şey var buradan :parametre router'a geçilirse bu seviyeden yakalanıyor örneğin buradan :id geçiğ projectRoutes altında çağrılan controllerdan yakalanamıyor */ 
-// For Heroku Deployment - this should be top of routes?
+
+
+// get requestlerde sıkıntı çıktığı için get requestler userRoutes içine import edildi 
 
 app.use('/', userRoutes)
 if(process.env.NODE_ENV === "production") {

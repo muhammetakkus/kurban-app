@@ -1,6 +1,6 @@
 import Loading from '../../../components/Loading';
 import ProcessService from "../../../../services/ProcessService";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {useSelector} from "react-redux"
 import {Icon} from "../../../../utils/SVG";
 import Modal from '../../../molecules/modal';
@@ -8,6 +8,7 @@ import {NavLink} from 'react-router-dom'
 
  
 function ProcessList() {
+ 
   const kurum = useSelector(state => state.auth.kurum)
 
   const [processes, setProcess] = useState([]);
@@ -17,15 +18,17 @@ function ProcessList() {
   const [deleteObj, setDeleteObj] = useState({});
   const [isModal, setModal] = useState({isOpen: false, title: '', message: ''});
 
-  useEffect(() => {
-    const getProcess = async () => {
-      console.log(kurum)
-      const request = await ProcessService.getAll({kurum_id: kurum._id});
-      if(request.status === 200) {
-        setLoading(false)
-        setProcess(request.data)
-      }
+  const getProcess = async () => {
+    console.log(kurum)
+    const request = await ProcessService.getAll({kurum_id: kurum._id});
+    if(request.status === 200) {
+      setLoading(false)
+      setProcess(request.data)
     }
+  }
+
+  useEffect(() => {
+    
     getProcess()
     
   }, [])
@@ -50,23 +53,49 @@ function ProcessList() {
       }
     }
   }
+
+  const changeOrder = async (process, status) => {
+    console.log(processes)
+    const data = {
+      _id: process._id,
+      kurum_id: kurum._id,
+      process_order: process.process_order,
+      status: status,
+      countProcess: processes.length
+    }
+    const response = await ProcessService.update(data);
+
+    if(response.status === 200 && !response.data.error) {
+      // geçici çözüm yeniden get request
+      getProcess()
+      if(status === "up") {
+
+      }
+
+      if(status === "down") {
+
+      }
+    } else if(response.data.error) {
+      console.log(response.data.error)
+    }
+  }
   
     return (
       <>
             <div className="w-full overflow-hidden rounded-lg shadow-xs border-[1px] border-gray-400/20">
-              <div className={`${loading || processes.length === 0 ? "hidden" : ""} w-full overflow-x-auto`}>
+              <div className={`${loading || processes?.length === 0 ? "hidden" : ""} w-full overflow-x-auto`}>
                 <table className="w-full whitespace-no-wrap  ">
                   <thead>
                     <tr className="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" lang="tr" >
                       <th className="px-4 py-3">#</th>
                       <th className="px-4 py-3">İşlem Başlığı</th>
                       <th className="px-4 py-3">Mesaj Şablonu</th>
-                      {/*<th className="px-4 py-3">Sıra</th>*/}
+                      <th className="px-4 py-3">İşlem Sırası</th>
                       <th className="px-4 py-3 text-center" colSpan={2}>İşlemler</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                  {processes && processes.map((process, index) =>  (
+                  {processes && processes?.map((process, index) =>  (
                       <tr className="text-gray-700 dark:text-gray-400" key={process._id}>
                         <td className="px-4 py-1">
                           <div className="flex items-center text-sm">
@@ -87,11 +116,20 @@ function ProcessList() {
                         <td className="px-4 py-1 text-l">
                           <span>{process.message_template ? process.message_template : '-'}</span>
                         </td>
-                        {/*<td className="px-4 py-1 text-sm">
-                          <span className="px-5 py-2 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
-                            {process.process_order}
-                          </span>
-                        </td>*/}
+                        <td className="px-4 inline-flex flex-col py-1 text-sm">
+                          
+                            <p onClick={() => changeOrder(process, 'up')} className='cursor-pointer'>
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                              </svg>
+                            </p>
+                            <p onClick={() => changeOrder(process, 'down')} className='cursor-pointer'>
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </p>
+                        
+                        </td>
                         <td className="px-4 py-1 text-sm">
                           <div className='flex items-center justify-center'>
                             <NavLink to={"/kurum/edit-process"} state={process}>
@@ -126,7 +164,7 @@ function ProcessList() {
               </div>
               
               
-              <div className={` ${processes.length === 0 && !loading ? "" : "hidden"} py-10`}>
+              <div className={` ${processes?.length === 0 && !loading ? "" : "hidden"} py-10`}>
                 <span className='text-gray-400 block text-center'>Henüz bir işlem adımı oluşturmadınız..</span>
               </div>
             </div>

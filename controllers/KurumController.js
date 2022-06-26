@@ -2,6 +2,7 @@ import Kurum from '../models/Kurum.js'
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
+import Process from '../models/Process.js';
 
 // user objesinden password veya istenilen ögeler çıkarılmış şekilde return et
 const kurumData = (kurum) => {
@@ -120,6 +121,14 @@ const register = async (req,res) => {
             req.body.password =  await bcrypt.hash(req.body.password, salt)
         
             const kurum = await Kurum.create(req.body);
+            
+            // Her kurum için default KAYIT process'i oluştur
+            await Process.create({
+                kurum_id: kurum._id,
+                process_title: "KAYIT",
+                process_order: 0
+            });
+
             return res.status(200).json({
                 _id: kurum._id,
                 email: kurum.email,

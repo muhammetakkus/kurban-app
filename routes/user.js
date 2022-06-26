@@ -7,7 +7,7 @@ dotenv.config({ path: './config/config.env' })
 import userMiddleware from "../middleware/user.js"
 
 // Controllers
-import { index } from '../controllers/HomeController.js'
+//import { index } from '../controllers/HomeController.js'
 import { login, users, register, find, update, _delete, getKurbanInfo } from '../controllers/UserController.js'
 
 import passport from 'passport'
@@ -112,5 +112,7 @@ import { findByProjectID, findByKurbanID } from '../controllers/HisseController.
 router.get('/hisse/:kurban_id', findByKurbanID)
 router.get('/hisse/:project_id', findByProjectID)
 
+import ekran from "./ekran.js"
+router.use('/ekran', ekran)
 
 export default router

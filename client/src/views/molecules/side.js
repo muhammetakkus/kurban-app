@@ -30,7 +30,6 @@ export default function Side(props) {
 
   useEffect(() => {
     setOpen(data.isOpen)
-    console.log(data)
   }, [data])
   
   const [open, setOpen] = useState(data.isOpen)
@@ -97,8 +96,8 @@ export default function Side(props) {
                               className="w-full group -ml-1 flex items-center rounded-md bg-white p-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             >
                               <span className={`${item._id === data.state_loading ? "animate-bounce !text-green-400" : ""} flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-400`}>
-                                <PlusSmIcon className={`h-5 w-5  ${kurbanProcess === item.process_title ? "hidden" : ""}`} aria-hidden="true" />
-                                <BadgeCheckIcon className={`h-5 w-5 text-green-500 ${item.message_title ? 'hidden' : ''} ${kurbanProcess === item.process_title ? "" : "hidden"}`} aria-hidden="true" />
+                                <PlusSmIcon className={`h-5 w-5  ${kurbanProcess.process_title === item.process_title ? "hidden" : ""}`} aria-hidden="true" />
+                                <BadgeCheckIcon className={`h-5 w-5 text-green-500 ${item.message_title ? 'hidden' : ''} ${kurbanProcess.process_title === item.process_title ? "" : "hidden"}`} aria-hidden="true" />
                                 <ChatIcon className={`${item.message_title ? '' : 'hidden'} w-5 h-5`} />
                               </span>
                               <span className="ml-4 text-sm font-medium text-indigo-600 group-hover:text-indigo-500">

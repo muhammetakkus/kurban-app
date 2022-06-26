@@ -91,11 +91,14 @@ function BuyukBasKurbanList({ project_id }) {
     result.kurban_id = kurban._id
     setSide({isOpen: false, title: side.title})
     
-    if(result.process_title && result.process_title !== kurban.kurban_process) {
+    if(result && result._id !== kurban.process._id) {
       setProcessLoader(kurban._id)
-      const change_process = await KurbanService.update({_id: kurban._id, kurban_process: result})
-      console.log(change_process)
-      setKurban(kurbans.filter(item => item._id === kurban._id ? kurban.kurban_process = result.process_title : item))
+      const change_process = await KurbanService.update({_id: kurban._id, process: result._id})
+      
+      // artık kurban process_id tutup populate ederek aldığı için update ederken process_id kaydediliyor
+      // anlık güncelleme için değiştirilen _id process içinde bulunup yeni değer yazdırılmalı
+      console.log(process)
+      setKurban(kurbans.filter(item => item._id === kurban._id ? kurban.process = result : item))
       setProcessLoader(false)
       if(change_process.data.is_message_send) {
         setNoty({isOpen: true, message: "Kurban durumu değiştirildi ve operasyon mesajı hissedarlara gönderildi."})
@@ -180,7 +183,7 @@ function BuyukBasKurbanList({ project_id }) {
     return (
             <div className="w-full overflow-hidden rounded-lg shadow-xs border-[1px] border-gray-400/20">
             <Noty isOpen={noty.isOpen} message={noty.message} title={noty.title} type={noty.type} />
-            <Side result={sideResult} data={side} kurbanProcess={kurban.kurban_process}/>
+            <Side result={sideResult} data={side} kurbanProcess={kurban.process}/>
             <Side result={sideResultForSMS} data={sideForSMS}/>
             <Modal result={deleteKurban} data={isDeleteModal} />
 
@@ -243,7 +246,7 @@ function BuyukBasKurbanList({ project_id }) {
                         </td>
                         <td className="px-2 py-3 text-sm">
                           <span onClick={() => {openProcessList(kurban)}} className="cursor-pointer px-5 py-2 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
-                            {processLoader === kurban._id ?  "..." : kurban.kurban_process}
+                            {processLoader === kurban._id ?  "..." : kurban.process.process_title}
                           </span>
                         </td>
                         <td className="px-4 py-3 text-sm">

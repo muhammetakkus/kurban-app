@@ -33,6 +33,8 @@ import CreateHisseGroup from '../views/Kurum/pages/HisseGroup/CreateHisseGroup'
 
 import Ekran from '../views/Kurum/pages/Ekran/Ekran'
 import EkranManagement from '../views/Kurum/pages/Ekran/EkranManagement'
+import CreateEkranDynamic from '../views/Kurum/pages/Ekran/CreateEkranDynamic'
+import CreateEkranStatic from '../views/Kurum/pages/Ekran/CreateEkranStatic'
 
 import KurumLogin from '../views/Kurum/pages/Login'
 import KurumRegister from '../views/Kurum/pages/Register'
@@ -211,6 +213,16 @@ const routers = (isUserAuth, isKurumAuth, isAdminAuth) => [
                 path: 'ekran',
                 exact: false,
                 element: <Ekran />
+            },
+            {
+                path: 'create-ekran-static',
+                exact: false,
+                element: <CreateEkranStatic />
+            },
+            {
+                path: 'create-ekran-dynamic',
+                exact: false,
+                element: <CreateEkranDynamic />
             },
             {
                 path: '*',

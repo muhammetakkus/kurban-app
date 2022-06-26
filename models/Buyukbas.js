@@ -4,10 +4,6 @@ const BuyukbasSchema = new mongoose.Schema({
     kurum_id: mongoose.Types.ObjectId,
     project_id: mongoose.Types.ObjectId,
     kurban_no: Number,
-    kurban_process: {
-        type: String,
-        default: 'KAYIT'
-    },
     kurban_kupe_no: String,
     kurban_hisse_group: String,
     net_hisse_fiyat: Number,
@@ -15,6 +11,10 @@ const BuyukbasSchema = new mongoose.Schema({
     kurban_image: String,
     kurban_weight: String,
     kurban_note: String,
+    process: {
+        type: mongoose.Types.ObjectId,
+        ref: "Process"
+    },
     hisse: [{
         type: mongoose.Types.ObjectId,
         ref: "Hisse"

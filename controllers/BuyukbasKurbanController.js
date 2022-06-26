@@ -2,28 +2,41 @@ import Buyukbas from '../models/Buyukbas.js'
 import MessageTemplate from '../models/MessageTemplate.js'
 import asyncHandler from 'express-async-handler'
 import fetch from 'cross-fetch'
+import Process from '../models/Process.js';
 
 const find = asyncHandler( async (req,res) => {
     const buyukbas = await Buyukbas.find({_id: req.params.id})
     return res.status(200).json(buyukbas);
 })
 
-const findAll = asyncHandler( async (req,res) => {
-    const buyukbas = await Buyukbas.find({project_id: req.params.project_id}).populate("hisse").sort('-createdAt')
-    return res.status(200).json(buyukbas);
+const findForEkran = asyncHandler( async (req,res) => {
+    const { self } = req.body
+    if(self) {
+        const buyukbas = await Buyukbas.find({$and: [{process_id: req.params.process_id}, {project_id: req.params.project_id}]}).populate("hisse").populate("process").sort('createdAt')
+        return res.status(200).json(buyukbas);
+    } else {
+        const process = await Process.findById(req.params.process_id)
+        const processMain = await Process.find({ $and: [ { process_order: (process.process_order-1) }, { project_id: req.params.project_id } ] })
+        const buyukbas = await Buyukbas.find({$and: [{process: processMain[0]._id}, {project_id: req.params.project_id}]}).populate("hisse").populate("process").sort('createdAt')
+        return res.status(200).json(buyukbas);
+    }
 })
 
+const findAll = asyncHandler( async (req,res) => {
+    const buyukbas = await Buyukbas.find({project_id: req.params.project_id}).populate("hisse").populate("process").sort('createdAt')
+    return res.status(200).json(buyukbas);
+})
 
 const update = async (req,res) => {
     // net hisse fiyat number gelmeli yoksa hata veriyor
     const id = { _id: req.params.id }
-    const { kurban_id, message_template, process_title } = req.body.kurban_process
+    const { _id, message_template, process } = req.body
 
     /* Process/İşlem adımına bağlı mesaj gönderme */
     let is_message_send = 0
     if(message_template) {
 
-        const buyukbas = await Buyukbas.find({_id: kurban_id}).populate("hisse")
+        const buyukbas = await Buyukbas.find({_id: _id}).populate("hisse")
         const message = await MessageTemplate.find({message_template: message_template})   
 
         if(buyukbas[0].hisse.length > 0) {
@@ -55,16 +68,17 @@ const update = async (req,res) => {
         }
     }
     
-    let doc = await Buyukbas.findOneAndUpdate(id, {kurban_process: process_title});
+    let doc = await Buyukbas.findOneAndUpdate(id, {process: process});
     return res.status(200).json({...doc._doc, is_message_send: is_message_send});
 }
 
 const create = async (req,res) => {
     const {kurum_id, project_id} = req.body
     const buyukbas = await Buyukbas.find({ project_id: project_id })
-    const max_kurban_no = buyukbas.reduce( (a,b) => a.kurban_no> b.kurban_no ? a : b).kurban_no;
+    const max_kurban_no = buyukbas.length > 0 ? buyukbas.reduce( (a,b) => a.kurban_no> b.kurban_no ? a : b).kurban_no : 0
     const countKurban = await Buyukbas.countDocuments( { kurum_id: kurum_id }, { project_id: project_id }  )
-    const createKurban = await Buyukbas.create({ ...req.body, kurban_no: max_kurban_no+1 })
+    const process = await Process.find({ $and: [{ kurum_id: kurum_id }, {process_title: "KAYIT"}] });
+    const createKurban = await Buyukbas.create({ ...req.body, process: process[0]._id, kurban_no: max_kurban_no+1 })
     return res.status(200).json(createKurban);
 }
 
@@ -74,4 +88,4 @@ const _delete = async (req,res) =>{
 }
 
 
-export { create, find, findAll, update, _delete}
+export { create, find, findAll, findForEkran, update, _delete}

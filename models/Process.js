@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 const ProcessSchema = new mongoose.Schema({
     kurum_id: mongoose.Types.ObjectId,
     process_title: String,
-    process_order: Number, // kstu daki slider_order mantığında işlem adımlarının sırası değiştirilebilecek
+    process_order: Number,
     message_template: {
         type: String,
         default: null
