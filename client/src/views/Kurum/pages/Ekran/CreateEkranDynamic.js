@@ -22,6 +22,7 @@ function CreateBuyukbas() {
   const [loading, setLoading] = useState(false);
   const [hisseGroupLoader, setProcessLoader] = useState("İşlem adımları yükleniyor..");
   const [selected, setSelected] = useState("")
+  const [selfStatus, setselfStatus] = useState(false)
   const [processes, setProcesses] = useState([]);
   const [errors, setError] = useState([]);
   const [formData, setFormData] = useState({
@@ -35,6 +36,11 @@ function CreateBuyukbas() {
         ...prevState,
         [e.target.name]: e.target.value,
       }))
+    }
+
+    const toggleCheckBox = (status) => {
+      if(selfStatus) setselfStatus(false)
+      if(!selfStatus) setselfStatus(true)
     }
 
     const handleDropDown = (e) => {
@@ -64,7 +70,7 @@ function CreateBuyukbas() {
         type: "dynamic",
         screen_title: screen_title,
         process: selected,
-        self: false,
+        self: selfStatus,
       }
       const response = await EkranService.create(data);
       
@@ -117,6 +123,12 @@ function CreateBuyukbas() {
             </label>
 
               <Input value={screen_title} title="Ekran Başlığı" name="screen_title" onChange={onChange} errors={errors} />
+
+              <label className="block text-sm mb-4">
+                <span className={`text-gray-700 dark:text-gray-400`}>İşlemin kendisi - self:</span>
+                <input type="checkbox" title="" value={selfStatus} onChange={toggleCheckBox} className="block mt-2 ml-1" />
+              </label>
+
               <Button className={"mt-2 w-full"} disabled={loading}>
                 {loading ? 'Oluşturuluyor' : 'Oluştur'}
               </Button>

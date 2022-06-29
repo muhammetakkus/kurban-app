@@ -13,11 +13,10 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: './config/config.env' })
 const PORT = process.env.PORT || 5001
 
-console.log(process.env.PORT)
-
 /* Database */
 import connectDB from './config/db.js'
 connectDB()
+
 
 /* Routers */
 import userRoutes from './routes/user.js'
@@ -30,7 +29,31 @@ import hisseGroupRoutes from './routes/hisse_group.js'
 import hisseRoutes from './routes/hisse.js'
 import messageRoutes from './routes/message.js'
 
+
+
+//
 const app = express()
+
+// socket.io
+/*const require = createRequire(import.meta.url)
+const http = require('http').createServer(app)
+const io = require('socket.io')(http) */
+
+import { createServer } from "http";
+import { Server } from "socket.io";
+
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  // rejectUnauthorized: false // WARN: please do not do this in production
+  cors: {
+    origin: process.env.NODE_ENV === "production" ? process.CLIENT_URL_PROD : process.env.CLIENT_URL_LOCAL,
+  }
+});
+
+// Express 4, in your index.js file set like this then in your router or controller, you can use 
+app.set('socketio', io);
+
+
 
 /* for properly send request */
 app.use(bodyParser.json({limit: '30mb', 'extended': true}))
@@ -91,8 +114,27 @@ app.use('/message', kurumMiddleware, messageRoutes)
 
 
 
+/*io.on("connection", socket => {
+  
+  console.log("User connection", socket.client.id);
+
+  socket.on("disconnect", () => {
+       console.log("User disconnect");
+  });
+  
+  socket.on("sendMessageToServer", (data) => {
+    console.log("sendMessageToServer tetiklendi.");
+    console.log((data))
+  });
+
+  socket.emit("sendMessageToClient");
+
+  socket.on("disconnect", () => { });
+  //socket.removeAllListeners();
+});*/
+
 
 /* Error Handler */
 //app.use(errorHandler)
 
-app.listen(PORT, console.log(`Express server running in port ${PORT}`))
+httpServer.listen(PORT, console.log(`Express server running in port ${PORT}`))

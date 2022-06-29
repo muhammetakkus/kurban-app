@@ -17,7 +17,7 @@ class BKurbanService {
     }
     
     getForEkran(payload) {
-        return axios.get(`/buyukbas-kurban/process/${payload.project_id}/${payload.process_id}`);
+        return axios.get(`/buyukbas-kurban/process/${payload.kurum_id}/${payload.project_id}/${payload.process_id}/${payload.self}`);
     }
     
     /* */

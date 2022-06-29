@@ -9,17 +9,17 @@ import DynamicScreen from "./DynamicScreen"
 import Slider from 'react-carousel-responsive';
 import 'react-carousel-responsive/dist/styles.css';
 import "./ekran.css"
-import ProcessService from "../../../../services/ProcessService";
+
 function Ekran() {
 
 
     const kurum = useSelector((state) => state.auth.kurum)
     const [ekran, setEkran] = useState([]);
-    const [process, setProcess] = useState([]);
+
 
     useEffect(() => {
       getEkran()
-      getProcess()
+
     }, [])
     
     const getEkran = async () => {
@@ -28,12 +28,7 @@ function Ekran() {
       if(request.status === 200) setEkran(request.data)
     }
     
-    const getProcess = async () => {
-      const request = await ProcessService.getAll({kurum_id: kurum._id});
-      //console.log(request.data)
-      if(request.status === 200) setProcess(request.data)
-    }
-    
+
     return (
       <Card>
           <div className="flex items-center justify-start mb-2">
@@ -49,7 +44,7 @@ function Ekran() {
             pauseOnHover={false}
            >
             {ekran.map((screen) => (
-              <div className="slide border border-pink-500 overflow-hidden" key={screen._id}>
+              <div className="slide p-9 overflow-hidden" key={screen._id}>
                 {
                   screen.type === "dynamic" 
                   ? <DynamicScreen screen={screen} />
@@ -65,4 +60,3 @@ function Ekran() {
   }
   
   export default Ekran;
-  

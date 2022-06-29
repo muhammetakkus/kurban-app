@@ -134,3 +134,16 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
   
 ## EXPRESS ##
 express tarafında get metodları app.use(/) altında çalışıyor diğer path ler altındaki file'larda çalışması You need to enable javasript hatası veriyor
+
+# EKRAN - SOCKET.IO #
+
+- server tarafında index.js de socket başlatıldı ve diğer dosyalarda kullanılabilmesi için io.set metodu kullanıldı
+- 
+-
+- EKRAN Yönetimi sayfasından statik veya dinamik ekran oluşturulabilir
+- statik ekran sadece resim upload
+- dinamik ekran bir process işlemine bağlanan ekrandır. self checkbox'ı ise o işlemin kendisi seçili iken mi gösterilecek PARÇALAMADA - TESLİM EDİLDİ gibi
+- yoksa KESİLDİ gibi işlem yapılmadan önce sıradaki şeklinde mi gösterilecek bunu belirler
+- BuyukbasKurbanList componentinde bir işlem değiştiğinde BuyukbasKurbanController.update metodunda o process_id ile bir socket açılır io.emiit (o işlemin id si ile bir EKRAN kaydı var mı kontrol etmeden) 
+- DynamicEkran componenti de daima var olan dinamik ekranların bağlı olduğu processlerin id leri ile bir socket varsa orayı dinamik olarak dinlemekte - socket.on(props.screen.process._id)
+- böylece bir işlem değişince DynamicScreen componenti tetiklenir ve get metodunu çağrır

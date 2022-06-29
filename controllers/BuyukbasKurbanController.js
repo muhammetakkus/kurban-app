@@ -10,14 +10,20 @@ const find = asyncHandler( async (req,res) => {
 })
 
 const findForEkran = asyncHandler( async (req,res) => {
-    const { self } = req.body
-    if(self) {
-        const buyukbas = await Buyukbas.find({$and: [{process_id: req.params.process_id}, {project_id: req.params.project_id}]}).populate("hisse").populate("process").sort('createdAt')
+    // req.params.kurum_id
+    // req.params.project_id
+    // req.params.project_id
+    // req.params.self
+
+    if(req.params.self === "true") {
+        const buyukbas = await Buyukbas.find({$and: [{process_id: req.params.process_id}, {project_id: req.params.project_id}]}).populate("hisse").populate("process").sort('createdAt').limit(1)
+        console.log("self true runned")
         return res.status(200).json(buyukbas);
     } else {
         const process = await Process.findById(req.params.process_id)
-        const processMain = await Process.find({ $and: [ { process_order: (process.process_order-1) }, { project_id: req.params.project_id } ] })
-        const buyukbas = await Buyukbas.find({$and: [{process: processMain[0]._id}, {project_id: req.params.project_id}]}).populate("hisse").populate("process").sort('createdAt')
+        const processMain = await Process.find({ $and: [ { process_order: (process.process_order-1) }, { kurum_id: req.params.kurum_id } ] })
+        if(processMain.length === 0) return res.status(200).json({error: "İLGİLİ PROCESS BULUNAMADI - BuyukbasKurbanController"});
+        const buyukbas = await Buyukbas.find({$and: [{process: processMain[0]._id}, {project_id: req.params.project_id}]}).populate("hisse").populate("process").sort('createdAt').limit(1)
         return res.status(200).json(buyukbas);
     }
 })
@@ -68,7 +74,14 @@ const update = async (req,res) => {
         }
     }
     
-    let doc = await Buyukbas.findOneAndUpdate(id, {process: process});
+    
+    let doc = await Buyukbas.findOneAndUpdate(id, {process: process}, {new: true});
+
+    var io = req.app.get('socketio');
+    // değişiklik yapılan process id sinde bir socket oluştur
+    // console.log(doc.process)
+    io.emit(doc.process)
+
     return res.status(200).json({...doc._doc, is_message_send: is_message_send});
 }
 
