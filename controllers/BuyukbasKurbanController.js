@@ -4,7 +4,7 @@ import asyncHandler from 'express-async-handler'
 import fetch from 'cross-fetch'
 import Process from '../models/Process.js';
 
-const find = asyncHandler( async (req,res) => {
+const findSingleBuyukbas = asyncHandler( async (req,res) => {
     const buyukbas = await Buyukbas.find({_id: req.params.id})
     return res.status(200).json(buyukbas);
 })
@@ -28,7 +28,7 @@ const findForEkran = asyncHandler( async (req,res) => {
     }
 })
 
-const findAll = asyncHandler( async (req,res) => {
+const findAllBuyukbas = asyncHandler( async (req,res) => {
     const buyukbas = await Buyukbas.find({project_id: req.params.project_id}).populate("hisse").populate("process").sort('createdAt')
     return res.status(200).json(buyukbas);
 })
@@ -101,4 +101,4 @@ const _delete = async (req,res) =>{
 }
 
 
-export { create, find, findAll, findForEkran, update, _delete}
+export { create, findSingleBuyukbas, findAllBuyukbas, findForEkran, update, _delete}
