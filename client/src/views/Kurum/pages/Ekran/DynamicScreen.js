@@ -53,20 +53,7 @@ export default function DynamicScreen (props) {
             
             <div className="flex mt-5">
            
-                <div className="font-bold border-r-2 border-r-gray-400 px-8">
-                    <h4 className="text-4xl">KURBAN NO:</h4>
-                    <h4 className="text-[28rem] leading-none">{kurban[0]?.kurban_no}</h4>
-                </div>
-        
-                <div className="px-6 pt-4 text-4xl">
-                    <ul>
-                        {kurban[0]?.hisse.map(value => (
-                            <li key={value._id} className="py-3">
-                                {`${value.hissedar_full_name} - ${value.hissedar_gsm}`}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                
        
             </div>
             
