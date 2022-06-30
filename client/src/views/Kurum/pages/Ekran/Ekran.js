@@ -38,13 +38,14 @@ function Ekran() {
 
           <div id="dynamic-kurban-track-screen overflow-hidden">
           <Slider
-            autoplay={ekran.length > 0 ? true : false} // çalışmıyor
+            //autoplay={ekran.length > 0 ? true : false} // çalışmıyor
+            autoplay={true} // çalışmıyor
             speed={300}
-            autoplaySpeed={3000}
+            autoplaySpeed={10000}
             pauseOnHover={false}
            >
             {ekran.map((screen) => (
-              <div className="slide p-9 overflow-hidden" key={screen._id}>
+              <div className="slide py-9" key={screen._id}>
                 {
                   screen.type === "dynamic" 
                   ? <DynamicScreen screen={screen} />

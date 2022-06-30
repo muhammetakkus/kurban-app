@@ -147,3 +147,13 @@ express tarafında get metodları app.use(/) altında çalışıyor diğer path 
 - BuyukbasKurbanList componentinde bir işlem değiştiğinde BuyukbasKurbanController.update metodunda o process_id ile bir socket açılır io.emiit (o işlemin id si ile bir EKRAN kaydı var mı kontrol etmeden) 
 - DynamicEkran componenti de daima var olan dinamik ekranların bağlı olduğu processlerin id leri ile bir socket varsa orayı dinamik olarak dinlemekte - socket.on(props.screen.process._id)
 - böylece bir işlem değişince DynamicScreen componenti tetiklenir ve get metodunu çağrır
+
+
+
+
+
+
+
+#
+
+- get route ları user.js e koymayı unutma Javascript not enable hatasından kaçınmak için
