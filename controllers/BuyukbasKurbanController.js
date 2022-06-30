@@ -91,7 +91,7 @@ const create = async (req,res) => {
     const max_kurban_no = buyukbas.length > 0 ? buyukbas.reduce( (a,b) => a.kurban_no> b.kurban_no ? a : b).kurban_no : 0
     const countKurban = await Buyukbas.countDocuments( { kurum_id: kurum_id }, { project_id: project_id }  )
     let process = await Process.find({ $and: [{ kurum_id: kurum_id }, {process_title: "KAYIT"}] });
-    if(process.length === 0) process = await Process.create({ kurum_id: kurum._id, process_title: "KAYIT", process_order: 0 });
+    if(process.length === 0) process = await Process.create({ kurum_id: kurum_id , process_title: "KAYIT", process_order: 0 });
     const createKurban = await Buyukbas.create({ ...req.body, process: process[0]._id, kurban_no: max_kurban_no+1 })
     return res.status(200).json(createKurban);
 }
