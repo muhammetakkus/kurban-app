@@ -90,7 +90,7 @@ const create = async (req,res) => {
     const buyukbas = await Buyukbas.find({ project_id: project_id })
     const max_kurban_no = buyukbas.length > 0 ? buyukbas.reduce( (a,b) => a.kurban_no> b.kurban_no ? a : b).kurban_no : 0
     const countKurban = await Buyukbas.countDocuments( { kurum_id: kurum_id }, { project_id: project_id }  )
-    let process = await Process.find({ $and: [{ kurum_id: kurum_id }, {process_title: "KAYIT"}] });
+    let process = await Process.find({ $and: [{ kurum_id: kurum_id }, {process_order: 0}] });
     // process find ile çekildipğinde array içinde dönüyor create yapınca tek obj olarak dönüyor
     if(process.length === 0) {
         process = await Process.create({ kurum_id: kurum_id , process_title: "KAYIT", process_order: 0 })

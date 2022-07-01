@@ -63,9 +63,13 @@ const create = async (req,res) => {
 }
 
 const _delete = async (req,res) =>{
-    const result = await Process.findByIdAndDelete({ _id: req.params.id });
-    res.status(200).json(result);
+    const result = await Process.findById(req.params.id);
+    if(result.process_title === "KAYIT") {
+        res.status(200).json({error: "KAYIT işlem adımı silinemez.."})
+    } else {
+        const d = await Process.findByIdAndDelete(result._id)
+        res.status(200).json(d);
+    }
 }
-
 
 export { processes, create, find, update, _delete }
