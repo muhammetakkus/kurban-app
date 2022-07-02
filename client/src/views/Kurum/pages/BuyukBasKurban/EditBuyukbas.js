@@ -13,7 +13,6 @@ import Textarea from "../../../components/Textarea"
 function EditBuyukbas() {
 
     let location = useLocation();
-    
     //const isKurumAuth = useSelector((state) => state.auth.isKurum)
     //const kurum = useSelector((state) => state.auth.kurum)
     const active_project_id = useSelector((state) => state.kurum.active_project_id)
@@ -121,9 +120,13 @@ function EditBuyukbas() {
                 />
             </label>
 
-            <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
-              <source src={`${process.env.REACT_APP_ENV === "dev" ? "http://localhost:3000/" : "https://kurbanapp.herokuapp.com/" }${location.state.video_path}`} type="video/mp4" />
-            </video>
+              <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
+                <source src={`${process.env.REACT_APP_ENV === "dev" ? "http://localhost:3000/" : "https://kurbanapp.herokuapp.com/" }${location.state.video_path}`} type="video/mp4" />
+              </video>
+              
+              <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
+                <source src={"https://kurbanapp.herokuapp.com/" + location.state.video_path} type="video/mp4" />
+              </video>
 
               <Button className={"mt-2 w-full"} disabled={loading}>
                 {loading ? 'Düzenleniyor' : 'Düzenle'}
