@@ -121,8 +121,8 @@ function EditBuyukbas() {
                 />
             </label>
 
-            <video width="750" height="500" controls >
-              <source src={`${process.env.REACT_APP_ENV === "dev" ? "http://localhost:3000/" : process.env.REACT_APP_API_PROD_BASE_URL }${location.state.video_path}`} />
+            <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
+              <source src={`${process.env.REACT_APP_ENV === "dev" ? "http://localhost:3000/" : "https://kurbanapp.herokuapp.com/" }${location.state.video_path}`} />
             </video>
 
               <Button className={"mt-2 w-full"} disabled={loading}>
