@@ -22,15 +22,17 @@ function EditBuyukbas() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const [errors, setError] = useState([]);
+    const [singleFile, setSingleFile] = useState('');
     const [formData, setFormData] = useState({
       _id: '',
       kurban_kupe_no: '',
       net_hisse_fiyat: '',
       kurban_weight: '',
-      kurban_note: ''
+      kurban_note: '',
+      file: ''
     })
     
-    const { kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note } = formData
+    const { kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note, file, _id } = formData
     
     const onChange = (e) => {
       setFormData((prevState) => ({
@@ -41,6 +43,7 @@ function EditBuyukbas() {
 
     /* */
     useEffect(() => {
+      console.log(location.state)
       // NavLink ile gelen location.state deki değerleri state'teki öğelere geçmek için bu kadar işlem yapmaya gerek var mı?
       Object.keys(formData).forEach(key => {
         setFormData((prevState) => ({
@@ -50,39 +53,78 @@ function EditBuyukbas() {
       });
     }, [])
 
+    const SingleFileChange = (e) => {
+      setSingleFile(e.target.files[0]);
+      //setSingleProgress(0);
+    }
+
     /* */
     const editKurban = async (e) => {
       e.preventDefault();
       
       setLoading(true)
+    
+      // eğer video dosyası seçilmişse
+      if(singleFile) {
+        const form = new FormData();
+        form.append('file', singleFile);
+        
+        console.log(singleFile)
 
-      const response = await BKurbanService.update(formData);
-      
-      console.log(response)
+        const upload = await BKurbanService.upload(form, _id);
 
-      if(response.status === 200 && !response.data.error) {
-        navigate(`/kurum/dashboard/${active_project_id}`)
-      } else if(response.data.error) {
-        console.log(response.data.error)
-        setLoading(false)
-        setError({key: response.data.error}) // input name key olarak verilecek
+        console.log("upload video")
+
+        if(!upload.data.error) {
+          navigate(`/kurum/dashboard/${active_project_id}`)
+        } else {
+          console.log(upload.data)
+        }
+
+      } else {
+        const response = await BKurbanService.update(formData);
+        if(response.status === 200 && !response.data.error) {
+          navigate(`/kurum/dashboard/${active_project_id}`)
+        } else if(response.data.error) {
+          console.log(response.data.error)
+          setLoading(false)
+          setError({key: response.data.error}) // input name key olarak verilecek
+        }
       }
+      
     }
 
     return (
         <>
 
-          <form onSubmit={editKurban}>
+          <form onSubmit={editKurban} id="kurban_edit_form" encType="multipart/form-data">
             <Card>
               <div className="flex items-center">
                 <Prev />
                 <Title title={"Kurban Düzenle"} />
               </div>
-              
+              <input type={"hidden"} value={_id} name="_id"/>
               <Input value={kurban_kupe_no} title="Küpe No" name="kurban_kupe_no" onChange={onChange} errors={errors} />
-              <Input value={net_hisse_fiyat} title="Net Hisse Fiyatı" name="net_hisse_fiyat" onChange={onChange} errors={errors} />
+              <Input type="number" value={net_hisse_fiyat} title="Net Hisse Fiyatı" name="net_hisse_fiyat" onChange={onChange} errors={errors} />
               <Input value={kurban_weight} title="Kurban KG" name="kurban_weight" onChange={onChange} errors={errors} />
               <Textarea value={kurban_note} title="Kurban Not" name="kurban_note" onChange={onChange} errors={errors} />
+              
+              <label className="block text-sm mb-4">
+                <span className={`text-gray-700 dark:text-gray-400`}>Kurban Kesim Videosu:</span>
+                <input
+                type="file"
+                value={file}
+                name="file"
+                onChange={(e) => SingleFileChange(e)}
+                className={`mt-1 block w-full text-md border-gray-400/30 rounded-[0.250rem] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input`}
+                accept="video/*"
+                />
+            </label>
+
+            <video width="750" height="500" controls >
+              <source src={`${process.env.REACT_APP_ENV === "dev" ? "http://localhost:3000/" : process.env.REACT_APP_API_PROD_BASE_URL }${location.state.video_path}`} />
+            </video>
+
               <Button className={"mt-2 w-full"} disabled={loading}>
                 {loading ? 'Düzenleniyor' : 'Düzenle'}
               </Button>

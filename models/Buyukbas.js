@@ -18,7 +18,10 @@ const BuyukbasSchema = new mongoose.Schema({
     hisse: [{
         type: mongoose.Types.ObjectId,
         ref: "Hisse"
-    }]
+    }],
+    video_path: String,
+    video_thumbnail: String,
+    video_duration: String
 }, {timestamps: true})
 
 export default mongoose.model('Buyukbas', BuyukbasSchema)

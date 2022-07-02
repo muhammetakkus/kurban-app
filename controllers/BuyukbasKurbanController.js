@@ -3,6 +3,8 @@ import MessageTemplate from '../models/MessageTemplate.js'
 import asyncHandler from 'express-async-handler'
 import fetch from 'cross-fetch'
 import Process from '../models/Process.js';
+import multer from 'multer'
+import fs from 'fs'
 
 const findSingleBuyukbas = asyncHandler( async (req,res) => {
     const buyukbas = await Buyukbas.find({_id: req.params.id})
@@ -33,10 +35,11 @@ const findAll = asyncHandler( async (req,res) => {
     return res.status(200).json(buyukbas);
 })
 
+// bu method aslında 3-4 farklı metoda bölünmeliydi :(
 const update = async (req,res) => {
     // net hisse fiyat number gelmeli yoksa hata veriyor
     const id = { _id: req.params.id }
-    const { _id, message_template, process } = req.body
+    const { _id, message_template, process, kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note } = req.body
 
     /* Process/İşlem adımına bağlı mesaj gönderme */
     let is_message_send = 0
@@ -75,14 +78,27 @@ const update = async (req,res) => {
     }
     
     
-    let doc = await Buyukbas.findOneAndUpdate(id, {process: process}, {new: true});
+    // change process or message template
+    if(process || message_template) {
+        let doc = await Buyukbas.findOneAndUpdate(id, {process: process}, {new: true});
 
-    var io = req.app.get('socketio');
-    // değişiklik yapılan process id sinde bir socket oluştur
-    // console.log(doc.process)
-    io.emit(doc.process)
+        // burası sadece process change de tetiklenmeli aslında
+        var io = req.app.get('socketio');
+        // değişiklik yapılan process id sinde bir socket oluştur
+        // console.log(doc.process)
+        io.emit(doc.process)
 
-    return res.status(200).json({...doc._doc, is_message_send: is_message_send});
+        return res.status(200).json({...doc._doc, is_message_send: is_message_send});
+    }
+    
+    // kurban edit
+    if(kurban_kupe_no || net_hisse_fiyat || kurban_weight || kurban_note) {
+        console.log("mesaj ve process update yok")
+        console.log(req.body)
+        const doc = await Buyukbas.findOneAndUpdate(id, req.body, {new: true});
+        return res.status(200).json(doc);
+    }
+   
 }
 
 const create = async (req,res) => {
@@ -101,10 +117,39 @@ const create = async (req,res) => {
     return res.status(200).json(createKurban);
 }
 
+const uploadKurbanVideo = async (req, res, next) => {
+    const id = { _id: req.params.id }
+
+
+
+    try{
+        // delete if it has a video
+        const f = await Buyukbas.findById(id)
+        if(f.video_path) {
+            const path = 'client/public/' + f.video_path
+            fs.unlink(path, (err) => {
+                if (err) { console.error(err) }
+            })
+        }
+
+        // save new video path
+        const uploaded = await Buyukbas.findOneAndUpdate(id, {
+            video_path: 'uploads/' + req.file.filename
+        }, {new: true});
+
+        console.log(req.file)
+
+        return res.status(200).json(uploaded);
+    }catch(error) {
+        return res.status(200).json({error: error});
+    }
+
+}
+
 const _delete = async (req,res) =>{
     const result = await Buyukbas.findByIdAndDelete({ _id: req.params.id });
     res.status(200).json(result);
 }
 
 
-export { create, findSingleBuyukbas, findAll, findForEkran, update, _delete}
+export { create, findSingleBuyukbas, findAll, findForEkran, update, _delete, uploadKurbanVideo }

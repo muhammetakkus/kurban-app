@@ -58,6 +58,7 @@ app.set('socketio', io);
 /* for properly send request */
 app.use(bodyParser.json({limit: '30mb', 'extended': true}))
 app.use(bodyParser.urlencoded({limit: '30mb', 'extended': true}))
+app.use(bodyParser.raw());
 //app.use(cors({origin: ["http://localhost:3000"], credentials: true}))
 //app.use(cors())
 

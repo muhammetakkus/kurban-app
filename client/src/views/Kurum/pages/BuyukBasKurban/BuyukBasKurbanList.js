@@ -78,7 +78,6 @@ function BuyukBasKurbanList({ project_id }) {
       }
     }
   }
-  
 
 
   /* Change Process */

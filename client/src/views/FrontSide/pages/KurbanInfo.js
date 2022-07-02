@@ -2,22 +2,28 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import KurbanService from "../../../services/BKurbanService";
 import Loading from "../../components/Loading";
+import Video from "../components/Video";
 
 export default function KurbanInfo() {
   let { kurban_code } = useParams();
 
   const [loading, setLoading] = useState(true)
   const [kurban, setKurban] = useState({})
+  
+  const getKurban = async () => {
+    const kurbanInfo = await KurbanService.getKurbanInfo(kurban_code)
+    setKurban(kurbanInfo.data[0])
+    //console.log(kurbanInfo.data[0])
+
+    setKurban((state) => {
+      console.log(state);
+      setLoading(false)
+      return state;
+    });
+  }
 
   useEffect(() => {
     console.log(kurban_code)
-
-    const getKurban = async () => {
-      const kurbanInfo = await KurbanService.getKurbanInfo(kurban_code)
-      setKurban(kurbanInfo.data[0])
-      //console.log(kurbanInfo.data[0])
-      setLoading(false)
-    }
 
     getKurban()
   }, [])
@@ -31,7 +37,7 @@ export default function KurbanInfo() {
         </div>
         <div className="border-t border-gray-200">
           <dl>
-            <div className={`${kurban.kurban_image ? "" : "hidden"}`}>
+            <div className={`${kurban?.kurban_image ? "" : "hidden"}`}>
               <img src={kurban.kurban_image} alt="kurban" className="w-full h-64"/>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -42,7 +48,7 @@ export default function KurbanInfo() {
               <dt className="text-sm font-medium text-gray-500">Hisse Gurubu</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{kurban?.kurban_hisse_group}</dd>
             </div>
-            <div className={`bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ${kurban.net_hisse_fiyat ? "" : "!hidden"}`}>
+            <div className={`bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ${kurban?.net_hisse_fiyat ? "" : "!hidden"}`}>
               <dt className="text-sm font-medium text-gray-500">Net Hisse Fiyatı</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{kurban?.net_hisse_fiyat}</dd>
             </div>
@@ -50,7 +56,7 @@ export default function KurbanInfo() {
               <dt className="text-sm font-medium text-gray-500">Kurbanınızın Şuanki Durumu</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{kurban?.kurban_process}</dd>
             </div>
-            <div className={`bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ${kurban.kurban_weight ? "" : "!hidden"}`}>
+            <div className={`bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ${kurban?.kurban_weight ? "" : "!hidden"}`}>
               <dt className="text-sm font-medium text-gray-500">Kurban KG</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{kurban?.kurban_weight}</dd>
             </div>
@@ -65,6 +71,10 @@ export default function KurbanInfo() {
                   ))}
                 </ul>
               </dd>
+            </div>
+            <div className={`bg-white px-4 py-5${loading === false && kurban?.video_path ? "" : "!hidden"}`}>
+              <dt className="text-sm font-medium text-gray-500 mb-4">Kurban Kesim Videosu</dt>
+              {kurban.video_path && <Video path={`${process.env.REACT_APP_ENV === "dev" ? "http://localhost:3000/" : process.env.REACT_APP_API_PROD_BASE_URL }${kurban?.video_path}`}/>}
             </div>
           </dl>
         </div>

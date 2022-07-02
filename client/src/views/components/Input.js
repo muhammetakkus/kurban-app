@@ -1,6 +1,6 @@
 export default function Input(props) {
     const {
-        title,
+        title = "",
         className = "",
         type = 'text',
         name = "",
