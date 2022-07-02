@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import KurbanService from "../../../services/BKurbanService";
 import Loading from "../../components/Loading";
-import Video from "../components/Video";
+//import Video from "../components/Video";
 
 export default function KurbanInfo() {
   let { kurban_code } = useParams();
@@ -74,7 +74,11 @@ export default function KurbanInfo() {
             </div>
             <div className={`bg-white px-4 py-5${loading === false && kurban?.video_path ? "" : "!hidden"}`}>
               <dt className="text-sm font-medium text-gray-500 mb-4">Kurban Kesim Videosu</dt>
-              {kurban?.video_path && <Video path={kurban?.video_path ? require('../../../assets/uploads/' + kurban?.video_path) : ""} />}
+              {/*kurban?.video_path && <Video path={kurban?.video_path ? require('../../../assets/uploads/' + kurban?.video_path) : ""} />*/}
+
+              <video width="100%" height="720" controls className={`${loading === false && kurban?.video_path ? "" : "!hidden"}`}>
+                <source src={kurban?.video_path ? require('../../../assets/uploads/' + kurban?.video_path) : ""} type="video/mp4" />
+              </video>
             </div>
           </dl>
         </div>
