@@ -74,7 +74,7 @@ export default function KurbanInfo() {
             </div>
             <div className={`bg-white px-4 py-5${loading === false && kurban?.video_path ? "" : "!hidden"}`}>
               <dt className="text-sm font-medium text-gray-500 mb-4">Kurban Kesim Videosu</dt>
-              {kurban?.video_path && <Video path={kurban?.video_path ? require('../../../assets/uploads/' + kurban.video_path) : ""} />}
+              {kurban?.video_path && <Video path={kurban?.video_path ? require('../../../assets/uploads/' + kurban?.video_path) : ""} />}
             </div>
           </dl>
         </div>
