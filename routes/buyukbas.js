@@ -17,7 +17,8 @@ router.put('/:id', update)
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'client/public/uploads');
+        //cb(null, 'client/public/uploads');
+        cb(null, 'client/src/assets/uploads');
     },
     filename: (req, file, cb) => {
         const newName = new Date().toISOString()

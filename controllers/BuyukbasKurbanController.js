@@ -126,7 +126,7 @@ const uploadKurbanVideo = async (req, res, next) => {
         // delete if it has a video
         const f = await Buyukbas.findById(id)
         if(f.video_path) {
-            const path = 'client/public/' + f.video_path
+            const path = 'client/src/assets/uploads/' + f.video_path
             fs.unlink(path, (err) => {
                 if (err) { console.error(err) }
             })
@@ -134,7 +134,8 @@ const uploadKurbanVideo = async (req, res, next) => {
 
         // save new video path
         const uploaded = await Buyukbas.findOneAndUpdate(id, {
-            video_path: 'uploads/' + req.file.filename
+            //video_path: 'uploads/' + req.file.filename
+            video_path: req.file.filename
         }, {new: true});
 
         console.log(req.file)

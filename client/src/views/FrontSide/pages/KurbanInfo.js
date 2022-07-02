@@ -74,7 +74,7 @@ export default function KurbanInfo() {
             </div>
             <div className={`bg-white px-4 py-5${loading === false && kurban?.video_path ? "" : "!hidden"}`}>
               <dt className="text-sm font-medium text-gray-500 mb-4">Kurban Kesim Videosu</dt>
-              {kurban?.video_path && <Video path={`${process.env.REACT_APP_ENV === "dev" ? "http://localhost:3000/" : "https://kurbanapp.herokuapp.com/" }${kurban?.video_path}`}/>}
+              {kurban?.video_path && <Video path={kurban?.video_path ? require('../../../assets/uploads/' + kurban.video_path) : ""} />}
             </div>
           </dl>
         </div>

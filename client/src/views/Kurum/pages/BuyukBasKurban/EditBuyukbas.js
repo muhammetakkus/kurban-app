@@ -9,7 +9,7 @@ import Card from "../../../components/Card"
 import Prev from "../../../components/Prev"
 import Title from "../../../components/Title"
 import Textarea from "../../../components/Textarea"
-
+//import v from "../../../../assets/uploads/2022-07-02T22:58:49.534Z.mp4"
 function EditBuyukbas() {
 
     let location = useLocation();
@@ -19,6 +19,7 @@ function EditBuyukbas() {
     //if(isKurumAuth) axios.defaults.headers.common['Authorization'] = `Bearer ${kurum.token}`;
 
     const navigate = useNavigate()
+    //const [v, setV] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errors, setError] = useState([]);
     const [singleFile, setSingleFile] = useState('');
@@ -39,7 +40,7 @@ function EditBuyukbas() {
         [e.target.name]: e.target.value, // verilen propslardan name'e göre value'değerini match edip eşleştiriyor
       }))
     }
-
+    
     /* */
     useEffect(() => {
       console.log(location.state)
@@ -121,12 +122,10 @@ function EditBuyukbas() {
             </label>
 
               <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
-                <source src={`${process.env.REACT_APP_ENV === "dev" ? "http://localhost:3000/" : "https://kurbanapp.herokuapp.com/" }${location.state.video_path}`} type="video/mp4" />
+                <source src={location.state.video_path ? require('../../../../assets/uploads/' + location.state.video_path) : ""} type="video/mp4" />
               </video>
               
-              <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
-                <source src={"https://kurbanapp.herokuapp.com/" + location.state.video_path} type="video/mp4" />
-              </video>
+         
 
               <Button className={"mt-2 w-full"} disabled={loading}>
                 {loading ? 'Düzenleniyor' : 'Düzenle'}
