@@ -76,9 +76,7 @@ export default function KurbanInfo() {
               <dt className="text-sm font-medium text-gray-500 mb-4">Kurban Kesim Videosu</dt>
               {/*kurban?.video_path && <Video path={kurban?.video_path ? require('../../../assets/uploads/' + kurban?.video_path) : ""} />*/}
 
-              <video width="100%" height="720" controls className={`${loading === false && kurban?.video_path ? "" : "!hidden"}`}>
-                <source src={kurban?.video_path ? require('../../../assets/uploads/' + kurban?.video_path) : ""} type="video/mp4" />
-              </video>
+             
             </div>
           </dl>
         </div>
