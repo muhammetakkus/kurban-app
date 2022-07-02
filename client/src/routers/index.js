@@ -94,11 +94,11 @@ const routers = (isUserAuth, isKurumAuth, isAdminAuth) => [
                 path: '/kurban-sorgula',
                 element: <KurbanSorgula />
             },
-            {
+            /*{
                 path: '*',
                 exact: false,
                 element: <Home />,
-            },
+            },*/
         ]
     },
     // project sayfası hem /kurum/project şeklinde olsun hem de kurum altında nested olmayıp onun templatine girmemiş oldu

@@ -38,7 +38,7 @@ export default function KurbanInfo() {
         <div className="border-t border-gray-200">
           <dl>
             <div className={`${kurban?.kurban_image ? "" : "hidden"}`}>
-              <img src={kurban.kurban_image} alt="kurban" className="w-full h-64"/>
+              <img src={kurban?.kurban_image} alt="kurban" className="w-full h-64"/>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Kurban NO</dt>
@@ -64,7 +64,7 @@ export default function KurbanInfo() {
               <dt className="text-sm font-medium text-gray-500">Hissedarlar</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <ul className="-my-5 divide-y divide-gray-200">
-                  {kurban.hisse?.map(h => (
+                  {kurban?.hisse?.map(h => (
                     <li className="py-4" key={h._id}>
                       <span className="text-sm font-medium text-gray-900 truncate">{h.hissedar_full_name}</span>
                     </li>
@@ -74,7 +74,7 @@ export default function KurbanInfo() {
             </div>
             <div className={`bg-white px-4 py-5${loading === false && kurban?.video_path ? "" : "!hidden"}`}>
               <dt className="text-sm font-medium text-gray-500 mb-4">Kurban Kesim Videosu</dt>
-              {kurban.video_path && <Video path={`${process.env.REACT_APP_ENV === "dev" ? "http://localhost:3000/" : process.env.REACT_APP_API_PROD_BASE_URL }${kurban?.video_path}`}/>}
+              {kurban?.video_path && <Video path={`${process.env.REACT_APP_ENV === "dev" ? "http://localhost:3000/" : "https://kurbanapp.herokuapp.com/" }${kurban?.video_path}`}/>}
             </div>
           </dl>
         </div>
