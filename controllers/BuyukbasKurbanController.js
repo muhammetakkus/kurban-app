@@ -42,38 +42,41 @@ const update = async (req,res) => {
     const { _id, message_template, process, kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note } = req.body
 
     /* Process/İşlem adımına bağlı mesaj gönderme */
+
     let is_message_send = 0
-    if(message_template) {
+    if(req.body.process) {
+        const is_message_template = await Process.findById(req.body.process)
 
-        const buyukbas = await Buyukbas.find({_id: _id}).populate("hisse")
-        const message = await MessageTemplate.find({message_template: message_template})   
-
-        if(buyukbas[0].hisse.length > 0) {
-
-            const hissedar_adet = buyukbas[0].hisse.length
-            let gonderilen_mesaj = 0
-            let GSMs = ""
-            let message_txt = ""
-            buyukbas[0].hisse.forEach(hissedar => {
-                GSMs+=hissedar.hissedar_gsm
-                gonderilen_mesaj++
-                gonderilen_mesaj < hissedar_adet ? GSMs+=";" : null
-            });
+        if(is_message_template.message_template) {
     
-            message_txt = message[0].message_content
+        const buyukbas = await Buyukbas.find({_id: _id}).populate("hisse")
+        const message = await MessageTemplate.find({message_template: is_message_template.message_template})   
 
+            if(buyukbas[0].hisse.length > 0) {
+                const hissedar_adet = buyukbas[0].hisse.length
+                let gonderilen_mesaj = 0
+                let GSMs = ""
+                let message_txt = ""
+                buyukbas[0].hisse.forEach(hissedar => {
+                    GSMs+=hissedar.hissedar_gsm
+                    gonderilen_mesaj++
+                    gonderilen_mesaj < hissedar_adet ? GSMs+=";" : null
+                });
+        
+                message_txt = message[0].message_content
 
-            console.log(buyukbas[0].hisse)
+                console.log(buyukbas[0].hisse)
 
-            await fetch(`http://api.pusulasms.com/toplusms.asp?kullanici=YENIBOSNA&parola=655330&telefonlar=${GSMs}&mesaj=${message_txt}&gonderen=Y.BosnaYurt`)
-            .then(res => {
-                if (res.status >= 400) { throw new Error("Bad response from server - BuyukbasKurbanController.js"); }
-                return {status: res.status}
-            })
-            .then(data => {
-                if(data.status === 200) { is_message_send = 1 }
-            })
-            .catch(err => { console.error(err); });
+                await fetch(`http://api.pusulasms.com/toplusms.asp?kullanici=YENIBOSNA&parola=655330&telefonlar=${GSMs}&mesaj=${message_txt}&gonderen=Y.BosnaYurt`)
+                .then(res => {
+                    if (res.status >= 400) { throw new Error("Bad response from server - BuyukbasKurbanController.js"); }
+                    return {status: res.status}
+                })
+                .then(data => {
+                    if(data.status === 200) { is_message_send = 1 }
+                })
+                .catch(err => { console.error(err); });
+            }
         }
     }
     

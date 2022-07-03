@@ -35,6 +35,7 @@ const s3 = new S3Client({
         accessKeyId: "AKIA2TX3M3FXLU7HVZJI",
         secretAccessKey: "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"
     },
+    // bunlar olmasa da olur - kaldır - dene
     hostPrefixEnabled: true,
     computeChecksums: true,
     s3BucketEndpoint: true,

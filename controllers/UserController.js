@@ -101,7 +101,7 @@ const findByEmail = async (req, res) => {
 }
 
 const getKurbanInfo = asyncHandler( async (req,res) => {
-    const buyukbas = await Buyukbas.find({uniq_kurban_code: req.params.kurban_code}).populate("hisse")
+    const buyukbas = await Buyukbas.find({uniq_kurban_code: req.params.kurban_code}).populate("hisse").populate("process")
     return res.status(200).json(buyukbas);
 })
 

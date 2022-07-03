@@ -81,7 +81,7 @@ const send = async (req,res) => {
             if (res.status >= 400) {
                 throw new Error("Bad response from server");
             }
-            console.log(res)
+            
             return {status: res.status}
             //return res.json();
         })
