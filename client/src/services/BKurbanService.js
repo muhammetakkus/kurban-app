@@ -24,7 +24,7 @@ class BKurbanService {
     getKurbanInfo(kurban_code) {
         return axios.get(`/user/kurban-info/${kurban_code}`);
     }
-
+    
     update(payload) {
         return axios.put(`/buyukbas-kurban/${payload._id}`, payload);
     }

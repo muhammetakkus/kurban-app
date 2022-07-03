@@ -3,7 +3,7 @@ import MessageTemplate from '../models/MessageTemplate.js'
 import asyncHandler from 'express-async-handler'
 import fetch from 'cross-fetch'
 import Process from '../models/Process.js';
-import multer from 'multer'
+import { S3Client } from '@aws-sdk/client-s3'
 import fs from 'fs'
 
 const findSingleBuyukbas = asyncHandler( async (req,res) => {
@@ -124,18 +124,19 @@ const uploadKurbanVideo = async (req, res, next) => {
 
     try{
         // delete if it has a video
-        const f = await Buyukbas.findById(id)
+        /*const f = await Buyukbas.findById(id)
         if(f.video_path) {
             const path = 'client/src/assets/uploads/' + f.video_path
             fs.unlink(path, (err) => {
                 if (err) { console.error(err) }
             })
-        }
+        }*/
 
         // save new video path
         const uploaded = await Buyukbas.findOneAndUpdate(id, {
             //video_path: 'uploads/' + req.file.filename
-            video_path: req.file.filename
+            video_path: req.file.location,
+            video_key: req.file.key
         }, {new: true});
 
         console.log(req.file)
@@ -146,6 +147,7 @@ const uploadKurbanVideo = async (req, res, next) => {
     }
 
 }
+
 
 const _delete = async (req,res) =>{
     const result = await Buyukbas.findByIdAndDelete({ _id: req.params.id });
