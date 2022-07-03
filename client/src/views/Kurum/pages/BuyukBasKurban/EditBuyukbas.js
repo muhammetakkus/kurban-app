@@ -125,7 +125,9 @@ function EditBuyukbas() {
 
               {/*location.state.video_path && <Video path={location.state.video_path ? '../../../../assets/uploads/' + location.state.video_path : ""} /> */}
 
-             
+             {location.state.video_path && <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
+                <source src={location.state.video_path ? location.state.video_path : ""} type="video/mp4" />
+              </video>}
 
               <Button className={"mt-2 w-full"} disabled={loading}>
                 {loading ? 'Düzenleniyor' : 'Düzenle'}
