@@ -9,10 +9,11 @@
 # testing
 /coverage
 
+
 # production
 /client/build
 /client/public/uploads
-
+/config/config.env
 
 # misc
 .DS_Store
