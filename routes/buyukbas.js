@@ -29,11 +29,12 @@ router.put('/:id', update)
     }
 })*/
 
+
 const s3 = new S3Client({
     region: "us-east-1",
     credentials: {
-        accessKeyId: "AKIA2TX3M3FXLU7HVZJI",
-        secretAccessKey: "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"
+        accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY
     },
     // bunlar olmasa da olur - kaldır - dene
     hostPrefixEnabled: true,
