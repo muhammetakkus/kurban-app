@@ -9,6 +9,7 @@ import Card from "../../../components/Card"
 import Prev from "../../../components/Prev"
 import Title from "../../../components/Title"
 import Textarea from "../../../components/Textarea"
+//import Video from '../../../FrontSide/components/Video'
 //import v from "../../../../assets/uploads/2022-07-02T22:58:49.534Z.mp4"
 function EditBuyukbas() {
 
@@ -121,9 +122,12 @@ function EditBuyukbas() {
                 />
             </label>
 
-              <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
+
+              {/*location.state.video_path && <Video path={location.state.video_path ? '../../../../assets/uploads/' + location.state.video_path : ""} /> */}
+             
+             {location.state.video_path && <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
                 <source src={location.state.video_path ? require('../../../../assets/uploads/' + location.state.video_path) : ""} type="video/mp4" />
-              </video>
+            </video>}
               
          
 
