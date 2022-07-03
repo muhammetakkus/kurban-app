@@ -77,7 +77,6 @@ const update = async (req,res) => {
         }
     }
     
-    
     // change process or message template
     if(process || message_template) {
         let doc = await Buyukbas.findOneAndUpdate(id, {process: process}, {new: true});
