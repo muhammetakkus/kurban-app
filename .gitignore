@@ -12,7 +12,7 @@
 # production
 /client/build
 /client/public/uploads
-/client/src/assets/uploads
+/client/src/assets/uploads/
 
 # misc
 .DS_Store
