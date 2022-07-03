@@ -77,6 +77,7 @@ export default function KurbanInfo() {
               {/*kurban?.video_path && <Video path={kurban?.video_path ? require('../../../assets/uploads/' + kurban?.video_path) : ""} />*/}
 
              
+              
             </div>
           </dl>
         </div>
