@@ -121,7 +121,9 @@ function EditBuyukbas() {
                 />
             </label>
 
-              
+              <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
+                <source src={location.state.video_path ? require('../../../../assets/uploads/' + location.state.video_path) : ""} type="video/mp4" />
+              </video>
               
          
 
