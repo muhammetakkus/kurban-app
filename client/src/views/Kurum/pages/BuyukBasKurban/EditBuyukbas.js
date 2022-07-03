@@ -20,7 +20,7 @@ function EditBuyukbas() {
     //if(isKurumAuth) axios.defaults.headers.common['Authorization'] = `Bearer ${kurum.token}`;
 
     const navigate = useNavigate()
-    const [vv, setV] = useState(false);
+    //const [v, setV] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errors, setError] = useState([]);
     const [singleFile, setSingleFile] = useState('');
@@ -45,7 +45,6 @@ function EditBuyukbas() {
     /* */
     useEffect(() => {
       console.log(location.state)
-      setV('../../../../assets/uploads/' + location.state.video_path)
       // NavLink ile gelen location.state deki değerleri state'teki öğelere geçmek için bu kadar işlem yapmaya gerek var mı?
       Object.keys(formData).forEach(key => {
         setFormData((prevState) => ({
@@ -127,7 +126,7 @@ function EditBuyukbas() {
               {/*location.state.video_path && <Video path={location.state.video_path ? '../../../../assets/uploads/' + location.state.video_path : ""} /> */}
              
              {location.state.video_path && <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
-                <source src={location.state.video_path ? require(vv) : ""} type="video/mp4" />
+                <source src={location.state.video_path ? require(('../../../../assets/uploads/' + location.state.video_path)) : ""} type="video/mp4" />
             </video>}
               
          
