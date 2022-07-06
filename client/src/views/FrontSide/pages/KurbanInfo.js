@@ -5,6 +5,9 @@ import Loading from "../../components/Loading";
 //import Video from "../components/Video";
 import "../../../assets/css/KurbanInfo.css"
 
+import { DefaultPlayer as Video } from 'react-html5video';
+import 'react-html5video/dist/styles.css';
+
 export default function KurbanInfo() {
   let { kurban_code } = useParams();
 
@@ -37,6 +40,7 @@ export default function KurbanInfo() {
 
   useEffect(() => {
     console.log(kurban_code)
+    console.log(tarih)
 
     setTarihThing()
     getKurban()
@@ -55,10 +59,10 @@ export default function KurbanInfo() {
     </div>
 
     <div className="grid grid-cols-2 gap-2 mx-2 md:mx-10 my-2">
-      <div className="bg-[#F3FBFC] p-4 flex flex-col justify-center items-center">
+      {/*<div className="bg-[#F3FBFC] p-4 flex flex-col justify-center items-center">
         <p className="py-1 text-xl text-gray-600/70 font-medium">Tarih</p>
         <p className="py-1 text-xl  text-[#44bdc6] font-semibold">{tarih}</p>
-      </div>
+      </div>*/}
       <div className="bg-[#F3FBFC] p-4 flex flex-col justify-center items-center">
         <p className="py-1 text-xl text-gray-600/70 font-medium">Kurban No</p>
         <p className="py-1 text-xl text-[#44bdc6] font-semibold">{kurban?.kurban_no}</p>
@@ -70,6 +74,10 @@ export default function KurbanInfo() {
       <div className="bg-[#F3FBFC] p-4 flex flex-col justify-center items-center">
         <p className="py-1 text-xl text-gray-600/70 font-medium">Durumu</p>
         <p className="py-1 text-xl text-[#44bdc6] font-semibold">{kurban?.process?.process_title}</p>
+      </div>
+      <div className="bg-[#F3FBFC] p-4 flex flex-col justify-center items-center">
+        <p className="py-1 text-xl text-gray-600/70 font-medium">Net Hisse Fiyatı</p>
+        <p className="py-1 text-xl text-[#44bdc6] font-semibold">{kurban?.process?.net_hisse_fiyat}</p>
       </div>
     </div>
 
@@ -93,10 +101,20 @@ export default function KurbanInfo() {
     <div className="bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5">
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Videosu</h2>
 
-        {kurban?.video_path && <video width="800" height="500" controls className="mx-auto">
+        {/*kurban?.video_path && <video width="800" height="500" controls className="mx-auto">
                 <source src={kurban?.video_path ? kurban?.video_path : ""} type="video/mp4" />
-              </video>}
-              
+          </video>*/}
+        
+        {kurban?.video_path && <Video autoPlay loop muted
+            controls={['PlayPause', 'Seek', 'Time', 'Volume', 'Fullscreen']}
+            poster="https://images.unsplash.com/photo-1502590464431-3b66d77494d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+            onCanPlayThrough={() => {
+                // Do stuff
+            }}>
+            <source src={kurban?.video_path ? kurban?.video_path : ""} type="video/mp4" />
+        </Video>}
+        
+        
               
         <p className={`${kurban?.video_path ? "hidden" : ""} text-gray-400 text-sm`}>Kurbanınız kesildikten sonra kesim videosunu buradan izleyebilirsiniz..</p>
     </div>
