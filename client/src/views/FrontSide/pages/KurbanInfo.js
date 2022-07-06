@@ -96,7 +96,7 @@ export default function KurbanInfo() {
     <div className="bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center">
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Videosu</h2>
 
-        {kurban?.video_path && <video width="750" height="500" controls>
+        {kurban?.video_path && <video width="800" height="500" controls className="mx-auto">
                 <source src={kurban?.video_path ? kurban?.video_path : ""} type="video/mp4" />
               </video>}
               
@@ -106,8 +106,8 @@ export default function KurbanInfo() {
   
   </div>
 
-  <div className={` ${loading ? "" : "hidden"} py-10 text-lg`}>
-      <Loading loading={loading} />
+  <div className={` ${loading ? "" : "hidden"} py-10 text-lg  font-semibold`}>
+      <Loading loading={loading} className="!text-white tracking-wider" />
   </div>
 
   </>
