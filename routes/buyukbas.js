@@ -6,7 +6,7 @@ import AWS from 'aws-sdk'
 import progress from 'progress-stream'
 const router = express.Router()
 
-import { create, update, _delete, uploadKurbanVideo } from '../controllers/BuyukbasKurbanController.js'
+import { create, update, _delete, uploadKurbanVideo, uploadKurbanImage } from '../controllers/BuyukbasKurbanController.js'
 
 router.post('/:project_id', create)
 
@@ -48,7 +48,7 @@ const s3 = new S3Client({
 // image için olan validation mp4 olarak değiştirilecek
 const filefilter = (req, file, cb) => {
   if (file.mimetype === 'video/mp4' || file.mimetype === 'image/jpg' 
-      || file.mimetype === 'image/jpeg'){
+      || file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
           cb(null, true);
       }else {
           cb(null, false);
@@ -64,7 +64,8 @@ const upload = multer({
       cb(null, {fieldName: file.fieldname});
     },
     key: function (req, file, cb) {
-      cb(null, Date.now().toString() + ".mp4")
+      const extension = file.originalname.split(".").pop()
+      cb(null, Date.now().toString() + "." + extension)
     },
     filefilter: filefilter
   })
@@ -86,6 +87,7 @@ s3.createBucket({
 //const upload = multer({storage: storage});
 
 router.post('/video/:id', upload.single('file'), uploadKurbanVideo)
+router.post('/image/:id', upload.single('kurban_img'), uploadKurbanImage)
 
 router.delete('/:id', _delete)
 

@@ -33,6 +33,10 @@ class BKurbanService {
         return axios.post(`/buyukbas-kurban/video/${id}`, payload, uploadFileOption);
     }
 
+    uploadImage(payload, id) {
+        return axios.post(`/buyukbas-kurban/image/${id}`, payload);
+    }
+
     delete(id) {
         return axios.delete(`/buyukbas-kurban/${id}`);
     }

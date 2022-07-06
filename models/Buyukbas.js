@@ -9,6 +9,7 @@ const BuyukbasSchema = new mongoose.Schema({
     net_hisse_fiyat: Number,
     uniq_kurban_code: String,
     kurban_image: String,
+    kurban_image_key: String,
     kurban_weight: String,
     kurban_note: String,
     process: {

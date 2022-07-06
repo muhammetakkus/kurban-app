@@ -39,7 +39,7 @@ const findAll = asyncHandler( async (req,res) => {
 const update = async (req,res) => {
     // net hisse fiyat number gelmeli yoksa hata veriyor
     const id = { _id: req.params.id }
-    const { _id, message_template, process, kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note } = req.body
+    const { _id, message_template, process, kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note, kurban_hisse_group } = req.body
 
     /* Process/İşlem adımına bağlı mesaj gönderme */
 
@@ -94,7 +94,7 @@ const update = async (req,res) => {
     }
     
     // kurban edit
-    if(kurban_kupe_no || net_hisse_fiyat || kurban_weight || kurban_note) {
+    if(kurban_kupe_no || net_hisse_fiyat || kurban_weight || kurban_note || kurban_hisse_group) {
         console.log("mesaj ve process update yok")
         console.log(req.body)
         const doc = await Buyukbas.findOneAndUpdate(id, req.body, {new: true});
@@ -132,7 +132,7 @@ const uploadKurbanVideo = async (req, res, next) => {
             })
         }*/
 
-        // delete s3 object - aws s3 access denied veriyor :/
+        // delete s3 object
         const f = await Buyukbas.findById(id)
         if(f.video_path) {
             const s3 = new AWS.S3(
@@ -169,6 +169,42 @@ const uploadKurbanVideo = async (req, res, next) => {
 
 }
 
+const uploadKurbanImage = async (req, res, next) => {
+    const id = { _id: req.params.id }
+
+    try{
+        // delete s3 object
+        const kurban = await Buyukbas.findById(id)
+        if(kurban.kurban_image) {
+            const s3 = new AWS.S3(
+                { 
+                    accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
+                    secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
+                    Bucket: "kurbanapp"
+                }
+            );
+              
+            s3.deleteObject({
+                Bucket: "kurbanapp",
+                Key: kurban.kurban_image_key
+            }, function (err,data){
+                console.log(data)
+                console.log(err)
+            })
+        }
+
+        const uploaded = await Buyukbas.findOneAndUpdate(id, {
+            kurban_image: req.file.location,
+            kurban_image_key: req.file.key
+        }, {new: true});
+
+        return res.status(200).json(uploaded);
+    }catch(error) {
+        return res.status(200).json({error: error});
+    }
+
+}
+
 
 const _delete = async (req,res) =>{
     const result = await Buyukbas.findByIdAndDelete({ _id: req.params.id });
@@ -176,4 +212,4 @@ const _delete = async (req,res) =>{
 }
 
 
-export { create, findSingleBuyukbas, findAll, findForEkran, update, _delete, uploadKurbanVideo }
+export { create, findSingleBuyukbas, findAll, findForEkran, update, _delete, uploadKurbanVideo, uploadKurbanImage }

@@ -30,6 +30,8 @@ function EditBuyukbas() {
     const [loading, setLoading] = useState(false);
     const [errors, setError] = useState([]);
     const [singleFile, setSingleFile] = useState('');
+    const [kurbanImage, setKurbanImage] = useState('');
+    const [img, setImg] = useState('');
 
     const [hisseGroupLoader, setHisseGroupLoader] = useState("Hisse grupları yükleniyor..");
     const [selected, setSelected] = useState("")
@@ -41,7 +43,7 @@ function EditBuyukbas() {
       net_hisse_fiyat: '',
       kurban_weight: '',
       kurban_note: '',
-      file: ''
+      file: '',
     })
     
     const { kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note, file, _id } = formData
@@ -70,6 +72,7 @@ function EditBuyukbas() {
     useEffect(() => {
       console.log(location.state)
       setSelected(location.state.kurban_hisse_group)
+      setImg(location.state.kurban_image)
       // NavLink ile gelen location.state deki değerleri state'teki öğelere geçmek için bu kadar işlem yapmaya gerek var mı?
       Object.keys(formData).forEach(key => {
         setFormData((prevState) => ({
@@ -82,6 +85,14 @@ function EditBuyukbas() {
       getHisseGroups()
     }, [])
 
+    const KurbanImageChange = (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        const [file] = e.target.files;
+        setImg(URL.createObjectURL(file));
+        setKurbanImage(file)
+      }
+    }
+    
     const SingleFileChange = (e) => {
       setSingleFile(e.target.files[0]);
       //setSingleProgress(0);
@@ -122,13 +133,24 @@ function EditBuyukbas() {
           console.log(upload.data)
         }
 
-      } else {
-        // bütün inputlar boş olduğunda submit edilince state boşta kalıyor ve response dönmüyor bunun için önlem - thats sucks
-        if(kurban_kupe_no === "" && kurban_note === "" && kurban_weight === "" && net_hisse_fiyat === null) {
-          navigate(-1)
+      } else if(kurbanImage) {
+        const imageForm = new FormData();
+        imageForm.append('kurban_img', kurbanImage);
+
+        const uploadImage = await BKurbanService.uploadImage(imageForm, _id);
+
+        if(!uploadImage.data.error) {
+          navigate(`/kurum/dashboard/${active_project_id}`)
+        } else {
+          console.log(uploadImage.data)
         }
+
+      }
+      else {
+        // bütün inputlar boş olduğunda submit edilince state boşta kalıyor ve response dönmüyor bunun için önlem - thats sucks
+        
         // update
-        const response = await BKurbanService.update(formData);
+        const response = await BKurbanService.update({...formData, kurban_hisse_group: selected});
         if(response.status === 200 && !response.data.error) {
           navigate(`/kurum/dashboard/${active_project_id}`)
         } else if(response.data.error) {
@@ -180,7 +202,40 @@ function EditBuyukbas() {
               <Input value={kurban_weight} title="Kurban KG" name="kurban_weight" onChange={onChange} errors={errors} />
               <Textarea value={kurban_note} title="Kurban Not" name="kurban_note" onChange={onChange} errors={errors} />
               
-              <label className="block text-sm mb-4">
+              
+              <hr />
+
+              <div className="flex justify-center my-4">
+                <div className="mb-3 w-full">
+                  <label htmlFor="formFile" className="form-label inline-block mb-2 text-gray-700 text-sm">Kurban Fotoğrafı Yükle</label>
+                  <input className="form-control
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  id="formFile"
+                  type="file"
+                  name="kurban_img"
+                  onChange={(e) => KurbanImageChange(e)}
+                  /> 
+                </div>
+              </div>
+
+              <img className={`${img ? '' : 'hidden'}`} src={img} alt="kurban_image" />
+
+              <hr />
+
+              <label className="block text-sm my-4">
                 <span className={`text-gray-700 dark:text-gray-400`}>Kurban Kesim Videosu:</span>
                 <input
                 type="file"
