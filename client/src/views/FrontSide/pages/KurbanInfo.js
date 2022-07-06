@@ -45,7 +45,7 @@ export default function KurbanInfo() {
   return (
 
 <>
-  <div className={`${loading ? "hidden" : ""} w-full`}>
+  <div className={`kurban-info-wrapper ${loading ? "hidden" : ""} w-full`}>
     <header className="bg-white flex justify-center p-4 shadow-lg">
       <span className="font-bold text-[#1BABB4] text-2xl">KURBAN BİLGİ EKRANI</span>
     </header>
