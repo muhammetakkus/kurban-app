@@ -105,7 +105,7 @@ export default function KurbanInfo() {
                 <source src={kurban?.video_path ? kurban?.video_path : ""} type="video/mp4" />
           </video>*/}
         
-        {kurban?.video_path && <Video autoPlay loop muted
+        {kurban?.video_path && <Video autoPlay
             controls={['PlayPause', 'Seek', 'Time', 'Volume', 'Fullscreen']}
             poster="https://images.unsplash.com/photo-1502590464431-3b66d77494d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
             onCanPlayThrough={() => {
