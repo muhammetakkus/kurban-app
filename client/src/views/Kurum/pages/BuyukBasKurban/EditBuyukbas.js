@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import {useSelector} from "react-redux"
 //import axios from 'axios';
 import BKurbanService from '../../../../services/BKurbanService';
+import HisseGroupService from '../../../../services/HisseGroupService';
 import Input from "../../../components/Input"
 import Button from "../../../components/Button"
 import Card from "../../../components/Card"
@@ -29,6 +30,11 @@ function EditBuyukbas() {
     const [loading, setLoading] = useState(false);
     const [errors, setError] = useState([]);
     const [singleFile, setSingleFile] = useState('');
+
+    const [hisseGroupLoader, setHisseGroupLoader] = useState("Hisse grupları yükleniyor..");
+    const [selected, setSelected] = useState("")
+    const [hisse_groups, setHisseGroup] = useState([]);
+
     const [formData, setFormData] = useState({
       _id: '',
       kurban_kupe_no: '',
@@ -46,10 +52,24 @@ function EditBuyukbas() {
         [e.target.name]: e.target.value, // verilen propslardan name'e göre value'değerini match edip eşleştiriyor
       }))
     }
+
+    const getHisseGroups = async () => {
+      const request = await HisseGroupService.getByProject({project_id: active_project_id});
+      if(request.status === 200) {
+        const hisseGroupLoaderMessage = request.data.length > 0 ? "Hisse grubu seçiniz" : "Listelenecek hisse grubu bulunamadı"
+        setHisseGroupLoader(hisseGroupLoaderMessage)
+        setHisseGroup(request.data)
+      }
+    }
+
+    const handleDropDown = (e) => {
+      setSelected(e.target.value)
+    }
     
     /* */
     useEffect(() => {
       console.log(location.state)
+      setSelected(location.state.kurban_hisse_group)
       // NavLink ile gelen location.state deki değerleri state'teki öğelere geçmek için bu kadar işlem yapmaya gerek var mı?
       Object.keys(formData).forEach(key => {
         setFormData((prevState) => ({
@@ -57,6 +77,9 @@ function EditBuyukbas() {
           [key]: location.state[key]
         }))
       });
+
+      
+      getHisseGroups()
     }, [])
 
     const SingleFileChange = (e) => {
@@ -127,6 +150,31 @@ function EditBuyukbas() {
                 <Title title={"Kurban Düzenle"} />
               </div>
               <input type={"hidden"} value={_id} name="_id"/>
+
+              <label className="block text-sm mb-4">
+                <span className={`text-gray-700 dark:text-gray-400`}>Hisse Grubu:</span>
+            
+                  <select value={selected} onChange={(e) => handleDropDown(e)} className="border-gray-400/30 rounded-[0.250rem] form-select appearance-none
+                    block
+                    w-full
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding bg-no-repeat
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" disabled={!hisseGroupLoader}>
+                      <option value="">{hisseGroupLoader}</option>
+                      {hisse_groups.map((hisse_group) => (
+                        <option key={hisse_group._id} value={hisse_group.hisse_group_title}>{hisse_group.hisse_group_title}</option>
+                      ))}
+                  </select>
+
+              </label>
+
               <Input value={kurban_kupe_no} title="Küpe No" name="kurban_kupe_no" onChange={onChange} errors={errors} />
               <Input type="number" value={net_hisse_fiyat} title="Net Hisse Fiyatı" name="net_hisse_fiyat" onChange={onChange} errors={errors} />
               <Input value={kurban_weight} title="Kurban KG" name="kurban_weight" onChange={onChange} errors={errors} />

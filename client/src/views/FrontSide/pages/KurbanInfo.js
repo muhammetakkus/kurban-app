@@ -77,7 +77,7 @@ export default function KurbanInfo() {
       </div>
       <div className="bg-[#F3FBFC] p-4 flex flex-col justify-center items-center">
         <p className="py-1 text-xl text-gray-600/70 font-medium">Net Hisse Fiyatı</p>
-        <p className="py-1 text-xl text-[#44bdc6] font-semibold">{kurban?.process?.net_hisse_fiyat}</p>
+        <p className="py-1 text-xl text-[#44bdc6] font-semibold">{kurban?.net_hisse_fiyat} ₺</p>
       </div>
     </div>
 
