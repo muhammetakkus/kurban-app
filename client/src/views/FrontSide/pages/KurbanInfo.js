@@ -77,7 +77,7 @@ export default function KurbanInfo() {
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Hissedarları</h2>
         <ul className="text-lg text-gray-600/70 font-medium">
           {kurban?.hisse?.map(hissedar => (
-            <li className="p-1">{hissedar.hissedar_full_name}</li>
+            <li key={hissedar._id} className="p-1">{hissedar.hissedar_full_name}</li>
           ))}
         </ul>
     </div>
