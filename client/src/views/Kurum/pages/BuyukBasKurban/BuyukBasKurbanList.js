@@ -27,11 +27,10 @@ function BuyukBasKurbanList({ project_id }) {
   const [processLoader, setProcessLoader] = useState('');
   const [isModal, setModal] = useState({isOpen: false, title: '', message: ''});
   const [isDeleteModal, setDeleteModal] = useState({isOpen: false});
-  const [side, setSide] = useState({isOpen: false});
+  const [side, setSide] = useState({isOpen: false}); // for process
   const [sideForSMS, setSideForSMS] = useState({isOpen: false});
   const [noty, setNoty] = useState({isOpen: false});
 
-  
   useEffect(() => {
     const getKurbanAll = async () => {
       const request = await KurbanService.getAll({kurum_id: kurum._id, project_id: project_id});
@@ -79,6 +78,24 @@ function BuyukBasKurbanList({ project_id }) {
     }
   }
 
+  /* Delete Kurban */
+  const askModal = (kurban) => {
+    _setKurban(kurban)
+    setDeleteModal({isOpen: true, title: 'Kurban Sil', message: `[${kurban.kurban_no}] Numaralı kurbanı ve hisselerini silmek istediğinize emin misiniz?`})
+  }
+
+  const deleteKurban = async (result) => {
+    setDeleteModal({isOpen: false})
+
+    if(result) {
+      setKurbanDeleteLoading(kurban._id)
+      const deleteRecord = await KurbanService.delete(kurban._id);
+      if(deleteRecord.status === 200) {
+        setKurban( kurbans.filter( e => e._id !== kurban._id  ) );
+        setKurbanDeleteLoading('')
+      }
+    }
+  }
 
   /* Change Process */
   const openProcessList = (kurban) => {
@@ -86,7 +103,7 @@ function BuyukBasKurbanList({ project_id }) {
     _setKurban(kurban)
   }
 
-  const sideResult = async (result) => {
+  const sideResultForProcess = async (result) => {
     result.kurban_id = kurban._id
     setSide({isOpen: false, title: side.title})
     
@@ -111,26 +128,6 @@ function BuyukBasKurbanList({ project_id }) {
     }
   }
 
-
-  /* Delete Kurban */
-  const askModal = (kurban) => {
-    _setKurban(kurban)
-    setDeleteModal({isOpen: true, title: 'Kurban Sil', message: `[${kurban.kurban_no}] Numaralı kurbanı ve hisselerini silmek istediğinize emin misiniz?`})
-  }
-
-  const deleteKurban = async (result) => {
-    setDeleteModal({isOpen: false})
-
-    if(result) {
-      setKurbanDeleteLoading(kurban._id)
-      const deleteRecord = await KurbanService.delete(kurban._id);
-      if(deleteRecord.status === 200) {
-        setKurban( kurbans.filter( e => e._id !== kurban._id  ) );
-        setKurbanDeleteLoading('')
-      }
-    }
-  }
-
   /* Send SMS */
   const openSendSMS = (kurban) => {
     setSideForSMS({isOpen: true, title: "Mesajlar", veri: message_templates, kurban_no: kurban.kurban_no, state_loading: false})
@@ -138,19 +135,15 @@ function BuyukBasKurbanList({ project_id }) {
     // message gönderimi sırasında side panelin Icon kısmında progress olabilir gönderim işlemi bitince side kapanır + noty mesaj verir
   }
 
-
   const sideResultForSMS = async (result) => {
     setSideForSMS({isOpen: true, title: "Mesajlar", veri: message_templates, kurban_no: kurban.kurban_no, state_loading: result._id, kurban_info_message: result.kurban_info_message})
     
-    //console.log(res ult)
     //console.log(kurban)
 
     /*  
       data.state_loading message._id ile set edilecek loading bar gösterilecek
     */
-
-
-    
+   
     const sendSMS = await MessageService.send({
       message: result,
       hissedarlar: kurban.hisse,
@@ -158,7 +151,6 @@ function BuyukBasKurbanList({ project_id }) {
       kurban_code: kurban.uniq_kurban_code,
       kurban_info_message: result.kurban_info_message ? 1 : 0
     })
-    
 
     setSideForSMS({isOpen: false, title: side.title, state_loading: null})
 
@@ -173,6 +165,7 @@ function BuyukBasKurbanList({ project_id }) {
     }, 3500)
   }
 
+  //
   const doluHisse = (e, hisse) => {
     if(hisse > 6) {
       e.preventDefault()
@@ -182,7 +175,7 @@ function BuyukBasKurbanList({ project_id }) {
     return (
             <div className="w-full overflow-hidden rounded-lg shadow-xs border-[1px] border-gray-400/20">
             <Noty isOpen={noty.isOpen} message={noty.message} title={noty.title} type={noty.type} />
-            <Side result={sideResult} data={side} kurbanProcess={kurban.process}/>
+            <Side result={sideResultForProcess} data={side} kurbanProcess={kurban.process}/>
             <Side result={sideResultForSMS} data={sideForSMS}/>
             <Modal result={deleteKurban} data={isDeleteModal} />
 

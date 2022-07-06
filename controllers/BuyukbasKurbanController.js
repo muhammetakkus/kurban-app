@@ -3,8 +3,8 @@ import MessageTemplate from '../models/MessageTemplate.js'
 import asyncHandler from 'express-async-handler'
 import fetch from 'cross-fetch'
 import Process from '../models/Process.js';
-import { S3Client } from '@aws-sdk/client-s3'
-import fs from 'fs'
+import AWS from 'aws-sdk'
+//import fs from 'fs'
 
 const findSingleBuyukbas = asyncHandler( async (req,res) => {
     const buyukbas = await Buyukbas.find({_id: req.params.id})
@@ -122,8 +122,6 @@ const create = async (req,res) => {
 const uploadKurbanVideo = async (req, res, next) => {
     const id = { _id: req.params.id }
 
-
-
     try{
         // delete if it has a video
         /*const f = await Buyukbas.findById(id)
@@ -134,6 +132,27 @@ const uploadKurbanVideo = async (req, res, next) => {
             })
         }*/
 
+        // delete s3 object - aws s3 access denied veriyor :/
+        const f = await Buyukbas.findById(id)
+        if(f.video_path) {
+            const s3 = new AWS.S3(
+                { 
+                    accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
+                    secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
+                    Bucket: "kurbanapp"
+                }
+            );
+              
+            s3.deleteObject({
+                Bucket: "kurbanapp",
+                Key: f.video_key
+            }, function (err,data){
+                console.log(data)
+                console.log(err)
+            })
+        }
+
+
         // save new video path
         const uploaded = await Buyukbas.findOneAndUpdate(id, {
             //video_path: 'uploads/' + req.file.filename
@@ -141,7 +160,7 @@ const uploadKurbanVideo = async (req, res, next) => {
             video_key: req.file.key
         }, {new: true});
 
-        console.log(req.file)
+        //console.log(req.file)
 
         return res.status(200).json(uploaded);
     }catch(error) {

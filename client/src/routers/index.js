@@ -59,6 +59,10 @@ const routers = (isUserAuth, isKurumAuth, isAdminAuth) => [
         exact: true,
         element: <GoogleAuth />
     },
+    {
+        path: '/kurban-info/:kurban_code',
+        element: <KurbanInfo />
+    },
     /* */
     {
         path: '/',
@@ -85,10 +89,6 @@ const routers = (isUserAuth, isKurumAuth, isAdminAuth) => [
                 exact: false,
                 auth: true,
                 element: isUserAuth ? <Sepet /> : <Navigate to="/" replace />,
-            },
-            {
-                path: '/kurban-info/:kurban_code',
-                element: <KurbanInfo />
             },
             {
                 path: '/kurban-sorgula',

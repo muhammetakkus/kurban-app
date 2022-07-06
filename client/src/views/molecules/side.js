@@ -30,7 +30,6 @@ export default function Side(props) {
 
   useEffect(() => {
     setOpen(data.isOpen)
-    console.log(kurbanProcess)
   }, [data])
   
   const [open, setOpen] = useState(data.isOpen)

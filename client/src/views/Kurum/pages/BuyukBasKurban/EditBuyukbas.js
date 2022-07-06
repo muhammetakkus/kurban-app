@@ -11,6 +11,10 @@ import Title from "../../../components/Title"
 import Textarea from "../../../components/Textarea"
 //import Video from '../../../FrontSide/components/Video'
 //import v from "../../../../assets/uploads/2022-07-02T22:58:49.534Z.mp4"
+
+//import { CircularProgressbar, buildStyles} from 'react-circular-progressbar';
+//import 'react-circular-progressbar/dist/styles.css';
+
 function EditBuyukbas() {
 
     let location = useLocation();
@@ -21,6 +25,7 @@ function EditBuyukbas() {
 
     const navigate = useNavigate()
     //const [v, setV] = useState(false);
+    const [percentage, setUploadFileProgress] = useState(0);
     const [loading, setLoading] = useState(false);
     const [errors, setError] = useState([]);
     const [singleFile, setSingleFile] = useState('');
@@ -59,6 +64,18 @@ function EditBuyukbas() {
       //setSingleProgress(0);
     }
 
+    const uploadFileOption = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      onUploadProgress: (progressEvent) => {
+        const {loaded, total} = progressEvent;
+        const percent = Math.floor(((loaded/1000) * 100) / (total/1000))
+        setUploadFileProgress(percent)
+        console.log(percentage)
+      }
+    }
+
     /* */
     const editKurban = async (e) => {
       e.preventDefault();
@@ -72,7 +89,7 @@ function EditBuyukbas() {
         
         console.log(singleFile)
 
-        const upload = await BKurbanService.upload(form, _id);
+        const upload = await BKurbanService.upload(form, _id, uploadFileOption);
 
         console.log("upload video")
 
@@ -83,6 +100,11 @@ function EditBuyukbas() {
         }
 
       } else {
+        // bütün inputlar boş olduğunda submit edilince state boşta kalıyor ve response dönmüyor bunun için önlem - thats sucks
+        if(kurban_kupe_no === "" && kurban_note === "" && kurban_weight === "" && net_hisse_fiyat === null) {
+          navigate(-1)
+        }
+        // update
         const response = await BKurbanService.update(formData);
         if(response.status === 200 && !response.data.error) {
           navigate(`/kurum/dashboard/${active_project_id}`)
@@ -122,6 +144,20 @@ function EditBuyukbas() {
                 />
             </label>
 
+            {/* 
+            <div style={{ width: 100, height: 100 }} className={`mx-auto my-1 ${percentage > 0 ? '' : 'hidden'}`}>
+              <CircularProgressbar value={percentage} text={`${percentage === 100 ? "Yönlendiriliyor.." : "%"+percentage } `} 
+                styles={buildStyles({
+                  rotation: 0.25,
+                  strokeLinecap: 'butt',
+                  textSize: percentage === 100 ? "10px" : '16px',
+                  pathColor: `rgba(62, 152, 199, ${percentage / 100})`,
+                  textColor: '#555',
+                  trailColor: '#d6d6d6',
+                  backgroundColor: '#3e98c7',
+                })} />
+            </div>
+            */}
 
               {/*location.state.video_path && <Video path={location.state.video_path ? '../../../../assets/uploads/' + location.state.video_path : ""} /> */}
 
@@ -132,6 +168,7 @@ function EditBuyukbas() {
               <Button className={"mt-2 w-full"} disabled={loading}>
                 {loading ? 'Düzenleniyor' : 'Düzenle'}
               </Button>
+
             </Card>    
           </form>
       </>

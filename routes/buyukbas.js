@@ -2,7 +2,8 @@ import express from 'express'
 import multer from 'multer'
 import multerS3 from 'multer-s3'
 import { S3Client } from '@aws-sdk/client-s3'
-
+import AWS from 'aws-sdk'
+import progress from 'progress-stream'
 const router = express.Router()
 
 import { create, update, _delete, uploadKurbanVideo } from '../controllers/BuyukbasKurbanController.js'
@@ -44,6 +45,16 @@ const s3 = new S3Client({
     
 })
 
+// image için olan validation mp4 olarak değiştirilecek
+const filefilter = (req, file, cb) => {
+  if (file.mimetype === 'video/mp4' || file.mimetype === 'image/jpg' 
+      || file.mimetype === 'image/jpeg'){
+          cb(null, true);
+      }else {
+          cb(null, false);
+      }
+}
+
 const upload = multer({
   storage: multerS3({
     s3: s3,
@@ -54,19 +65,22 @@ const upload = multer({
     },
     key: function (req, file, cb) {
       cb(null, Date.now().toString() + ".mp4")
-    }
+    },
+    filefilter: filefilter
   })
 })
 
-// image için olan validation mp4 olarak değiştirilecek
-const filefilter = (req, file, cb) => {
-    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' 
-        || file.mimetype === 'image/jpeg'){
-            cb(null, true);
-        }else {
-            cb(null, false);
-        }
-}
+
+
+/* Create Bucket */
+/*
+s3.createBucket({
+  Bucket: BUCKET_NAME   
+}, function () {
+  s3.putObject(params, function (err, data) {});
+})
+*/
+
 
 //const upload = multer({storage: storage, fileFilter: filefilter})
 //const upload = multer({storage: storage});
