@@ -1,3 +1,7 @@
+html, body {
+ height: 100%;
+}
+
 .kurban-info-wrapper {
     background: rgb(31,173,176);
     background: linear-gradient(180deg, rgba(31,173,176,1) 0%, rgba(17,159,233,1) 100%);

@@ -45,7 +45,7 @@ export default function KurbanInfo() {
   return (
 
 <>
-  <div className={`kurban-info-wrapper ${loading ? "hidden" : ""} w-full`}>
+  <div className={`kurban-info-wrapper ${loading ? "hidden" : ""} w-full pb-8 mb-5`}>
     <header className="bg-white flex justify-center p-4 shadow-lg">
       <span className="font-bold text-[#1BABB4] text-2xl">KURBAN BİLGİ EKRANI</span>
     </header>
@@ -76,12 +76,9 @@ export default function KurbanInfo() {
     <div className="bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center">
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Hissedarları</h2>
         <ul className="text-lg text-gray-600/70 font-medium">
-          <li className="p-1">Siraceddin El</li>
-          <li>Şahbil Uygur</li>
-          <li>Soner</li>
-          <li>Siraceddin El</li>
-          <li>Şahbil Uygur</li>
-          <li>Soner</li>
+          {kurban?.hisse?.map(hissedar => (
+            <li className="p-1">{hissedar.hissedar_full_name}</li>
+          ))}
         </ul>
     </div>
 
@@ -93,7 +90,7 @@ export default function KurbanInfo() {
         </div>
     </div>
 
-    <div className="bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center">
+    <div className="bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5">
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Videosu</h2>
 
         {kurban?.video_path && <video width="800" height="500" controls className="mx-auto">
@@ -107,7 +104,7 @@ export default function KurbanInfo() {
   </div>
 
   <div className={` ${loading ? "" : "hidden"} py-10 text-lg  font-semibold`}>
-      <Loading loading={loading} className="!text-white tracking-wider" />
+      <Loading loading={loading} className=" tracking-wider" />
   </div>
 
   </>
