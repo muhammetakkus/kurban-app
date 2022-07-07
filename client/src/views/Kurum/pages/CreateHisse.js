@@ -88,12 +88,12 @@ function CreateHisse() {
               
 
               <Input value={hissedar_full_name} title="*Hissedar tam ismi" name="hissedar_full_name" onChange={onChange} errors={errors} />
-              <Input value={hissedar_gsm} title="*Hissedar GSM" name="hissedar_gsm" onChange={onChange} errors={errors} />
+              <Input type="number" min={0} value={hissedar_gsm} title="*Hissedar GSM" name="hissedar_gsm" onChange={onChange} errors={errors} />
               <hr className='mb-4 mt-6' />
               <Input value={kapora} title="Kapora" name="kapora" onChange={onChange} errors={errors} />
               <Textarea value={hissedar_address} title="Hissedar adresi" name="hissedar_address" onChange={onChange} errors={errors} />
               <Input value={referans_full_name} title="Referans tam ismi" name="referans_full_name" onChange={onChange} errors={errors} />
-              <Input type="number" value={referans_gsm} title="Referans GSM" name="referans_gsm" onChange={onChange} errors={errors} />
+              <Input type="number" min={0} value={referans_gsm} title="Referans GSM" name="referans_gsm" onChange={onChange} errors={errors} />
               <Textarea value={hissedar_note} title="Hissedar not" name="hissedar_note" onChange={onChange} errors={errors} />
               <p>
                 <input type="checkbox" id="vekalet" value={is_vekalet}/><label htmlFor='vekalet'> Vekaleti alınmıştır</label>
