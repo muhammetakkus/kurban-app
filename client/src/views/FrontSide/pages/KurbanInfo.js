@@ -108,7 +108,7 @@ export default function KurbanInfo() {
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Videosu</h2>
         
         <div className="overflow-hidden relative mx-auto">
-          <iframe width="560" height="315" src={`https://www.youtube.com/embed/${kurban?.youtube_embed}`} 
+          <iframe width="100%" height="320" src={`https://www.youtube.com/embed/${kurban?.youtube_embed}`} 
           className="mx-auto"
           title="YouTube video player"
           frameborder="0"

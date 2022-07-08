@@ -235,11 +235,11 @@ function EditBuyukbas() {
               <img className={`${img ? '' : 'hidden'}`} src={img} alt="kurban_image" />
               
 
-              <hr />
+              <hr className='my-4' />
 
-              <Input value={youtube_embed} title="YouTube Embed Linki" name="youtube_embed" onChange={onChange} errors={errors} />
+              <Input value={youtube_embed} title="YouTube Embed Kodu (Video Paylaş - Yerleştir Kısmından)" name="youtube_embed" onChange={onChange} errors={errors} />
 
-              <hr />
+              <hr className='my-5' />
 
               <label className="block text-sm my-4">
                 <span className={`text-gray-700 dark:text-gray-400`}>Kurban Kesim Videosu:</span>
