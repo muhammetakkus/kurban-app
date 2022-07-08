@@ -24,7 +24,8 @@ const BuyukbasSchema = new mongoose.Schema({
     video_thumbnail: String,
     video_duration: String,
     video_key: String,
-    youtube_embed: String
+    youtube_embed: String,
+    vidyome_embed: String
 }, {timestamps: true})
 
 export default mongoose.model('Buyukbas', BuyukbasSchema)

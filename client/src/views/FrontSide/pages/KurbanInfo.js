@@ -100,10 +100,20 @@ export default function KurbanInfo() {
 
     
 
-    <div className={`${(kurban?.youtube_embed || kurban?.video_path) ? "hidden" : ""} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5`}>
+    <div className={`${(kurban?.youtube_embed || kurban?.video_path || kurban?.vidyome_embed) ? "hidden" : ""} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5`}>
       <p className={`text-gray-400 text-sm`}>Kurbanınız kesildikten sonra kesim videosunu buradan izleyebilirsiniz..</p>
     </div>
     
+    <div className={`${kurban?.vidyome_embed ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5`}>
+        <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Videosu</h2>
+        
+        <div className="overflow-hidden relative mx-auto">
+          <iframe src={kurban?.vidyome_embed}
+                  title="Vidyome video player"
+                  width="100%" height="380" frameborder="0" scrolling="no" webkitallowfullscreen allowfullscreen></iframe>
+        </div>
+    </div>
+
     <div className={`${kurban?.youtube_embed ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5`}>
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Videosu</h2>
         
