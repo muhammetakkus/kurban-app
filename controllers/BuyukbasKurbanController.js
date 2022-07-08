@@ -39,7 +39,7 @@ const findAll = asyncHandler( async (req,res) => {
 const update = async (req,res) => {
     // net hisse fiyat number gelmeli yoksa hata veriyor
     const id = { _id: req.params.id }
-    const { _id, message_template, process, kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note, kurban_hisse_group } = req.body
+    const { _id, message_template, process, kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note, kurban_hisse_group, youtube_embed } = req.body
 
     /* Process/İşlem adımına bağlı mesaj gönderme */
 
@@ -93,13 +93,10 @@ const update = async (req,res) => {
         return res.status(200).json({...doc._doc, is_message_send: is_message_send});
     }
     
-    // kurban edit
-    if(kurban_kupe_no || net_hisse_fiyat || kurban_weight || kurban_note || kurban_hisse_group) {
-        console.log("mesaj ve process update yok")
-        console.log(req.body)
+
         const doc = await Buyukbas.findOneAndUpdate(id, req.body, {new: true});
         return res.status(200).json(doc);
-    }
+    
    
 }
 
