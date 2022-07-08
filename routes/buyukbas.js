@@ -32,7 +32,7 @@ router.put('/:id', update)
 
 
 const s3 = new S3Client({
-    region: "us-east-1",
+    region: "eu-central-1",
     credentials: {
         accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY
@@ -58,7 +58,7 @@ const filefilter = (req, file, cb) => {
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'kurbanapp',
+    bucket: 'awskurbanapp',
     ACL: 'public-read',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});

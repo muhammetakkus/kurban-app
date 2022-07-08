@@ -44,9 +44,10 @@ function EditBuyukbas() {
       kurban_weight: '',
       kurban_note: '',
       file: '',
+      youtube_embed: ''
     })
     
-    const { kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note, file, _id } = formData
+    const { kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note, file, youtube_embed, _id } = formData
     
     const onChange = (e) => {
       setFormData((prevState) => ({
@@ -232,6 +233,11 @@ function EditBuyukbas() {
               </div>
 
               <img className={`${img ? '' : 'hidden'}`} src={img} alt="kurban_image" />
+              
+
+              <hr />
+
+              <Input value={youtube_embed} title="YouTube Embed Linki" name="youtube_embed" onChange={onChange} errors={errors} />
 
               <hr />
 
@@ -246,6 +252,8 @@ function EditBuyukbas() {
                 accept="video/*"
                 />
             </label>
+
+          
 
             {/* 
             <div style={{ width: 100, height: 100 }} className={`mx-auto my-1 ${percentage > 0 ? '' : 'hidden'}`}>

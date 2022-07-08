@@ -139,12 +139,12 @@ const uploadKurbanVideo = async (req, res, next) => {
                 { 
                     accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
                     secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
-                    Bucket: "kurbanapp"
+                    Bucket: "awskurbanapp"
                 }
             );
               
             s3.deleteObject({
-                Bucket: "kurbanapp",
+                Bucket: "awskurbanapp",
                 Key: f.video_key
             }, function (err,data){
                 console.log(data)
@@ -180,12 +180,12 @@ const uploadKurbanImage = async (req, res, next) => {
                 { 
                     accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
                     secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
-                    Bucket: "kurbanapp"
+                    Bucket: "awskurbanapp"
                 }
             );
               
             s3.deleteObject({
-                Bucket: "kurbanapp",
+                Bucket: "awskurbanapp",
                 Key: kurban.kurban_image_key
             }, function (err,data){
                 console.log(data)

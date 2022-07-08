@@ -98,7 +98,26 @@ export default function KurbanInfo() {
         </div>
     </div>
 
-    <div className="bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5">
+    
+
+    <div className={`${(kurban?.youtube_embed || kurban?.video_path) ? "hidden" : ""} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5`}>
+      <p className={`text-gray-400 text-sm`}>Kurbanınız kesildikten sonra kesim videosunu buradan izleyebilirsiniz..</p>
+    </div>
+    
+    <div className={`${kurban?.youtube_embed ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5`}>
+        <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Videosu</h2>
+        
+        <div className="overflow-hidden relative mx-auto">
+          <iframe width="560" height="315" src={`https://www.youtube.com/embed/${kurban?.youtube_embed}`} 
+          className="mx-auto"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+        </div>
+        
+    </div>
+    
+    <div className={`${kurban?.video_path ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5`}>
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Videosu</h2>
 
         {/*kurban?.video_path && <video width="800" height="500" controls className="mx-auto">
@@ -112,11 +131,7 @@ export default function KurbanInfo() {
                 // Do stuff
             }}>
             <source src={kurban?.video_path ? kurban?.video_path : ""} type="video/mp4" />
-          </Video>}
-        
-        
-              
-        <p className={`${kurban?.video_path ? "hidden" : ""} text-gray-400 text-sm`}>Kurbanınız kesildikten sonra kesim videosunu buradan izleyebilirsiniz..</p>
+          </Video>}       
     </div>
   
   </div>
