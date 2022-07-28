@@ -10,7 +10,7 @@ import { useEffect } from 'react'
 
   const isUserAuth = useSelector((state) => state.auth.isUser)
   const isKurumAuth = useSelector((state) => state.auth.isKurum)
-  const isAdminAuth = useSelector((state) => state.auth.isAdmin)
+  const isAdminAuth = useSelector((state) => state.admin.isAdmin)
 
 
   //const activeProjectID = useSelector((state) => state.kurum.active_project_id)

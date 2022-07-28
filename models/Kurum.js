@@ -16,6 +16,10 @@ const KurumSchema = new mongoose.Schema({
         type: String,
         default: 'light'
     },
+    active_sms_api: {
+        type: mongoose.Types.ObjectId,
+        ref: "MessageService"
+    }
     /*
     project: {
         type: mongoose.Types.ObjectId, // ??????????????????????? project.id kaydı geçilecek 

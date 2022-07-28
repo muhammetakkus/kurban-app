@@ -2,9 +2,14 @@ import Process from '../models/Process.js'
 import asyncHandler from 'express-async-handler'
 
 const processes = asyncHandler( async (req,res) => {
-    const projects = await Process.find({kurum_id: req.params.kurum_id}).sort('process_order')
+    const projects = await Process.find({kurum_id: req.params.kurum_id}).sort('process_order').populate('message_template')
     return res.status(200).json(projects);
 })
+
+const getKurumProcess = asyncHandler( async (req,res) => {
+    const process = await Process.find({kurum_id: req.params.kurum_id}).populate('message_template')
+    return res.status(200).json(process);
+  })
 
 const find = async (req,res) => {
    try {
@@ -42,10 +47,12 @@ const update = async (req,res) => {
         }
     }
 
-    
-    Process.findOneAndUpdate(id, req.body, {new: true}, (err, doc) => {
+    let doc = await Process.findOneAndUpdate(id, req.body, {new: true});
+    return res.status(200).json(doc);
+
+    /*await Process.findOneAndUpdate(id, req.body, {new: true}, (err, doc) => {
         return res.status(200).json(doc);
-    })
+    })*/
 }
 
 const create = async (req,res) => {
@@ -72,4 +79,4 @@ const _delete = async (req,res) =>{
     }
 }
 
-export { processes, create, find, update, _delete }
+export { processes, create, find, update, getKurumProcess, _delete }

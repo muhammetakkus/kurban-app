@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import KurbanService from "../../../services/BKurbanService";
-import Loading from "../../components/Loading";
+import KurbanService from "../../../../services/BKurbanService";
+import Loading from "../../../components/Loading";
 //import Video from "../components/Video";
-import "../../../assets/css/KurbanInfo.css"
+import "../../../../assets/css/KurbanInfo.css"
 
 import { DefaultPlayer as Video } from 'react-html5video';
 import 'react-html5video/dist/styles.css';
+import ProcessSteps from "./ProcessSteps";
 
 export default function KurbanInfo() {
   let { kurban_code } = useParams();
@@ -14,9 +15,11 @@ export default function KurbanInfo() {
   const [loading, setLoading] = useState(true)
   const [tarih, setTarih] = useState('')
   const [kurban, setKurban] = useState({})
+  const [process, setProcess] = useState([])
   
   const getKurban = async () => {
     const kurbanInfo = await KurbanService.getKurbanInfo(kurban_code)
+    getKurumProcess(kurbanInfo.data[0].kurum_id)
     setKurban(kurbanInfo.data[0])
     //console.log(kurbanInfo.data[0])
 
@@ -25,6 +28,11 @@ export default function KurbanInfo() {
       setLoading(false)
       return state;
     });
+  }
+
+  const getKurumProcess = async (kurum_id) => {
+    const kurumProcess = await KurbanService.getKurumProcess(kurum_id)
+    setProcess(kurumProcess.data)
   }
 
   const setTarihThing = () => {
@@ -44,6 +52,7 @@ export default function KurbanInfo() {
 
     setTarihThing()
     getKurban()
+    
   }, [])
 
   return (
@@ -63,25 +72,31 @@ export default function KurbanInfo() {
         <p className="py-1 text-xl text-gray-600/70 font-medium">Tarih</p>
         <p className="py-1 text-xl  text-[#44bdc6] font-semibold">{tarih}</p>
       </div>*/}
-      <div className="bg-[#F3FBFC] p-4 flex flex-col justify-center items-center">
+      <div className="bg-[#F3FBFC] p-4 text-center justify-center items-center card">
         <p className="py-1 text-xl text-gray-600/70 font-medium">Kurban No</p>
-        <p className="py-1 text-xl text-[#44bdc6] font-semibold">{kurban?.kurban_no}</p>
+        <p className="py-1 text-2xl text-[#44bdc6] font-semibold">{kurban?.kurban_no}</p>
       </div>
-      <div className="bg-[#F3FBFC] p-4 flex flex-col justify-center items-center">
+      <div className="bg-[#F3FBFC] p-4 text-center justify-center items-center card">
         <p className="py-1 text-xl text-gray-600/70 font-medium">Hisse Grubu</p>
-        <p className="py-1 text-xl text-[#44bdc6] font-semibold">{kurban?.kurban_hisse_group}</p>
+        <p className="py-1 text-2xl text-[#44bdc6] font-semibold">{kurban?.kurban_hisse_group}</p>
       </div>
-      <div className="bg-[#F3FBFC] p-4 flex flex-col justify-center items-center">
+      <div className="bg-[#F3FBFC] p-4 text-center justify-center items-center card">
         <p className="py-1 text-xl text-gray-600/70 font-medium">Durumu</p>
         <p className="py-1 text-xl text-[#44bdc6] font-semibold">{kurban?.process?.process_title}</p>
       </div>
-      <div className="bg-[#F3FBFC] p-4 flex flex-col justify-center items-center">
+      <div className="bg-[#F3FBFC] p-4 text-center justify-center items-center card">
         <p className="py-1 text-xl text-gray-600/70 font-medium">Net Hisse Fiyatı</p>
-        <p className="py-1 text-xl text-[#44bdc6] font-semibold">{kurban?.net_hisse_fiyat} ₺</p>
+        <p className="py-1 text-2xl text-[#44bdc6] font-semibold">{kurban?.net_hisse_fiyat} ₺</p>
       </div>
     </div>
 
-    <div className="bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center">
+
+    <div className="bg-white p-4 mx-2 md:mx-10 my-2 card">
+        <h2 className="font-semibold text-gray-500 text-center text-xl my-2 mb-5">Kurbanım Şuan Ne Durumda</h2>
+        <ProcessSteps process={process} currentID={kurban?.process?._id} />
+    </div>
+
+    <div className="bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center card">
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Hissedarları</h2>
         <ul className="text-lg text-gray-600/70 font-medium">
           {kurban?.hisse?.map(hissedar => (
@@ -90,21 +105,19 @@ export default function KurbanInfo() {
         </ul>
     </div>
 
-    <div className={`${kurban?.kurban_image ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center`}>
+    <div className={`${kurban?.kurban_image ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center card`}>
         <h2 className="font-semibold text-gray-500 text-xl my-2">Kurbanınız</h2>
 
         <div >
           <img src={kurban?.kurban_image} alt="kurban" className="w-full md:max-w-3xl mx-auto h-auto"/>
         </div>
-    </div>
-
-    
+    </div>    
 
     <div className={`${(kurban?.youtube_embed || kurban?.video_path || kurban?.vidyome_embed) ? "hidden" : ""} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5`}>
       <p className={`text-gray-400 text-sm`}>Kurbanınız kesildikten sonra kesim videosunu buradan izleyebilirsiniz..</p>
     </div>
     
-    <div className={`${kurban?.vidyome_embed ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5`}>
+    <div className={`${kurban?.vidyome_embed ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5 card`}>
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Videosu</h2>
         
         <div className="overflow-hidden relative mx-auto">
@@ -114,7 +127,7 @@ export default function KurbanInfo() {
         </div>
     </div>
 
-    <div className={`${kurban?.youtube_embed ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5`}>
+    <div className={`${kurban?.youtube_embed ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5 card`}>
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Videosu</h2>
         
         <div className="overflow-hidden relative mx-auto">
@@ -127,7 +140,7 @@ export default function KurbanInfo() {
         
     </div>
     
-    <div className={`${kurban?.video_path ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5`}>
+    <div className={`${kurban?.video_path ? "" : "hidden"} bg-[#F3FBFC] p-4 mx-2 md:mx-10 my-2 text-center !mb-5 card`}>
         <h2 className="font-semibold text-gray-500 text-xl my-2">Bu Kurbanın Videosu</h2>
 
         {/*kurban?.video_path && <video width="800" height="500" controls className="mx-auto">

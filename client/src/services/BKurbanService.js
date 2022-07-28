@@ -20,13 +20,21 @@ class BKurbanService {
         return axios.get(`/buyukbas-kurban/process/${payload.kurum_id}/${payload.project_id}/${payload.process_id}/${payload.self}`);
     }
     
-    /* */
+    /* For Kurban-Info Page */
     getKurbanInfo(kurban_code) {
         return axios.get(`/user/kurban-info/${kurban_code}`);
     }
+    getKurumProcess(kurum_id) {
+        return axios.get(`/user/kurban-info-process/${kurum_id}`);
+    }
+    /* */
     
     update(payload) {
         return axios.put(`/buyukbas-kurban/${payload._id}`, payload);
+    }
+
+    changeProcess(payload) {
+        return axios.put(`/buyukbas-kurban/change-process/${payload._id}`, payload);
     }
 
     upload(payload, id, uploadFileOption) {

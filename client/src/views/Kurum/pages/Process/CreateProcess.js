@@ -100,7 +100,7 @@ function CreateProcess() {
                     focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
                       <option value="">{message_template_holder}</option>
                       {messageTemplates.map((message) => (
-                        <option key={message._id} value={message.message_title}>{message.message_title}</option>
+                        <option key={message._id} value={message._id}>{message.message_title}</option>
                       ))}
                   </select>
                 </label>

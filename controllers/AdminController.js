@@ -1,9 +1,29 @@
 //import Kurum from '../models/Kurum.js'
+import jwt from 'jsonwebtoken'
+import Admin from '../models/Admin.js'
+import bcrypt from "bcrypt";
 
 import mongoose from "mongoose";
 
 const login = async (req,res) =>{
+    try {
+        const {email, password} = req.body
+    
+        const admin = await Admin.findOne({email});
 
+        if(admin && (await bcrypt.compare(password, admin.password))) {
+            return res.status(200).json({
+                id: admin._id,
+                email: admin.email,
+                createdAt: admin.createdAt,
+                token: generateToken(admin._id)
+            })
+        } else {
+            return res.status(200).json({error: 'Doesn\'t match with the any admin.'})
+        }
+    } catch (error) {
+        //res.json(error);
+    }
 }
 
 
@@ -40,5 +60,9 @@ const update = async (req,res) =>{
 }
 
 const _delete = async (req,res) =>{ }
+
+const generateToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '30d'})
+}
 
 export {login, create, find, update, _delete}

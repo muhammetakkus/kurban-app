@@ -83,6 +83,7 @@ router.get('/user/kurban-info/:kurban_code', getKurbanInfo)
 
 
 
+
 import kurumMiddleware from "../middleware/kurum.js"
 
 /* */
@@ -94,8 +95,11 @@ import { getAll } from '../controllers/DashboardMenuController.js'
 router.get('/kurum/menus', kurumMiddleware, getAll)
 
 
-import { processes } from '../controllers/ProcessController.js'
+import { processes, getKurumProcess } from '../controllers/ProcessController.js'
 router.get('/process/all/:kurum_id', processes)
+
+/* For Kurban-Info Page */
+router.get('/user/kurban-info-process/:kurum_id', getKurumProcess)
 
 import { messages } from '../controllers/MessageController.js'
 router.get('/message/all/:kurum_id', messages)
@@ -121,5 +125,13 @@ import { findSingleBuyukbas, findForEkran } from '../controllers/BuyukbasKurbanC
 router.get('/buyukbas-kurban/:project_id', findAll)
 router.get('/buyukbas-kurban/single/:id', findSingleBuyukbas)
 router.get('/buyukbas-kurban/process/:kurum_id/:project_id/:process_id/:self', findForEkran)
+
+/* created by admin */
+import { findAllMessageAPI } from '../controllers/MessageAPIController.js'
+router.get('/message-api/all', findAllMessageAPI)
+
+/* created by kurum */
+import { findAllMessageServices } from '../controllers/MessageServiceController.js'
+router.get('/sms-service/all/:kurum_id', findAllMessageServices)
 
 export default router

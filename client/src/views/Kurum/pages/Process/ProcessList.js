@@ -114,7 +114,7 @@ function ProcessList() {
                           <span>{process.process_title}</span>
                         </td>
                         <td className="px-4 py-1 text-l">
-                          <span>{process.message_template ? process.message_template : '-'}</span>
+                          <span>{process.message_template ? process.message_template.message_title : '-'}</span>
                         </td>
                         <td className="px-4 inline-flex flex-col py-1 text-sm">
                           

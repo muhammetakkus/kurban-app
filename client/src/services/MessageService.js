@@ -1,9 +1,15 @@
 import axios from "axios";
 
+// burası message template
 class MessageService {
     send(payload) {
         //return axios.get(`http://api.pusulasms.com/toplusms.asp?kullanici=test&parola=test&telefonlar=905385426714;05385426714;5385426714&mesaj=DenemeKurbanAp&gonderen=PUSULASMS`);
         return axios.post('/message/send', payload)
+    }
+
+    sendNewMessageAPI(payload) {
+        console.log(payload)
+        return axios.post('/message/test-new-message-api', payload)
     }
 
     create(payload) {
@@ -26,6 +32,8 @@ class MessageService {
     delete(id) {
         return axios.delete(`/message/${id}`);
     }
+
+    
 }
 
 export default new MessageService();

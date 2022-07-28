@@ -2,10 +2,8 @@ import {createSlice} from '@reduxjs/toolkit'
 
 
 const initialState = {
-  isAdmin : 0,
   isUser : 0,
   isKurum : 0,
-  admin: {},
   user: {},
   kurum: {}
 }
@@ -29,6 +27,10 @@ export const authSlice = createSlice({
     kurumLogout : (state) => {
       state.kurum = {}
       state.isKurum = false
+    },
+    setActiveSMSAPI: (state, action) => {
+      console.log(action.payload)
+      state.kurum.active_sms_api = action.payload
     }
   },
 })
@@ -36,7 +38,8 @@ export const authSlice = createSlice({
 export const {setUser,
               userLogout, 
               setKurum, 
-              kurumLogout
+              kurumLogout,
+              setActiveSMSAPI
             } = authSlice.actions
 
 export default authSlice.reducer

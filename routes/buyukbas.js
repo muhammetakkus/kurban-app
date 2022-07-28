@@ -6,11 +6,14 @@ import AWS from 'aws-sdk'
 import progress from 'progress-stream'
 const router = express.Router()
 
-import { create, update, _delete, uploadKurbanVideo, uploadKurbanImage } from '../controllers/BuyukbasKurbanController.js'
+import { create, update, _delete, uploadKurbanVideo, uploadKurbanImage, changeKurbanProcess } from '../controllers/BuyukbasKurbanController.js'
 
 router.post('/:project_id', create)
 
 router.put('/:id', update)
+
+// { parametre ile kurban_id, process (process_id), kurum_id } alıyor
+router.put('/change-process/:id', changeKurbanProcess)
 
 
 
@@ -70,8 +73,6 @@ const upload = multer({
     filefilter: filefilter
   })
 })
-
-
 
 /* Create Bucket */
 /*

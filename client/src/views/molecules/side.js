@@ -30,6 +30,8 @@ export default function Side(props) {
 
   useEffect(() => {
     setOpen(data.isOpen)
+
+    console.log(props)
   }, [data])
   
   const [open, setOpen] = useState(data.isOpen)

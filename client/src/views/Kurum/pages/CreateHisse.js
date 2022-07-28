@@ -64,9 +64,8 @@ function CreateHisse() {
         is_vekalet,
         hissedar_note
       }
-      const response = await HisseService.create(data);
       
-      console.log(response)
+      const response = await HisseService.create(data);
 
       if(response.status === 200 && !response.data.error) {
         navigate(`/kurum/dashboard/${active_project_id}`)

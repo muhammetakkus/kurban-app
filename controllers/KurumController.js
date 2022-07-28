@@ -30,6 +30,7 @@ const kurumData = (kurum) => {
         is_verify: kurum.is_verify,
         current_message_api: kurum.current_message_api,
         template: kurum.template,
+        active_sms_api: kurum.active_sms_api,
         token: generateToken(kurum._id)
     }
 }
@@ -184,9 +185,9 @@ const find = async (req,res) => {
 }
 
 const update = async (req,res) => {
-  /*  const filter = { name: 'Alex' };
-    const update = { age: '19' };
-    let doc = await Kurum.findOneAndUpdate(filter, update);*/
+    const id = { _id: req.params.id }
+    let doc = await Kurum.findOneAndUpdate(id, req.body, {new: true});
+    res.status(200).json(doc);
 }
 const _delete = async (req,res) =>{
    /* const result = await Kurum.findByIdAndDelete({ _id: req.params.id });

@@ -15,12 +15,12 @@ const PORT = process.env.PORT || 5001
 
 /* Database */
 import connectDB from './config/db.js'
-connectDB()
-
+connectDB.connection()
 
 /* Routers */
 import userRoutes from './routes/user.js'
 import kurumRoutes from './routes/kurum.js'
+import adminRoutes from './routes/admin.js'
 import projectRoutes from './routes/project.js'
 import buyukbasKurbanRoutes from './routes/buyukbas.js'
 import kucukbasKurbanRoutes from './routes/kucukbas.js'
@@ -28,6 +28,8 @@ import processRoutes from './routes/process.js'
 import hisseGroupRoutes from './routes/hisse_group.js'
 import hisseRoutes from './routes/hisse.js'
 import messageRoutes from './routes/message.js'
+import messageAPIRoutes from './routes/message_api.js'
+import smsServiceRoutes from './routes/sms_service.js'
 
 
 
@@ -104,6 +106,7 @@ if(process.env.NODE_ENV === "production") {
   })
 }
 app.use('/kurum', kurumRoutes)
+app.use('/admin', adminRoutes)
 // bu şekilde de okey (yani altındaki bütün routelara middleware geçmiş oldun prefix+route+middleware diyebiliriz) 
 app.use('/project', kurumMiddleware, projectRoutes) 
 app.use('/process', kurumMiddleware, processRoutes)
@@ -111,7 +114,9 @@ app.use('/buyukbas-kurban', kurumMiddleware, buyukbasKurbanRoutes)
 app.use('/kucukbas-kurban', kurumMiddleware, kucukbasKurbanRoutes)
 app.use('/hisse-group', kurumMiddleware, hisseGroupRoutes)
 app.use('/hisse', kurumMiddleware, hisseRoutes)
-app.use('/message', kurumMiddleware, messageRoutes)
+app.use('/message', kurumMiddleware, messageRoutes) // create by kurum for message templates  - relation with MessageTemplate model
+app.use('/message-api', messageAPIRoutes) // creeate by admin - relation with MessageAPI model
+app.use('/sms-service', smsServiceRoutes) // create by kurum - relation with MessageService model
 
 
 
@@ -139,3 +144,11 @@ app.use('/message', kurumMiddleware, messageRoutes)
 //app.use(errorHandler)
 
 httpServer.listen(PORT, console.log(`Express server running in port ${PORT}`))
+
+
+/**
+ * Admin create a message API name as a message_service_title via MessageAPI model
+ * client create a sms api via MessageService model
+ * 
+ * gsm - message_content - kurum.active_sms_api - getActiveSMSApiInfo  - send message
+ */

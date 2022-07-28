@@ -4,7 +4,17 @@ import asyncHandler from 'express-async-handler'
 import fetch from 'cross-fetch'
 import Process from '../models/Process.js';
 import AWS from 'aws-sdk'
-//import fs from 'fs'
+import KurbanProcessChangeFacade from './KurbanProcessChangeFacade/KurbanProcessChangeFacade.js';
+
+const changeKurbanProcess = async (req,res) => {
+    const kurbanID = { _id: req.params.id }
+    const processID = req.body.process
+    const kurumID = req.body.kurum_id
+
+    const kurbanProcessFacade = new KurbanProcessChangeFacade(kurbanID, processID, kurumID)
+    const response = await kurbanProcessFacade.changeKurbanProcess()
+    return res.status(200).json(response);
+}
 
 const findSingleBuyukbas = asyncHandler( async (req,res) => {
     const buyukbas = await Buyukbas.find({_id: req.params.id})
@@ -31,9 +41,10 @@ const findForEkran = asyncHandler( async (req,res) => {
 })
 
 const findAll = asyncHandler( async (req,res) => {
-    const buyukbas = await Buyukbas.find({project_id: req.params.project_id}).populate("hisse").populate("process").sort('createdAt')
+    const buyukbas = await Buyukbas.find({project_id: req.params.project_id}).populate("hisse").populate("process").sort('-createdAt')
     return res.status(200).json(buyukbas);
 })
+
 
 // bu method aslında 3-4 farklı metoda bölünmeliydi :(
 const update = async (req,res) => {
@@ -42,16 +53,15 @@ const update = async (req,res) => {
     const { _id, message_template, process, kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note, kurban_hisse_group, youtube_embed } = req.body
 
     /* Process/İşlem adımına bağlı mesaj gönderme */
-
     let is_message_send = 0
     if(req.body.process) {
         const is_message_template = await Process.findById(req.body.process)
+  
 
         if(is_message_template.message_template) {
     
         const buyukbas = await Buyukbas.find({_id: _id}).populate("hisse")
-        const message = await MessageTemplate.find({message_template: is_message_template.message_template})   
-
+        const message = await MessageTemplate.findById(is_message_template.message_template) 
             if(buyukbas[0].hisse.length > 0) {
                 const hissedar_adet = buyukbas[0].hisse.length
                 let gonderilen_mesaj = 0
@@ -63,9 +73,10 @@ const update = async (req,res) => {
                     gonderilen_mesaj < hissedar_adet ? GSMs+=";" : null
                 });
         
-                message_txt = message[0].message_content
-
-                console.log(buyukbas[0].hisse)
+                message_txt = message.message_content
+                
+                // console.log(message_txt)
+                // console.log(buyukbas[0].hisse)
 
                 await fetch(`http://api.pusulasms.com/toplusms.asp?kullanici=YENIBOSNA&parola=655330&telefonlar=${GSMs}&mesaj=${message_txt}&gonderen=Y.BosnaYurt`)
                 .then(res => {
@@ -87,15 +98,18 @@ const update = async (req,res) => {
         // burası sadece process change de tetiklenmeli aslında
         var io = req.app.get('socketio');
         // değişiklik yapılan process id sinde bir socket oluştur
-        // console.log(doc.process)
         io.emit(doc.process)
+
+        io.on('end', function (){
+            io.disconnect(0);
+        });
 
         return res.status(200).json({...doc._doc, is_message_send: is_message_send});
     }
     
 
-        const doc = await Buyukbas.findOneAndUpdate(id, req.body, {new: true});
-        return res.status(200).json(doc);
+    const doc = await Buyukbas.findOneAndUpdate(id, req.body, {new: true});
+    return res.status(200).json(doc);
     
    
 }
@@ -209,4 +223,4 @@ const _delete = async (req,res) =>{
 }
 
 
-export { create, findSingleBuyukbas, findAll, findForEkran, update, _delete, uploadKurbanVideo, uploadKurbanImage }
+export { create, findSingleBuyukbas, findAll, findForEkran, update, _delete, uploadKurbanVideo, uploadKurbanImage, changeKurbanProcess }

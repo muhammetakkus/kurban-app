@@ -1,11 +1,13 @@
 // import {NavLink} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { NavLink, useLocation } from 'react-router-dom'
 import { kurumLogout } from '../../../store/reducers/auth'
 import { setMobileMenu, setDark } from '../../../store/reducers/kurum.dashboard'
 
 function Header() {
     const dispatch = useDispatch()
+    const location = useLocation()
     const kurum = useSelector(state => state.auth.kurum)
     const [isAccountMenu, setIsAccountMenu] = useState(false)
     //const isKurum = useSelector(state => state.auth.isKurum)
@@ -45,8 +47,11 @@ function Header() {
       dispatch(setMobileMenu(false))
     }, [])
 
+    useEffect(() => {
+      setIsAccountMenu(false)
+    }, [location]);
+
     return (
-      
         <header className="z-10 py-4 bg-white shadow-md dark:bg-gray-800 ">
           <div
             className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
@@ -70,30 +75,10 @@ function Header() {
             </button>
   
             <div className="flex justify-center flex-1 lg:mr-32">
-              <div
-                className="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
-              >
-                <div className="absolute inset-y-0 flex items-center pl-2">
-                  <svg
-                    className="w-4 h-4"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                    ></path>
-                  </svg>
-                </div>
-                <input
-                  className="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                  type="text"
-                  placeholder="Search for projects"
-                  aria-label="Search"
-                />
-              </div>
+              {/* Header Search Area */}  
             </div>
-            <ul className="flex items-center flex-shrink-0 space-x-6">
+
+            <ul className={`flex items-center flex-shrink-0 space-x-6`}>
             <li className="flex">
                 <button onClick={toggleDarkTheme} className="rounded-md focus:outline-none focus:shadow-outline-purple" aria-label="Toggle color mode">
                   <span className={`${isDark ? "hidden" : ""}`}>
@@ -110,7 +95,7 @@ function Header() {
                 </button>
               </li>
       
-              <li className="relative">
+              <li className={` relative`}>
                 <button
                   className="align-middle rounded-full focus:shadow-outline-purple focus:outline-none p-1 px-2 ring-1 ring-purple-500/20"
                   onClick={() => {isAccountMenu ? setIsAccountMenu(false) : setIsAccountMenu(true)}}
@@ -144,9 +129,9 @@ function Header() {
                       </span>
                     </li>
                     <li className="flex cursor-pointer">
-                      <span
+                      <NavLink 
+                        to={'/kurum/setting'}
                         className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-           
                       >
                         <svg
                           className="w-4 h-4 mr-3 stroke-2"
@@ -161,7 +146,7 @@ function Header() {
                           <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                         <span>Ayarlar</span>
-                      </span>
+                      </NavLink>
                     </li>
                     <li className="flex cursor-pointer">
                       <span

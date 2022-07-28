@@ -30,6 +30,8 @@ import KucukbasKurban from '../views/Kurum/pages/KucukbasKurban'
 import HisseGroup from '../views/Kurum/pages/HisseGroup/HisseGroup'
 import EditHisseGroup from '../views/Kurum/pages/HisseGroup/EditHisseGroup'
 import CreateHisseGroup from '../views/Kurum/pages/HisseGroup/CreateHisseGroup'
+import Setting from '../views/Kurum/pages/Setting'
+import NewSMSAPI from '../views/Kurum/pages/Setting/components/NewSMSAPI'
 
 import Ekran from '../views/Kurum/pages/Ekran/Ekran'
 import EkranManagement from '../views/Kurum/pages/Ekran/EkranManagement'
@@ -44,6 +46,9 @@ import KurumRegister from '../views/Kurum/pages/Register'
 import Admin from '../views/Admin/AdminLayout'
 import AdminDashboard from '../views/Admin/pages/Dashboard'
 import AdminLogin from '../views/Admin/pages/Login'
+import MessageAPI from '../views/Admin/pages/MessageAPI/MessageAPI'
+import CreateMessageAPI from '../views/Admin/pages/MessageAPI/CreateMessageAPI'
+import EditMessageAPI from '../views/Admin/pages/MessageAPI/EditMessageAPI'
 import AdminError404 from '../views/Admin/pages/E404'
 
 import SomeComponent from '../views/SomeComponent'
@@ -225,6 +230,14 @@ const routers = (isUserAuth, isKurumAuth, isAdminAuth) => [
                 element: <CreateEkranDynamic />
             },
             {
+                path: 'setting',
+                element: <Setting />
+            },
+            {
+                path: 'new-message-api',
+                element: <NewSMSAPI />
+            },
+            {
                 path: '*',
                 exact: false,
                 element: <Navigate to="/kurum/login" replace />,// element: <KurumError404 />
@@ -240,11 +253,25 @@ const routers = (isUserAuth, isKurumAuth, isAdminAuth) => [
         path: '/admin',
         exact: true,
         element: isAdminAuth ? <Admin /> : <Navigate to="/admin/login" />,
-        redirect: '/',
         children: [
+            // main path'i bu şekilde /admin absolute path olarak belir diğer child pathleri / olmadan
             {
                 path: '/admin',
                 element: <AdminDashboard />
+            },
+            {
+                path: 'message-api',
+                element: <MessageAPI />
+            },
+            {
+                path: 'create-message-api',
+                exact: false,
+                element: <CreateMessageAPI />
+            },
+            {
+                path: 'edit-message-api',
+                exact: false,
+                element: <EditMessageAPI /> 
             },
             {
                 path: '*',

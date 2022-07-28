@@ -20,7 +20,7 @@ export const kurumSlice = createSlice({
     setActiveProjectID: (state, action) => {
       //window.localStorage.setItem("dark", action.payload);
       state.active_project_id = action.payload
-    },
+    }
   },
 })
 
