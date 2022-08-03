@@ -48,7 +48,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ## Components ##
 - view klasöründe 3 ayrı layout var her bir layout kendi içinde component klasörüne sahip old. gibi genel componentler view/components altında
-- Input componentine hata array'i veriliyor Inputta input name değerine göre o inputun hatasını arrayden okuyor yani errors array'ına input name'e göre hatalar json olarak geçilecek
+- Input componentine hata array'i veriliyor Inputta input name değerine göre o inputun hatasını arrayden okuyor yani errors array'ına input name'e göre hatalar json olarak geçilecek - bkz: setError({key-input-name: "Değer boş geçilemez"})
 
 ## JWT ##
 - backend tarafında jwt sign jwt.sign({id}, 'random secret', {expiresIn: '30d'}) ile token üretiyor bu token express-sesion veya cookie-session gibi paketlerle backend tarafında store edilebilir. Ön tarafta localStorage ile store edilecek.
@@ -148,12 +148,16 @@ express tarafında get metodları app.use(/) altında çalışıyor diğer path 
 - DynamicEkran componenti de daima var olan dinamik ekranların bağlı olduğu processlerin id leri ile bir socket varsa orayı dinamik olarak dinlemekte - socket.on(props.screen.process._id)
 - böylece bir işlem değişince DynamicScreen componenti tetiklenir ve get metodunu çağrır
 
+## SMS API - SMS Factory Module ##
+- Model: MessageTemplate -> sadece kurumun message_content ve message_title kayıtlarını tutar sms gönderme işlemi ile alakası yok
+- Model: MessageApi -> sadece Admin'in eklediği desteklenen SMS API  isimlerini tutar. Bu isimler birebir SMS API Class ismi ile aynı olmalı (server/Modules/FactorySMS/APIs)
+- Model: MessageService -> kurumun oluşturduğu SMS API hesap kayıtlarını tutar
 
-
-
-
+- Controller: MessageAPIController -> bu controller adminin oluşturduğu message api kayıtlarını sunar
+- Controller: MessageServiceController -> bu controller kurumun oluşturduğu sms api hesaplarını CRUD eder
+- Controller: MessageController -> bu controller kurumun oluşturduğu mesaj şablonlarını get eder + Factory SMS API modulünün send metodu da çalıştıran metoduyla sms gönderimi de yapar
 
 
 #
 
-- get route ları user.js e koymayı unutma Javascript not enable hatasından kaçınmak için
+- Javascript not enable hatasından kaçınmak için get route ları user.js e koymayı unutma - all get routes

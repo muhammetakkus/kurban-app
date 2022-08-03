@@ -55,33 +55,44 @@ const _delete = async (req,res) =>{
 
 
 const send = async (req,res) => {
-    const { hissedarlar, message, kurum_id, kurban_code = "", kurban_no = "", kurban_info_message = 0 } = req.body
-    let message_txt = message?.message_content
+    try {
+        const { hissedarlar, message, kurum_id, kurban_code = "", kurban_no = "", kurban_info_message = 0 } = req.body
+        let message_txt = message?.message_content
 
-    const kurumMessageAPI = await Kurum.findById( kurum_id ).populate("active_sms_api");
+        const kurumMessageAPI = await Kurum.findById( kurum_id ).populate("active_sms_api");
 
-    let GSMs = []
-    hissedarlar.forEach(hissedar => {
-        GSMs.push(hissedar.hissedar_gsm)
-    });
+        if(!kurumMessageAPI.active_sms_api) {
+            return res.status(200).json({error: "Mesaj API Bulunamadı.."});
+        }
 
-    if(kurban_info_message) {
-        message_txt= `Muhterem hissedarımız, ${kurban_no} NO'lu kurbanınız ile alakalı durum takibi ve bilgilere ${process.env.NODE_ENV === "production" ? process.env.CLIENT_URL_PROD : process.env.CLIENT_URL_LOCAL}/kurban-info/${kurban_code} adresinden ulaşabilirsiniz.`
+        let GSMs = []
+        hissedarlar.forEach(hissedar => {
+            GSMs.push(hissedar.hissedar_gsm)
+        });
+
+        // Remove Same GSMs
+        GSMs = Array.from(new Set(GSMs));
+
+        if(kurban_info_message) {
+            message_txt= `Muhterem hissedarımız, ${kurban_no} NO'lu kurbanınız ile alakalı durum takibi ve bilgilere ${process.env.NODE_ENV === "production" ? process.env.CLIENT_URL_PROD : process.env.CLIENT_URL_LOCAL}/kurban-info/${kurban_code} adresinden ulaşabilirsiniz.`
+        }
+
+        // with Factory Design Pattern
+        const smsAPI =  new SMSFactory(
+            kurumMessageAPI.active_sms_api?.message_api_title,
+            kurumMessageAPI.active_sms_api?.message_service_username,
+            kurumMessageAPI.active_sms_api?.message_service_password,
+            kurumMessageAPI.active_sms_api?.message_service_origin
+        )
+
+        for (let index = 0; index < GSMs.length; index++) {
+            smsAPI.send(GSMs[index], message_txt)
+        }
+
+        res.status(200).json(true);
+    } catch (error) {
+        return res.status(200).json(error.message);
     }
-
-    // with Factory Design Pattern
-    const smsAPI =  new SMSFactory(
-        kurumMessageAPI.active_sms_api?.message_api_title,
-        kurumMessageAPI.active_sms_api?.message_service_username,
-        kurumMessageAPI.active_sms_api?.message_service_password,
-        kurumMessageAPI.active_sms_api?.message_service_origin
-    )
-
-    for (let index = 0; index < GSMs.length; index++) {
-        smsAPI.send(GSMs[index], message_txt)
-    }
-
-    res.status(200).json(true);
 }
 
 export { messages, create, find, update, _delete, send }

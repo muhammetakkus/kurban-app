@@ -20,6 +20,7 @@ function BuyukBasKurbanList({ project_id }) {
   const kurum = useSelector(state => state.auth.kurum)
 
   const [kurbans, setKurban] = useState([]);
+  const [kurbanAtStart, setKurbanAtStart] = useState([]);
   const [message_templates, setMessageTemplate] = useState([]);
   const [kurban, _setKurban] = useState({});
   const [process, setProcess] = useState([]);
@@ -43,6 +44,7 @@ function BuyukBasKurbanList({ project_id }) {
       if(request.status === 200) {
         setLoading(false)
         setKurban(request.data)
+        setKurbanAtStart(request.data)
       }
     }
     const getProcess = async () => {
@@ -186,9 +188,20 @@ function BuyukBasKurbanList({ project_id }) {
     setKurban(kurbans.reverse())
     forceUpdate();
   }
+
+  const search = (e) => {
+    console.log(e.target.value)
+    if(e.target.value.length > 0) {
+      setKurban(kurbans.filter(kurban => kurban.hisse.some(hissedar => 
+          hissedar.hissedar_full_name.toLowerCase().match(new RegExp(e.target.value, 'g')))
+        ))
+    } else {
+      setKurban(kurbanAtStart)
+    }
+  }
     return (
      <>
-        <Search className={` mt-2 mb-5 `} />
+        <Search className={` mt-2 mb-5 `} search={search} />
         
         <div className="w-full overflow-hidden rounded-lg shadow-xs border-[1px] border-gray-400/20">
           <Noty isOpen={noty.isOpen} message={noty.message} title={noty.title} type={noty.type} />

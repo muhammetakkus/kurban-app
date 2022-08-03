@@ -7,13 +7,17 @@ import AWS from 'aws-sdk'
 import KurbanProcessChangeFacade from './KurbanProcessChangeFacade/KurbanProcessChangeFacade.js';
 
 const changeKurbanProcess = async (req,res) => {
-    const kurbanID = { _id: req.params.id }
-    const processID = req.body.process
-    const kurumID = req.body.kurum_id
+    try {
+        const kurbanID = { _id: req.params.id }
+        const processID = req.body.process
+        const kurumID = req.body.kurum_id
 
-    const kurbanProcessFacade = new KurbanProcessChangeFacade(kurbanID, processID, kurumID)
-    const response = await kurbanProcessFacade.changeKurbanProcess()
-    return res.status(200).json(response);
+        const kurbanProcessFacade = new KurbanProcessChangeFacade(kurbanID, processID, kurumID)
+        const response = await kurbanProcessFacade.changeKurbanProcess()
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(200).json(error.message);
+    }
 }
 
 const findSingleBuyukbas = asyncHandler( async (req,res) => {

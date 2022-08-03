@@ -58,26 +58,39 @@ class KurbanProcessChangeFacade {
 
     async getActiveSMSAPI() {
         const kurum = await Kurum.findById(this.kurumID).populate('active_sms_api')
+ 
         this.kurumMessageAPI = kurum.active_sms_api
         return this.kurumMessageAPI
     }
 
     async sendSMS() {
-        await this.getActiveSMSAPI()
-        const message = await this.getMessageTemplate()
-        console.log(this.GSMs)
-        console.log(this.kurumMessageAPI)
-        
-        // with Factory Design Pattern
-        const smsAPI =  new SMSFactory(
-                this.kurumMessageAPI.message_api_title,
-                this.kurumMessageAPI.message_service_username,
-                this.kurumMessageAPI.message_service_password,
-                this.kurumMessageAPI.message_service_origin
-            )
+        try {
+            await this.getActiveSMSAPI()
+            const message = await this.getMessageTemplate()
+            console.log(this.GSMs)
+            console.log(this.kurumMessageAPI)
+            
+            if(!this.kurumMessageAPI) {
+                throw new Error("Mesaj API Bulunamadı...")
+            }
 
-        for (let index = 0; index < this.GSMs.length; index++) {
-            smsAPI.send(this.GSMs[index], message.message_content)
+            // with Factory Design Pattern
+            const smsAPI =  new SMSFactory(
+                    this.kurumMessageAPI.message_api_title,
+                    this.kurumMessageAPI.message_service_username,
+                    this.kurumMessageAPI.message_service_password,
+                    this.kurumMessageAPI.message_service_origin
+                )
+
+            // Remove Same GSMs
+            this.GSMs = Array.from(new Set(this.GSMs));
+
+            for (let index = 0; index < this.GSMs.length; index++) {
+                smsAPI.send(this.GSMs[index], message.message_content)
+            }
+        } catch (error) {
+            console.log(error.message)
+            return error.message
         }
     }
 }

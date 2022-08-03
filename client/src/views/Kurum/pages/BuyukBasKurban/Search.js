@@ -23,6 +23,7 @@ export default function Search (props) {
                 type="text"
                 placeholder="Hissedar ismi ile arama yap.."
                 aria-label="Search"
+                onChange={props.search}
             />
         </div>
     )
