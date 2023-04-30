@@ -6,6 +6,7 @@ import { Icon } from '../../../utils/SVG';
 
 export default function LeftMenuContent () {
     const project_id = useSelector(state => state.kurum.active_project_id)
+    const kurum = useSelector(state => state.auth.kurum)
     const [menus, setMenus] = useState([]);
 
     useEffect(() => {
@@ -41,6 +42,13 @@ export default function LeftMenuContent () {
             </svg>
             <span>Projeler</span>
             </NavLink>
+        </div>
+
+        <div className="px-6 my-6">
+            <a href={`http://localhost:3000/onkayit/${kurum._id}`} target='_blank'
+            className='flex items-center justify-center w-full p-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-gray-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple'>
+                <span>Ön Kayıt Sayfası</span>
+            </a>
         </div>
     </>
     );

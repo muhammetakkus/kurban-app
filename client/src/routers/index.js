@@ -53,6 +53,8 @@ import AdminError404 from '../views/Admin/pages/E404'
 
 import SomeComponent from '../views/SomeComponent'
 
+import KurbanOnKayit from '../views/Kurum/pages/KurbanOnKayit/Index'
+
  
 // bu Navigate 'e state prop olarak userLocation() hook'u vermen gerekebilir. redirect ile alakalı bug olursa
 
@@ -67,6 +69,10 @@ const routers = (isUserAuth, isKurumAuth, isAdminAuth) => [
     {
         path: '/kurban-info/:kurban_code',
         element: <KurbanInfo />
+    },
+    {
+        path: '/onkayit/:kurum_id',
+        element: <KurbanOnKayit />
     },
     /* */
     {

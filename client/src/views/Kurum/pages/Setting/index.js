@@ -15,7 +15,7 @@ export default function Index () {
     const [searchParams] = useSearchParams();
     useEffect(() => {
         if(searchParams.get("tab")) {
-            handleTab(searchParams.get("tab"))
+           
         }
     }, [searchParams])
 

@@ -21,6 +21,7 @@ class Pusula extends SMSInterface {
         })
         .catch(err => { console.error(err); return err; });
     }
+    
 }
 
 export default Pusula

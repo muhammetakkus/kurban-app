@@ -4,7 +4,7 @@ const router = express.Router()
 import kurumMiddleware from "../middleware/kurum.js"
 
 // Controllers
-import { login, kurums, register, find, update, _delete } from '../controllers/KurumController.js'
+import { login, kurums, register, find, update, _delete, onKayit } from '../controllers/KurumController.js'
 //import { getAll } from '../controllers/DashboardMenuController.js'
 
 
@@ -13,6 +13,9 @@ router.get('/', kurumMiddleware, kurums)
 //router.get('/:id/projects', kurumMiddleware, kurums)
 router.post('/login', login)
 router.post('/register', register)
+router.post('/onkayit/:kurum_id', onKayit)
+// buraya post requesti al mail at
+// heroku aynı domain'e deploy et github auto push update olsun
 
 /* Bu kurum crud adminMiddleware korumasında olacak */
 router.get('/:id', find)

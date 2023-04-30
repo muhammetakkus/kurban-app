@@ -152,6 +152,7 @@ const register = async (req,res) => {
         //res.status(500).send(error);
     }
 }
+
 const kurums = asyncHandler( async (req,res) => {
     const kurumlar = await Kurum.find().select("-template");
     // execPupulate() 'i silipte dene 
@@ -171,8 +172,8 @@ const find = async (req,res) => {
    /**
     * ID ile Collection'dan spesifik field'ları çekmek için
     */
-    //const kurumSpecial = await Kurum.findById({ _id: req.params.id }, {full_name: kurum_name}).exec(); // _id, full_name, kurum_name key'li obj döner
-
+    const kurumSpecial = await Kurum.findById({ _id: req.params.id }).exec(); // _id, full_name, kurum_name key'li obj döner
+    res.status(200).json(kurumSpecial)
     /**
      * var mı? varsa _id döner 
      */
@@ -202,4 +203,10 @@ const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '30d'}) // buradaki json key id olduğu için decode ederken de id olmalı
 }
 
-export {login, kurums, register, find, update, _delete}
+const onKayit = (req,res) => {
+    const {kurum_id} = req.params
+    console.log(kurum_id);
+    // res.status(200).json(response)
+}
+
+export {login, kurums, register, find, update, _delete, onKayit}
