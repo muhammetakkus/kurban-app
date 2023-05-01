@@ -94,7 +94,7 @@ router.get('/project/:id', findProject)
 import { getAll } from '../controllers/DashboardMenuController.js'
 router.get('/kurum/menus', kurumMiddleware, getAll)
 
-import { findKurum } from '../controllers/KurumController.js'
+import { find as findKurum } from '../controllers/KurumController.js'
 router.get('/kurum/:id', findKurum)
 
 
