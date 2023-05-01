@@ -79,7 +79,7 @@ app.use(
   // Sessions
 app.use(
     session({
-      secret: 'kurban app',
+      secret: 'kurbanapp',
       resave: false,
       saveUninitialized: false,
       //store: MongoStore.create({mongoUrl: process.env.MONGO_URI}),
