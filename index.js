@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 //import errorHandler from './middleware/error.js'
 
-dotenv.config({ path: './config/config.env' })
+dotenv.config({ path: './.env' })
 const PORT = process.env.PORT || 5001
 
 /* Database */
