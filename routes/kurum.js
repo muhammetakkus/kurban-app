@@ -18,7 +18,7 @@ router.post('/onkayit/:kurum_id', onKayit)
 // heroku aynı domain'e deploy et github auto push update olsun
 
 /* Bu kurum crud adminMiddleware korumasında olacak */
-router.get('/:id', find)
+// router.get('/:id', find)
 router.put('/:id', update)
 router.delete('/:id', _delete)
 
