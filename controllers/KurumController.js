@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
 import Process from '../models/Process.js';
+import nodemailer from "nodemailer"
 
 // user objesinden password veya istenilen ögeler çıkarılmış şekilde return et
 const kurumData = (kurum) => {
@@ -206,7 +207,33 @@ const generateToken = (id) => {
 const onKayit = (req,res) => {
     const {kurum_id} = req.params
     console.log(kurum_id);
+    console.log(req.body);
     // res.status(200).json(response)
+
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "hesap.akkus@gmail.com",
+            pass: "dnbqgkcxgfnlkstk"
+        }
+    });
+
+    const mailOptions = {
+        from: "hesap.akkus@gmail.com",
+        to: req.body.email,
+        subject: "Kurban",
+        html: `İsim: ${req.body.full_name} </br> GSM: ${req.body.phone}`
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            console.log(error);
+        } else{
+            console.log("Email sent: " + info.response);
+            res.status(200).json({response: true})
+        }
+    });
+
 }
 
 export {login, kurums, register, find, update, _delete, onKayit}

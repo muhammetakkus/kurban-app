@@ -10,6 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 //import errorHandler from './middleware/error.js'
 
+// render 'a production deploymentta burası .env anadizin göster + client .end de node_env production yap
 dotenv.config({ path: './.env' })
 const PORT = process.env.PORT || 5001
 
