@@ -45,7 +45,7 @@ export default function LeftMenuContent () {
         </div>
 
         <div className="px-6 my-6">
-            <a href={`${process.env.REACT_APP_ENV === 'dev' ? process.env.REACT_APP_CLIENT_LOCAL_BASE_URL : process.env.REACT_APP_API_PROD_BASE_URL}onkayit/${kurum._id}`} target='_blank'
+            <a href={`https://kurban.onrender.com/onkayit/${kurum._id}`} target='_blank'
             className='flex items-center justify-center w-full p-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-gray-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple'>
                 <span>Ön Kayıt Sayfası</span>
             </a>
