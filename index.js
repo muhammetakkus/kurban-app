@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 //import errorHandler from './middleware/error.js'
 
 // render 'a production deploymentta burası .env anadizin göster + client .end de node_env production yap
-dotenv.config({ path: './.env' })
+dotenv.config({ path: './config/config.env' })
 const PORT = process.env.PORT || 5001
 
 /* Database */
@@ -70,7 +70,7 @@ import './config/passport.js'
 
 app.use(
     cors({
-      origin: process.env.NODE_ENV === "production" ? process.CLIENT_URL_PROD : process.env.CLIENT_URL_LOCAL,
+      origin: '*',//process.env.NODE_ENV === "production" ? process.CLIENT_URL_PROD : process.env.CLIENT_URL_LOCAL,
       methods: "GET,POST,PUT,DELETE",
       credentials: true,
     })
