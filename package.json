@@ -4,6 +4,9 @@
   "description": "NodeJs - MongoDB App",
   "main": "index.js",
   "type": "module",
+  "engines": (
+    "node": "16.x"
+  ),
   "scripts": {
     "start": "node index.js",
     "watch": "nodemon index.js --trace-warnings",

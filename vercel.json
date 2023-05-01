@@ -2,19 +2,26 @@
     "version": 2,
     "builds": [
       {
-        "src": "./server/index.js",  // path to your server.js file
+        "src": "./server/index.js", 
         "use": "@vercel/node"
       },
       {
-        "src": "./client/build",    // path to your build folder
+        "src": "./client/build",
         "use": "@vercel/static"
       }
     ],
-  
+    
     "rewrites": [
       {
         "source": "/(.*)",
-        "destination": "/server/index.js"
+        "destination": "/index.js"
+      }
+    ],
+
+    "routes": [
+      {
+        "source": "/(.*)",
+        "dest": "/"
       }
     ]
   }
