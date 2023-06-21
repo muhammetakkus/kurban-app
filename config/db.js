@@ -5,7 +5,8 @@ class connectDB {
     static async connection  () {
         try {
             if (this.mongoClient !== undefined) return this.mongoClient;
-            this.mongoClient = await mongoose.connect(process.env.MONGO_URI, {})
+                                                        // process.env.MONGO_URI
+            this.mongoClient = await mongoose.connect("mongodb+srv://mehmetakkus:9KUmTHOgNZGIDoty@my-first-mongodb.mztkz.mongodb.net/?retryWrites=true&w=majority", {})
             console.log(`MongoDB Connected: ${this.mongoClient.connection.host}`)
             return this.mongoClient
         } catch (err) {
