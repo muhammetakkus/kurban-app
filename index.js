@@ -49,7 +49,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   // rejectUnauthorized: false // WARN: please do not do this in production
   cors: {
-    origin: process.env.NODE_ENV === "production" ? process.CLIENT_URL_PROD : process.env.CLIENT_URL_LOCAL,
+    origin: "*"//process.env.NODE_ENV === "production" ? process.CLIENT_URL_PROD : "http://188.132.238.149/"_LOCAL,
   }
 });
 
@@ -70,7 +70,7 @@ import './config/passport.js'
 
 app.use(
     cors({
-      origin: '*',//process.env.NODE_ENV === "production" ? process.CLIENT_URL_PROD : process.env.CLIENT_URL_LOCAL,
+      origin: '*',//process.env.NODE_ENV === "production" ? process.CLIENT_URL_PROD : "http://188.132.238.149/"_LOCAL,
       methods: "GET,POST,PUT,DELETE",
       credentials: true,
     })
@@ -99,13 +99,13 @@ import kurumMiddleware from "./middleware/kurum.js"
 // get requestlerde sıkıntı çıktığı için get requestler userRoutes içine import edildi 
 
 app.use('/', userRoutes)
-if(process.env.NODE_ENV === "production") {
+// if(process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, '/client/build')))
   
   app.get('*', (req, res) => { 
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html")) //resolve yerine jo,n
   })
-}
+// }
 app.use('/kurum', kurumRoutes)
 app.use('/admin', adminRoutes)
 // bu şekilde de okey (yani altındaki bütün routelara middleware geçmiş oldun prefix+route+middleware diyebiliriz) 

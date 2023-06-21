@@ -9,7 +9,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
         try {
             token = req.headers.authorization.split(' ')[1]
-            const decoded = jwt.verify(token, process.env.JWT_SECRET)
+            const decoded = jwt.verify(token, "kurbanapp")
             req.admin = await Admin.findById(decoded.id).select('-password') // select minus -> objeden o fieldı çıkarıyor
             
             if(decoded && req.admin) { next() } else { throw new Error('oops this is not admin auth') }

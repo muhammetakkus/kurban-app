@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.REACT_APP_ENV === "production" ? process.env.REACT_APP_API_PROD_BASE_URL : process.env.REACT_APP_API_LOCAL_BASE_URL;//process.env.REACT_APP_API_BASE_URL;
+axios.defaults.baseURL = "http://188.132.238.149/api"  // process.env.REACT_APP_ENV === "production" ? process.env.REACT_APP_API_PROD_BASE_URL : process.env.REACT_APP_API_LOCAL_BASE_URL;//process.env.REACT_APP_API_BASE_URL;
 //axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 

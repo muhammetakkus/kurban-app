@@ -37,7 +37,8 @@ export default function DynamicScreen (props) {
 
           const runSocket = () => {
               /* SOCKET.IO */
-            const socket = io.connect(process.env.REACT_APP_ENV === "production" ? process.env.REACT_APP_API_PROD_BASE_URL : process.env.REACT_APP_API_LOCAL_BASE_URL, { transports : ['websocket'] })
+            //const socket = io.connect(process.env.REACT_APP_ENV === "production" ? process.env.REACT_APP_API_PROD_BASE_URL : process.env.REACT_APP_API_LOCAL_BASE_URL, { transports : ['websocket'] })
+            const socket = io.connect('http://188.132.238.149', { transports : ['websocket'], path: '/api/socket.io' })
             socket.on(props.screen.process._id, () => {
                 console.log("dynamic screen tetiklendi.");
                 getKurban()

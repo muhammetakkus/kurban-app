@@ -48,7 +48,7 @@ router.get('/', (req, res) => {
   router.get("/logout", (req, res) => {
     req.logout(req, err => {
       if(err) return next(err);
-      res.redirect(process.env.CLIENT_URL);
+      res.redirect("http://188.132.238.149/");
     });
   });
 
@@ -61,7 +61,7 @@ router.get('/', (req, res) => {
 router.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    successRedirect: process.env.CLIENT_URL+'/google-auth',
+    successRedirect: "http://188.132.238.149"+'/google-auth',
     failureRedirect: "/login/failed",
   })
 );
@@ -73,7 +73,7 @@ router.post('/user/login', login)
 router.post('/user/register', register)
 
 // bunlara admin middleware geçilecek
-router.get('/users', users)
+router.get('/users', userMiddleware, users)
 router.get('/user/:id', find)
 router.put('/user/:id', update)
 router.delete('/user/:id', _delete)

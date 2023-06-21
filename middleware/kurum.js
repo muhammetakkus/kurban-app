@@ -9,7 +9,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
         try {
             token = req.headers.authorization.split(' ')[1]
-            const decoded = jwt.verify(token, process.env.JWT_SECRET)
+            const decoded = jwt.verify(token, "kurbanapp")
             req.kurum = await Kurum.findById(decoded.id).select('-password')
             
             if(decoded && req.kurum) { next() } else { throw new Error('oops this is not kurum auth') }

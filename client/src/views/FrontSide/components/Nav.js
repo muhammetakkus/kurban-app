@@ -25,7 +25,8 @@ function Nav({testreactprops}) {
 
     const logout = async () => {
       if(user.googleId) {
-        window.open(`${process.env.REACT_APP_API_BASE_URL}logout`, "_self");
+        // window.open(`${process.env.REACT_APP_API_BASE_URL}logout`, "_self");
+        window.open(`${'http://188.132.238.149/'}logout`, "_self");
       }
       await dispatch(userLogout())
       return navigate("/");

@@ -7,9 +7,10 @@ const GoogleStrategy = passportGoogle.Strategy
 passport.use(new GoogleStrategy({
     clientID: "136609867431-i62lo34hc96bj0mo5dvc76459134ob2q.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: process.env.NODE_ENV === "production" 
+    /* callbackURL: process.env.NODE_ENV === "production" 
                   ? `${process.env.SERVER_URL_PROD}/auth/google/callback` 
-                  : `${process.env.SERVER_URL_LOCAL}/auth/google/callback`, //"http://localhost:5001/auth/google/callback"
+                  : `${process.env.SERVER_URL_LOCAL}/auth/google/callback`, //"http://localhost:5001/auth/google/callback" */
+    callbackURL: "http://188.132.238.149/auth/google/callback", //"http://localhost:5001/auth/google/callback"
   },
   async function(accessToken, refreshToken, profile, done) {
       
@@ -26,7 +27,7 @@ passport.use(new GoogleStrategy({
             full_name: profile._json.name,
             googleId: profile.id,
             email: profile.emails[0].value,
-            token: jwt.sign({id: findUser._id}, process.env.JWT_SECRET, {expiresIn: '30d'})
+            token: jwt.sign({id: findUser._id}, "kurbanapp", {expiresIn: '30d'})
         });
     } else {
         const usx = await User.create(data);
@@ -35,7 +36,7 @@ passport.use(new GoogleStrategy({
             full_name: profile._json.name,
             googleId: profile.id,
             email: profile.emails[0].value,
-            token: jwt.sign({id: findUser._id}, process.env.JWT_SECRET, {expiresIn: '30d'})
+            token: jwt.sign({id: findUser._id}, "kurbanapp", {expiresIn: '30d'})
         })
     }
     //done(null, profile);  

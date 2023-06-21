@@ -15,7 +15,8 @@ function Login() {
   const dispatch = useDispatch()
 
   const signInWithGoogle = () => {
-    window.open(`${process.env.REACT_APP_API_LOCAL_BASE_URL}google`, "_self");
+    // window.open(`${process.env.REACT_APP_API_LOCAL_BASE_URL}google`, "_self");
+    window.open(`${'http://188.132.238.149/'}google`, "_self");
   }
 
   useEffect(() => {
