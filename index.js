@@ -144,6 +144,9 @@ app.use('/sms-service', smsServiceRoutes) // create by kurum - relation with Mes
 /* Error Handler */
 //app.use(errorHandler)
 
+console.log(process.env.NODE_ENV)
+console.log(process.env.SERVER_URL_PROD)
+
 httpServer.listen(PORT, console.log(`Express server running in port ${PORT}`))
 
 
