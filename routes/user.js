@@ -48,7 +48,7 @@ router.get('/', (req, res) => {
   router.get("/logout", (req, res) => {
     req.logout(req, err => {
       if(err) return next(err);
-      res.redirect("http://188.132.238.149/");
+      res.redirect(process.env.CLIENT_URL);
     });
   });
 
@@ -61,7 +61,7 @@ router.get('/', (req, res) => {
 router.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://188.132.238.149"+'/google-auth',
+    successRedirect: process.env.CLIENT_URL+'/google-auth',
     failureRedirect: "/login/failed",
   })
 );

@@ -74,7 +74,7 @@ const send = async (req,res) => {
         GSMs = Array.from(new Set(GSMs));
 
         if(kurban_info_message) {
-            message_txt= `Muhterem hissedarımız, ${kurban_no} NO'lu kurbanınız ile alakalı durum takibi ve bilgilere http://188.132.238.149/kurban-info/${kurban_code} adresinden ulaşabilirsiniz.`
+            message_txt= `Muhterem hissedarımız, ${kurban_no} NO'lu kurbanınız ile alakalı durum takibi ve bilgilere ${process.env.NODE_ENV === "production" ? process.env.CLIENT_URL_PROD : process.env.CLIENT_URL_LOCAL}/kurban-info/${kurban_code} adresinden ulaşabilirsiniz.`
         }
 
         // with Factory Design Pattern

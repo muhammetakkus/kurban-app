@@ -201,7 +201,7 @@ const _delete = async (req,res) =>{
 }
 
 const generateToken = (id) => {
-    return jwt.sign({id}, "kurbanapp", {expiresIn: '30d'}) // buradaki json key id olduğu için decode ederken de id olmalı
+    return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '30d'}) // buradaki json key id olduğu için decode ederken de id olmalı
 }
 
 const onKayit = (req,res) => {
