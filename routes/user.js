@@ -73,7 +73,7 @@ router.post('/user/login', login)
 router.post('/user/register', register)
 
 // bunlara admin middleware geçilecek
-router.get('/users', userMiddleware, users)
+router.get('/users', users)
 router.get('/user/:id', find)
 router.put('/user/:id', update)
 router.delete('/user/:id', _delete)
