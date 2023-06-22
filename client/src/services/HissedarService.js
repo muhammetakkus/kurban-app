@@ -7,7 +7,7 @@ class HissedarService {
     }
 
     getAll(payload) {
-        return axios.get(`/user/hissedar/${payload.kurum_id}`)
+        return axios.get(`/hissedar/${payload.kurum_id}`)
     }
 
     get(id) {
@@ -19,7 +19,7 @@ class HissedarService {
     }
 
     delete(payload) {
-        return axios.delete(`/user/hissedar/${payload.id}`);
+        return axios.delete(`/hissedar/${payload.id}`);
     }
 }
 

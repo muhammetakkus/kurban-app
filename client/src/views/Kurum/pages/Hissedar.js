@@ -31,7 +31,7 @@ function Hissedar() {
           dispatch(setHissedars(request.data))
       }
     }
-    if(!hissedars || hissedars.length === 0) getHissedars()
+    getHissedars()
   }, [])
 
   const deleteItem = async (result) => {
