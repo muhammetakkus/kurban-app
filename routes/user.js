@@ -101,6 +101,11 @@ router.get('/kurum/:id', findKurum)
 import { processes, getKurumProcess } from '../controllers/ProcessController.js'
 router.get('/process/all/:kurum_id', processes)
 
+/* Get Hissedar */
+import { getHissedars, _delete } from '../controllers/HissedarController.js'
+router.get('/hissedar/:kurum_id', getHissedars)
+router.delete('/hissedar/:id', _delete)
+
 /* For Kurban-Info Page */
 router.get('/user/kurban-info-process/:kurum_id', getKurumProcess)
 
