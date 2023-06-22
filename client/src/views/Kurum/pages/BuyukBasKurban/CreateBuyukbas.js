@@ -123,8 +123,8 @@ function CreateBuyukbas() {
             </label>
 
               <Input value={kurban_kupe_no} title="Küpe No" name="kurban_kupe_no" onChange={onChange} errors={errors} />
-              <Input value={net_hisse_fiyat} title="Net Hisse Fiyatı" name="net_hisse_fiyat" onChange={onChange} errors={errors} />
-              <Input value={kurban_weight} title="Kurban KG" name="kurban_weight" onChange={onChange} errors={errors} />
+              <Input type={"number"} value={net_hisse_fiyat} title="Net Hisse Fiyatı" name="net_hisse_fiyat" onChange={onChange} errors={errors} />
+              <Input type={"number"} value={kurban_weight} title="Kurban KG" name="kurban_weight" onChange={onChange} errors={errors} />
               <Textarea value={kurban_note} title="Kurban Not" name="kurban_note" onChange={onChange} errors={errors} />
               <Button className={"mt-2 w-full"} disabled={loading}>
                 {loading ? 'Oluşturuluyor' : 'Oluştur'}
