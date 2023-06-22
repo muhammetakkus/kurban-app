@@ -5,7 +5,7 @@ import Card from "../../components/Card"
 import Prev from "../../components/Prev"
 import Title from "../../components/Title"
 import HissedarService from "../../../services/HissedarService";
-import {setHissedars} from "../../../store/reducers/hissedar"
+// import {setHissedars} from "../../../store/reducers/hissedar"
 import Modal from '../../molecules/modal';
 import {Icon} from "../../../utils/SVG";
 import Loading from '../../components/Loading';
@@ -43,7 +43,8 @@ function Hissedar() {
       const deleteRecord = await HissedarService.delete({id: currentHissedar._id});
       if(deleteRecord.status === 200) {
         const newHissedars = hissedars.filter( e => e._id !== currentHissedar._id  )
-        dispatch(setHissedars(newHissedars))
+        // dispatch(setHissedars(newHissedars))
+        setHissedars(newHissedars)
         setItemDeleting('')
       }
     }

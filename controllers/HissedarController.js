@@ -12,7 +12,7 @@ const getHissedars = async (req,res) => {
         // routerda /kurum/:kurum_id/project/:id şeklinde id parametresi var
         const hissedars = await Hissedar.find({
             kurum_id: req.params.kurum_id
-        });
+        }).sort('createdAt')
         res.status(200).json(hissedars);
    } catch (error) {
         console.log(error);
