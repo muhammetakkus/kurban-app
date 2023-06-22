@@ -36,6 +36,7 @@ function EditBuyukbas() {
     const [hisseGroupLoader, setHisseGroupLoader] = useState("Hisse grupları yükleniyor..");
     const [selected, setSelected] = useState("")
     const [hisse_groups, setHisseGroup] = useState([]);
+    const [kurbanCode, setKurbanCode] = useState("");
 
     const [formData, setFormData] = useState({
       _id: '',
@@ -45,7 +46,7 @@ function EditBuyukbas() {
       kurban_note: '',
       file: '',
       youtube_embed: '',
-      vidyome_embed: ''
+      vidyome_embed: '',
     })
     
     const { kurban_kupe_no, net_hisse_fiyat, kurban_weight, kurban_note, file, youtube_embed, _id, vidyome_embed } = formData
@@ -75,6 +76,7 @@ function EditBuyukbas() {
       console.log(location.state)
       setSelected(location.state.kurban_hisse_group)
       setImg(location.state.kurban_image)
+      setKurbanCode(location.state.uniq_kurban_code)
       // NavLink ile gelen location.state deki değerleri state'teki öğelere geçmek için bu kadar işlem yapmaya gerek var mı?
       Object.keys(formData).forEach(key => {
         setFormData((prevState) => ({
@@ -282,6 +284,10 @@ function EditBuyukbas() {
              {location.state.video_path && <video width="750" height="500" controls className={`${location.state.video_path ? "" : "hidden"}`}>
                 <source src={location.state.video_path ? location.state.video_path : ""} type="video/mp4" />
               </video>}
+
+              <div className='mb-2'>
+                Kurban Bilgi Linki: <a className='text-blue-500' target='_blank' href={`http://188.132.238.149/kurban-info/${kurbanCode}`}>http://188.132.238.149/kurban-info/{kurbanCode}</a>
+              </div>
 
               <Button className={"mt-2 w-full"} disabled={loading}>
                 {loading ? 'Düzenleniyor' : 'Düzenle'}

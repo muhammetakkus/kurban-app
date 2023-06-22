@@ -5,7 +5,7 @@ html, body {
 .kurban-info-wrapper {
     /* background: rgb(31,173,176);
     background: linear-gradient(180deg, rgba(31,173,176,1) 0%, rgba(17,159,233,1) 100%); */
-    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    background-image: linear-gradient(0deg, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
     height: 100%;
     padding: 0;
     margin: 0;
