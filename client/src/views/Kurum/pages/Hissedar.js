@@ -13,8 +13,8 @@ import Loading from '../../components/Loading';
 function Hissedar() {
   const kurum = useSelector(state => state.auth.kurum)
   const [loading, setLoading] = useState(false);
-  // const [hissedars, setHissedars] = useState([]);
-  const hissedars = useSelector(state => state.hissedar.items)
+  const [hissedars, setHissedars] = useState([]);
+  //const hissedars = useSelector(state => state.hissedar.items)
   const dispatch = useDispatch()
   const [isDeleteModal, setDeleteModal] = useState({isOpen: false});
   const [currentHissedar, setCurrentHissedar] = useState({});
@@ -28,7 +28,8 @@ function Hissedar() {
       if(request.status === 200) {
         console.log(request.data);
           setLoading(false)
-          dispatch(setHissedars(request.data))
+          // dispatch(setHissedars(request.data))
+          setHissedars(request.data)
       }
     }
     getHissedars()
