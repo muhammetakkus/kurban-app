@@ -31,6 +31,7 @@ import hisseRoutes from './routes/hisse.js'
 import messageRoutes from './routes/message.js'
 import messageAPIRoutes from './routes/message_api.js'
 import smsServiceRoutes from './routes/sms_service.js'
+import hissedarRoutes from './routes/hissedar.js'
 
 
 
@@ -118,6 +119,7 @@ app.use('/hisse', kurumMiddleware, hisseRoutes)
 app.use('/message', kurumMiddleware, messageRoutes) // create by kurum for message templates  - relation with MessageTemplate model
 app.use('/message-api', messageAPIRoutes) // creeate by admin - relation with MessageAPI model
 app.use('/sms-service', smsServiceRoutes) // create by kurum - relation with MessageService model
+app.use('/hissedar', hissedarRoutes)
 
 
 
@@ -142,7 +144,7 @@ app.use('/sms-service', smsServiceRoutes) // create by kurum - relation with Mes
 
 
 /* Error Handler */
-//app.use(errorHandler)z
+//app.use(errorHandler)
 
 httpServer.listen(PORT, console.log(`Express server running in port ${PORT}`))
 

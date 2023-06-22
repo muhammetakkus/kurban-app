@@ -1,6 +1,7 @@
 import Hisse from '../models/Hisse.js'
 import Buyukbas from '../models/Buyukbas.js'
 import asyncHandler from 'express-async-handler'
+import Hissedar from '../models/Hissedar.js'
 
 const findByKurbanID = asyncHandler( async (req,res) => {
     const hisse = await Hisse.find({project_id: req.params.project_id}).sort('-createdAt')
@@ -32,7 +33,13 @@ const update = async (req,res) => {
 }
 
 const create = async (req,res) => {
-    const hisse = await Hisse.create(req.body).then(document => {
+    const hasHissedar = await Hisse.find({hissedar_gsm: req.body.hissedar_gsm, kurum_id: req.body.kurum_id})
+
+    const hisse = await Hisse.create(req.body).then(async (document) => {
+
+        // Eğer bu kurumun hisse kayıtlarında böyle bir hissedar yoksa hissedar tablosuna ekle 
+        if(!hasHissedar || hasHissedar?.length === 0) await Hissedar.create(req.body)
+
         return Buyukbas.findByIdAndUpdate(
             req.body.kurban_id,
             { $push: { hisse: document._id } },

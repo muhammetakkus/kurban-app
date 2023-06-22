@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './reducers/auth'
 import kurum from './reducers/kurum.dashboard'
 import admin from './reducers/admin'
+import hissedar from './reducers/hissedar'
 //import thunk from 'redux-thunk'
 
 import storage from 'redux-persist/lib/storage';
@@ -18,7 +19,8 @@ import { persistReducer,
 const reducers = combineReducers({
   auth: authReducer,
   kurum: kurum,
-  admin: admin
+  admin: admin,
+  hissedar
 });
 
 const persistConfig = {

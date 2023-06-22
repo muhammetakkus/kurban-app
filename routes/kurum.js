@@ -15,7 +15,6 @@ router.post('/login', login)
 router.post('/register', register)
 router.post('/onkayit/:kurum_id', onKayit)
 // buraya post requesti al mail at
-// heroku aynı domain'e deploy et github auto push update olsun
 
 /* Bu kurum crud adminMiddleware korumasında olacak */
 // router.get('/:id', find)
