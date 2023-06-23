@@ -4,13 +4,16 @@ import ProjectService from "../../../../services/ProjectService";
 import { useEffect, useState } from "react";
 import {useSelector} from "react-redux"
 import {Icon} from "../../../../utils/SVG";
- 
+import Modal from '../../../molecules/modal';
+
 function ProjectList() {
   const kurum = useSelector(state => state.auth.kurum)
 
   const [projects, setProject] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState('');
+  const [isDeleteModal, setDeleteModal] = useState({isOpen: false});
+  const [deleteID, setDeleteID] = useState('');
 
   useEffect(() => {
     const getProjects = async () => {
@@ -25,18 +28,23 @@ function ProjectList() {
     
   }, [])
 
-  const deleteProject = async (id) => {
-    setDeleteLoading(id)
+  const askDelete = (id) => {
+    
+    setDeleteID(id)
+    setDeleteModal({isOpen: true, title: 'Proje Sil', message: `Bu proje ve ilgili kurban kayıtlarını silmek istediğinize emin misiniz?`})
+  }
 
-    // open delete modal
+  const deleteProject = async (result) => {
 
-    if(true) {
-      const res = await ProjectService.delete({kurum_id: kurum._id, id});
+    setDeleteModal({isOpen: false})
+
+    if(result) {
+      setDeleteLoading(deleteID)
+      const res = await ProjectService.delete({kurum_id: kurum._id, id: deleteID});
       if(res.status === 200 && !res.data.error) {
-        // noty
-          
+        
         // remove item
-        setProject(prevState => prevState.filter((prevItem) => prevItem._id !== id));
+        setProject(prevState => prevState.filter((prevItem) => prevItem._id !== deleteID))
 
       } else if(res.data.error) {
         console.log(res.data.error)
@@ -62,7 +70,7 @@ function ProjectList() {
                     <Icon name={"spin_loader_1"} />
                   </span>
 
-                  <span onClick={() => deleteProject(project._id)} className={`mr-3 cursor-pointer ${deleteLoading === project._id ? "hidden" : ""}`}>
+                  <span onClick={() => askDelete(project._id)} className={`mr-3 cursor-pointer ${deleteLoading === project._id ? "hidden" : ""}`}>
                     <Icon name={"delete"} />
                   </span>
                 </li>)
@@ -71,6 +79,7 @@ function ProjectList() {
             
             {projects.length === 0 && !loading? <span className='text-gray-400 block text-center'>Henüz bir proje oluşturmadınız..</span>: null}
 
+            <Modal result={deleteProject} data={isDeleteModal} />
       </>
     );
 }
