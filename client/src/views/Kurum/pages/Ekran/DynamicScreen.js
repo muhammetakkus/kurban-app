@@ -14,12 +14,12 @@ export default function DynamicScreen (props) {
 
         const getKurban = async () => {
             if(props.screen.self) {
-                const request = await BKurbanService.getForEkran({ process_id: props.screen.process._id, project_id: project_id, kurum_id: kurum._id, self: true });
+                const request = await BKurbanService.getForEkran({ process_id: props.screen.process?._id, project_id: project_id, kurum_id: kurum?._id, self: true });
                 if(request.status === 200) {
                     setKurban(request.data)
                 }
             } else {
-                const request = await BKurbanService.getForEkran({ process_id: props.screen.process._id, project_id: project_id, kurum_id: kurum._id, self: false });
+                const request = await BKurbanService.getForEkran({ process_id: props.screen.process?._id, project_id: project_id, kurum_id: kurum?._id, self: false });
                 if(request.status === 200) {
                     setKurban(request.data)
                     console.log(request.data)
@@ -39,7 +39,7 @@ export default function DynamicScreen (props) {
               /* SOCKET.IO */
             //const socket = io.connect(process.env.REACT_APP_ENV === "production" ? process.env.REACT_APP_API_PROD_BASE_URL : process.env.REACT_APP_API_LOCAL_BASE_URL, { transports : ['websocket'] })
             const socket = io.connect('http://188.132.238.149', { transports : ['websocket'], path: '/api/socket.io' })
-            socket.on(props.screen.process._id, () => {
+            socket.on(props.screen.process?._id, () => {
                 console.log("dynamic screen tetiklendi.");
                 getKurban()
             });
@@ -62,7 +62,7 @@ export default function DynamicScreen (props) {
                 <div className="px-6 pt-2 text-2xl">
                     <ul>
                         {kurban[0]?.hisse.map(value => (
-                            <li key={value._id} className="py-2">
+                            <li key={value?._id} className="py-2">
                                 {`${value.hissedar_full_name} - ${value.hissedar_gsm}`}
                             </li>
                         ))}
