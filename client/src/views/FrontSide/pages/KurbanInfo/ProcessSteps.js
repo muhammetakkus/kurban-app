@@ -9,6 +9,7 @@ function classNames(...classes) {
 export default function ProcessSteps({process, currentID}) {
   
     const [currentIndex, setCurrentIndex] = useState('')
+
     useEffect(() => {
         console.log(process)
         process.forEach((element, index) => {
@@ -18,8 +19,13 @@ export default function ProcessSteps({process, currentID}) {
         });
     }, [process])
 
+    useEffect(() => {
+      console.log(process);
+    }, [])
+
   return (
     <nav aria-label="Progress" className='ml-5'>
+      
       <ol className="overflow-hidden">
         {process?.map((step, stepIdx) => (
           <li key={step._id} className={classNames(stepIdx !== process.length - 1 ? 'pb-10' : '', 'relative')}>
@@ -77,6 +83,7 @@ export default function ProcessSteps({process, currentID}) {
           </li>
         ))}
       </ol>
+   
     </nav>
   )
 }

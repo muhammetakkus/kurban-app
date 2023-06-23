@@ -23,7 +23,7 @@ function Ekran() {
     }, [])
     
     const getEkran = async () => {
-      const request = await EkranService.getAll({kurum_id: kurum._id});
+      const request = await EkranService.getAll({kurum_id: kurum?._id});
       console.log(request.data)
       if(request.status === 200) setEkran(request.data)
     }
@@ -45,7 +45,7 @@ function Ekran() {
             pauseOnHover={false}
            >
             {ekran.map((screen) => (
-              <div className="slide py-9" key={screen._id}>
+              <div className="slide py-9" key={screen?._id}>
                 {
                   screen.type === "dynamic" 
                   ? <DynamicScreen screen={screen} />
