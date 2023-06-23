@@ -7,7 +7,7 @@ const processes = asyncHandler( async (req,res) => {
 })
 
 const getKurumProcess = asyncHandler( async (req,res) => {
-    const process = await Process.find({kurum_id: req.params.kurum_id}).populate('message_template')
+    const process = await Process.find({kurum_id: req.params.kurum_id}).sort('process_order').populate('message_template')
     return res.status(200).json(process);
   })
 
@@ -60,6 +60,9 @@ const create = async (req,res) => {
     const isProcess = await Process.find( { $and: [ { kurum_id: kurum_id }, { process_title: process_title }  ] })
     const countProcesses = await Process.countDocuments({ kurum_id: kurum_id })
     
+    if(req.body.message_template == "") {
+        delete req.body.message_template
+    }
     
     if(isProcess !== null && isProcess.length > 0) {
         res.status(200).json({error: "Bu isimde bir işlem adımı mevcut.."});
