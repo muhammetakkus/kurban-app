@@ -59,7 +59,7 @@ export default function ProcessSteps({process, currentID}) {
                   </span>
                   <span className="ml-4 min-w-0 flex flex-col">
                     <span className="text-xs font-semibold tracking-wide uppercase text-indigo-600">{step.process_title}</span>
-                    <span className={`text-sm text-gray-500`}>Kurbanınız Şuanda Bu Aşamada</span>
+                    <span className={`text-sm text-gray-500`}>Kurbanınız Şu Anda Bu Aşamada</span>
                   </span>
                 </div>
               </>

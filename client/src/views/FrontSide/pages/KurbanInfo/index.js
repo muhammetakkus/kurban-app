@@ -92,7 +92,7 @@ export default function KurbanInfo() {
 
 
     <div className="bg-white p-4 mx-2 md:mx-10 my-2 card">
-        <h2 className="font-semibold text-gray-500 text-center text-xl my-2 mb-5">Kurbanım Şuan Ne Durumda</h2>
+        <h2 className="font-semibold text-gray-500 text-center text-xl my-2 mb-5">Kurbanım Şu Anda Ne Durumda</h2>
         <ProcessSteps process={process} currentID={kurban?.process?._id} />
     </div>
 
