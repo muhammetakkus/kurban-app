@@ -49,7 +49,7 @@ export default function DynamicScreen (props) {
     return (
         <div>
             <h2>
-                <b>{props.screen.screen_title}</b> EKRANI - {props.screen.process.process_title} işlemi
+                <b>{props.screen.screen_title}</b> EKRANI - {props.screen?.process?.process_title} işlemi
             </h2>
             
             <div className="flex mt-5">

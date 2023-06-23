@@ -37,7 +37,7 @@ function ProcessList() {
     console.log(item)
     setDeleteObj({})
     setDeleteObj(item)
-    setModal({isOpen: true, title: 'İşlem Adımı Sil', message: `[${item.process_title}] - işlem adımını silmek istediğinize emin misiniz?`})
+    setModal({isOpen: true, title: 'İşlem Adımı Sil', message: `[${item?.process_title}] - işlem adımını silmek istediğinize emin misiniz?`})
   }
 
   const modalResult = async (result) => {
@@ -111,7 +111,7 @@ function ProcessList() {
                           </div>
                         </td>
                         <td className="px-4 py-1 text-l">
-                          <span>{process.process_title}</span>
+                          <span>{process?.process_title}</span>
                         </td>
                         <td className="px-4 py-1 text-l">
                           <span>{process.message_template ? process.message_template.message_title : '-'}</span>
@@ -130,7 +130,7 @@ function ProcessList() {
                             </p>
                         
                         </td>
-                        <td className={`${process.process_title === "KAYIT" ? "hidden" : ""} px-4 py-1 text-sm`}>
+                        <td className={`${process?.process_title === "KAYIT" ? "hidden" : ""} px-4 py-1 text-sm`}>
                           <div className='flex items-center justify-center'>
                             <NavLink to={"/kurum/edit-process"} state={process}>
                               <div className="p-2 cursor-pointer text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
@@ -139,7 +139,7 @@ function ProcessList() {
                             </NavLink>
                           </div>
                         </td>
-                        <td className={`${process.process_title === "KAYIT" ? "hidden" : ""} px-4 py-1 text-sm`}>
+                        <td className={`${process?.process_title === "KAYIT" ? "hidden" : ""} px-4 py-1 text-sm`}>
                           <div className='flex items-center justify-center'>
                             <div onClick={() => askModal(process)} className="p-2 cursor-pointer text-red-500 bg-red-100 rounded-full dark:text-orange-100 dark:bg-red-500">
                               <span className={`${deleteLoading === process._id ? "" : "hidden"}`}>

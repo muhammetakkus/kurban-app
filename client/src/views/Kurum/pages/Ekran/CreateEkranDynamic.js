@@ -116,7 +116,7 @@ function CreateBuyukbas() {
                     focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" disabled={!hisseGroupLoader}>
                       <option value="">{hisseGroupLoader}</option>
                       {processes.map((process) => (
-                        <option key={process._id} value={process._id}>{process.process_title}</option>
+                        <option key={process._id} value={process._id}>{process?.process_title}</option>
                       ))}
                   </select>
 
