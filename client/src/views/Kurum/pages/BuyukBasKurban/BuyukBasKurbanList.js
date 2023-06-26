@@ -116,7 +116,7 @@ function BuyukBasKurbanList({ project_id }) {
     result.kurban_id = kurban._id
     setSide({isOpen: false, title: side.title})
     
-    if(result && result._id !== kurban.process._id) {
+    if(result && result?._id !== kurban.process?._id) {
       setProcessLoader(kurban._id)
       // const change_process = await KurbanService.update({_id: kurban._id, process: result._id})
       const change_process = await KurbanService.changeProcess({_id: kurban._id, process: result._id, kurum_id: kurum._id })
