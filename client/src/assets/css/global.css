@@ -5,11 +5,11 @@ html, body {
 }
 
 @media screen and (max-width: 600px) {
-    .login-cover-img {
+    .login-cover-img img {
         object-position: bottom;
     }
     
-    .register-cover-img {
+    .register-cover-img img {
         object-position: 0 35%;
     }
 }
