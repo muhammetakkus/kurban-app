@@ -1,8 +1,9 @@
+ 
+.login-cover-img img {
+    object-position: bottom;
+    display: none;
+}
 
-    .login-cover-img img {
-        object-position: bottom;
-    }
-    
-    .register-cover-img img {
-        object-position: 0 35%;
-    }
+.register-cover-img img {
+    object-position: 0 35%;
+}
