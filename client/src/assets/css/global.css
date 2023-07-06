@@ -4,16 +4,6 @@ html, body {
     background-color: rgb(249 250 251 / 1);
 }
 
-@media screen and (max-width: 600px) {
-    .login-cover-img img {
-        object-position: bottom;
-    }
-    
-    .register-cover-img img {
-        object-position: 0 35%;
-    }
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

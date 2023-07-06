@@ -8,6 +8,8 @@ import axios from 'axios'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 
+import './auth.css'
+
 function Register() {
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')

@@ -11,6 +11,8 @@ import { NavLink } from 'react-router-dom'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 
+import './auth.css'
+
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
