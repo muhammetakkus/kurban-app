@@ -58,7 +58,7 @@ const login = async (req,res) =>{
             res.status(200).json({error: 'Girilen bilgiler ile eşleşen bir kullanıcı bulunamadı'})
         }
     } catch (error) {
-        //res.json(error);
+        res.status(500).json({error: 'Sunucu hatası'});
     }
 }
 
