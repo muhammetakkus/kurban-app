@@ -9,7 +9,7 @@ const KurumSchema = new mongoose.Schema({
     gsm: String,
     is_verify: {
         type: Boolean,
-        default: 0
+        default: true
     },
     current_message_api: String,
     template: {
